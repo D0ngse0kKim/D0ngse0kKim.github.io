@@ -13,10 +13,13 @@ body {
 }
 
 article {
-  h1, h2 {
+  h2 {
     padding-top: 0.5rem;
     border-bottom: 1px solid var(--global-divider-color);
     padding-bottom: 0.25rem;
+  }
+  h3 {
+    padding-top: 0.25rem;
   }
 }
 

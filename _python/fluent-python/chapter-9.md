@@ -360,7 +360,7 @@ Refer [this](#decorators-with-argumentsparameterized-decorators)
 
 ### The Parameterized Clock Decorator
 
-```python:Example 9-24
+```python:Example9-24
 import time
 DEFAULT_FMT = '[{elapsed:0.8f}s] {name}({args}) -> {result}'
 
@@ -399,7 +399,7 @@ for i in range(3):
 
 ### A Class-Based Clock Decorator
 
-```python:Example 9-27
+```python:Example9-27
 import time
 DEFAULT_FMT = '[{elapsed:0.8f}s] {name}({args}) -> {result}'
 

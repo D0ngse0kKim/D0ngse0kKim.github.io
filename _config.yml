@@ -178,17 +178,21 @@ news_limit: 5 # leave blank to include all the news in the `_news` folder
 # -----------------------------------------------------------------------------
 
 # Markdown and syntax highlight
+# highlighter is disabled
+# reference: https://vilcins.medium.com/disable-jekylls-default-syntax-highlighter-rouge-12130ccac779
 markdown: kramdown
-highlighter: rouge
+# highlighter: rouge
+highlighter: none
 kramdown:
   input: GFM
   syntax_highlighter_opts:
-    css_class: 'highlight'
-    span:
-      line_numbers: false
-    block:
-      line_numbers: false
-      start_line: 1
+    disable: true
+    # css_class: 'highlight'
+    # span:
+    #   line_numbers: false
+    # block:
+    #   line_numbers: false
+    #   start_line: 1
 
 # Includes & excludes
 include: ['_pages']

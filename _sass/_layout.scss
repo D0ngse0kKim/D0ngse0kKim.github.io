@@ -46,6 +46,42 @@ body.sticky-bottom-footer {
 
 // TODO: redefine content layout.
 
+// inserting heading numbers
+div.post {
+  counter-reset: h2_heading_number;
+}
+d-contents {
+  counter-reset: h2_heading_number;
+}
+h2[id]:before {
+  counter-increment: h2_heading_number;
+  content: counter(h2_heading_number) ". ";
+}
+
+h2[id] {
+  counter-reset: h3_heading_number;
+}
+h3[id]:before {
+  counter-increment: h3_heading_number;
+  content: counter(h2_heading_number) "." counter(h3_heading_number) ". ";
+}
+
+h3[id] {
+  counter-reset: h4_heading_number;
+}
+h4[id]:before {
+  counter-increment: h4_heading_number;
+  content: counter(h2_heading_number) "." counter(h3_heading_number) "." counter(h4_heading_number) ". ";
+}
+
+h4[id] {
+  counter-reset: h5_heading_number;
+}
+h5[id]:before {
+  counter-increment: h5_heading_number;
+  content: counter(h2_heading_number) "." counter(h3_heading_number) "." counter(h4_heading_number) "." counter(h5_heading_number) ". ";
+}
+
 
 /******************************************************************************
  * Publications

@@ -1,7 +1,7 @@
 ---
 layout: page
-title: tutorial
-description: tutorial of jekyll
+title: Tutorial
+description: Tutorial of Jekyll
 # img: assets/img/12.jpg
 # importance: 1
 category: Jekyll
@@ -19,7 +19,7 @@ category: Jekyll
 
 install `ruby` and `chruby`(Version manaber of `ruby`) from `brew`
 
-```zsh
+```bash
 % brew install chruby ruby-install xz
 % ruby-install ruby 3.1.3
 % echo "source $(brew --prefix)/opt/chruby/share/chruby/chruby.sh" >> ~/.zshrc
@@ -31,7 +31,7 @@ ruby 3.1.3p185 (2022-11-24 revision 1a6b16756e) [arm64-darwin21]
 
 ### Install Jekyll
 
-```zsh
+```bash
 % gem install jekyll bundler
 ```
 
@@ -39,14 +39,14 @@ ruby 3.1.3p185 (2022-11-24 revision 1a6b16756e) [arm64-darwin21]
 
 Create a new `Gemfile` into a project folder to list dependencies of the project.
 
-```zsh:console
+```bash:console
 % cd /path/to/project/folder
 % bundle init
 ```
 
 Edit `Gemfile` with text editor and add jekyll as a dependency
 
-```zsh:console
+```bash:console
 % code Gemfile
 ```
 

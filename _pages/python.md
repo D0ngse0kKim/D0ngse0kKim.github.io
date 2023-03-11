@@ -5,7 +5,7 @@ permalink: /python/
 description: Records of Python.
 nav: false
 #nav_order: 1
-display_categories: [Development-Environment, Packaging, Fluent-Python, Standard-Library]
+display_categories: [Development-Environment, Packaging, Fluent-Python, Standard-Library, 3rd-Party-Library]
 horizontal: false
 ---
 

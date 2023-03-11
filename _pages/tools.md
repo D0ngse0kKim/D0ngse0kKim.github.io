@@ -2,7 +2,7 @@
 layout: page
 title: tools
 permalink: /tools/
-description: Records of Python.
+description: Explain the how-to's of programming-related tools
 nav: false
 #nav_order: 1
 display_categories: [Git, Jekyll]

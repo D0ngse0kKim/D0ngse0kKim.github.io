@@ -14,7 +14,7 @@ gitignore.io can be used by `curl` command to API page[^APIPage] of gitignore.io
 
 A script in below adds `gi` command to zsh which retrieves template of `.gitignore`.
 
-```zsh
+```bash
 echo "function gi() { curl -sLw "\n" https://www.toptal.com/developers/gitignore/api/\$@ ;}" >> \
 ~/.zshrc && source ~/.zshrc
 ```

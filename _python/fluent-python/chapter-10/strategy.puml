@@ -1,0 +1,42 @@
+@startuml strategy
+
+class Order {
+    total()
+    due()
+}
+
+class Promotion {
+    discount()
+}
+
+class FidelityPromo {
+    discount()
+}
+class BulkItemPromo {
+    discount()
+}
+class LargeOrderPromo {
+    discount()
+}
+
+Order -left-o Promotion
+FidelityPromo-up-|>Promotion
+BulkItemPromo-up-|>Promotion
+LargeOrderPromo-up-|>Promotion
+
+note top of Order
+    context
+end note
+note top of Promotion
+    strategy
+end note
+note bottom of FidelityPromo
+    concrete strategies
+end note
+note bottom of BulkItemPromo
+    concrete strategies
+end note
+note bottom of LargeOrderPromo
+    concrete strategies
+end note
+@enduml

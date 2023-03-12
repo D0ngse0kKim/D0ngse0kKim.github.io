@@ -1,0 +1,73 @@
+@startuml command
+
+class Application {
+}
+
+note top of Application
+    client
+end note
+
+note bottom of Application
+    receivers
+end note
+
+class Menu {
+}
+
+note top of Menu
+    invoker
+end note
+
+class Command {
+    execute()
+}
+
+note top of Command
+    command
+end note
+
+class OpenCommand {
+    execute()
+}
+
+note bottom of OpenCommand
+    concrete commands
+end note
+
+class PasteCommand {
+    execute()
+}
+
+note bottom of PasteCommand
+    concrete commands
+end note
+
+class MacroCommand {
+    execute()
+}
+
+note bottom of MacroCommand
+    concrete commands
+end note
+
+class Document {
+    insert_text()
+}
+
+note bottom of Document
+    receivers
+end note
+
+Menu -left-o Command
+
+OpenCommand -left-> Application
+
+OpenCommand -up-|> Command
+PasteCommand -up-|> Command
+MacroCommand -up-|> Command
+
+PasteCommand -down-> Document
+
+MacroCommand -up-> Command
+
+@enduml

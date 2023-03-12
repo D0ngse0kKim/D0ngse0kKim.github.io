@@ -694,6 +694,7 @@ pre.code-block-header {
     z-index: 10;
     opacity: 2;
     border-bottom: 0;
+    line-height: 1.8em;
 
     /* 最大で40%の幅、超えてしまった場合wrapping wordを行う */
     max-width: 40%;

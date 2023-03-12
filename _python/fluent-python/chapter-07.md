@@ -1,6 +1,6 @@
 ---
 layout: distill
-title: Chapter 7
+title: Chapter 07
 description: Functions as First-Class Objects
 # img: assets/img/12.jpg
 # importance: 1
@@ -139,9 +139,9 @@ True
 
 ## From Positional to Keyword-Only Parameters
 
-<div class='embed-github-src' repo='fluentpython/example-code-2e' branch='master' path='07-1class-func/tagger.py' language="python" line='27-39'></div>
+<div class='embed-github-src' repo='fluentpython/example-code-2e' branch='23e78eeb82e04731fbb6063d1075d2f6400cc26c' path='07-1class-func/tagger.py' language="python" line='27-39'></div>
 
-<div class='embed-github-src' repo='fluentpython/example-code-2e' branch='master' path='07-1class-func/tagger.py' language="python" line='3-20'></div>
+<div class='embed-github-src' repo='fluentpython/example-code-2e' branch='23e78eeb82e04731fbb6063d1075d2f6400cc26c' path='07-1class-func/tagger.py' language="python" line='3-20'></div>
 
 ### *Specifying Keyword Argument*
 

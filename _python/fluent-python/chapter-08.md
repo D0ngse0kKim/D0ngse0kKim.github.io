@@ -1,6 +1,6 @@
 ---
 layout: distill
-title: Chapter 8
+title: Chapter 08
 description: Type Hints in Functions
 # img: assets/img/12.jpg
 # importance: 1
@@ -17,6 +17,11 @@ toc:
   - name: Links
 ---
 
+## Abstract
+
+This is summary of chapter 8 of [Fluent Python](https://www.oreilly.com/library/view/fluent-python-2nd/9781492056348/).
+Chapter 8 covers the topic of type hints in Python function, which allows developers to provide information about the expected data types for the function's parameters and return values.
+
 ## About Gradual Typing
 A gradual type system:
 * Is optional.
@@ -25,15 +30,15 @@ A gradual type system:
 * Does not enhance performance.
 
 ## Gradual Typing in Practice
-function definition without type hints for paramters and return value
+The following function `show_count()` is defined using a function definition *without* type hints for paramters and return value.
 
-```python
-def show_count(count, word):
-    if count == 1:
-        return f"1 {word}"
-    count_str = str(count) if count else "no"
-    return f"{count_str} {word}s"
-```
+<div class='embed-github-src'
+     repo='fluentpython/example-code-2e'
+     branch='01e717b60a9a14bc1bca4bffd915f7ed2c637e5e'
+     path='08-def-type-hints/messages/no_hints/messages.py'
+     line='14-18'
+     language='python'
+></div>
 
 ### Starting with Mypy
 * installation in VSCode is described in [here](../../development-environment/vscode/)
@@ -48,15 +53,13 @@ def show_count(count, word):
 * type hint for return value
     * `def <name-function>(<arguments>) -> <type-return-value>:`
 
-```python
-def show_count(count: int, singular: str, plural: str = '') -> str:
-    if count == 1:
-        return f'1 {singular}'
-    count_str = str(count) if count else 'no'
-    if not plural:
-        plural = singular + 's'
-    return f'{count_str} {plural}'
-```
+<div class='embed-github-src'
+     repo='fluentpython/example-code-2e'
+     branch='01e717b60a9a14bc1bca4bffd915f7ed2c637e5e'
+     path='08-def-type-hints/messages/hints_2/messages.py'
+     line='17-23'
+     language='python'
+></div>
 
 ### Using None as a Default
 * `Optional` can be used for using `None` as a default value.
@@ -75,15 +78,19 @@ def show_count(count: int, singular: str, plural: Optional[str] = None) -> str:
 ```
 
 ## Types Are Defined by Supported Operations
-* Duck typing (python adopts this typing system)
-    * objects have types.
-    * variables including parameters are untyped.
-        * Only the operations that the variable actually supports are important.
-    * checking type by duck typing is executed at runtime.
-    * more flexible but more errors at runtime compared to nomial typing
-* Nominal typing
-    * objects and variables including parameters have types.
-    * typing is enforced statically
+
+### Duck typing
+
+* Python adopts this typing system.
+* Objects have types.
+* Variables including parameters are untyped.
+    * Only the operations that the variable actually supports are important.
+* Checking type by duck typing is executed at runtime.
+* More flexible but more errors at runtime compared to nomial typing.
+
+### Nominal typing
+* Objects and variables including parameters have types.
+* Typing is enforced statically.
 
 ## Types Usable in Annotations
 
@@ -234,60 +241,58 @@ f3(o4) #
 #### Tuples as records
 * `tuple[str, float, str]` can accept a tuple like `('Shanghai', 24.28, 'China')`
 
-```python
->>> shanghai = 31.2304, 121.4737
->>> geohash(shanghai)
-'wtw3sjq6q'
+<div class='embed-github-src'
+     repo='fluentpython/example-code-2e'
+     branch='01e717b60a9a14bc1bca4bffd915f7ed2c637e5e'
+     path='08-def-type-hints/coordinates/coordinates.py'
+     language="python"
+     line='5-7'
+></div>
 
-from geolib import geohash as gh  # type: ignore
-
-PRECISION = 9
-
-def geohash(lat_lon: tuple[float, float]) -> str:
-    return gh.encode(*lat_lon, PRECISION)
-```
+<div class='embed-github-src'
+     repo='fluentpython/example-code-2e'
+     branch='01e717b60a9a14bc1bca4bffd915f7ed2c637e5e'
+     path='08-def-type-hints/coordinates/coordinates.py'
+     language="python"
+     line='11-16'
+></div>
 
 #### Tuples as records with named fields
 * `typing.NamedTuple` is consistent-with `tuple`.
 
-```python
-from typing import NamedTuple
-from geolib import geohash as gh # type: ignore
 
-PRECISION = 9
+<div class='embed-github-src'
+     repo='fluentpython/example-code-2e'
+     branch='01e717b60a9a14bc1bca4bffd915f7ed2c637e5e'
+     path='08-def-type-hints/coordinates/coordinates_named.py'
+     language="python"
+     line='12-23'
+></div>
 
-class Coordinate(NamedTuple):
-    lat: float
-    lon: float
 
-def geohash(lat_lon: Coordinate) -> str:
-    return gh.encode(*lat_lon, PRECISION)
-
-def display(lat_lon: tuple[float, float]) -> str:
-    lat, lon = lat_lon
-    ns='N' if lat >= 0 else 'S'
-    ew='E' if lon >= 0 else 'W'
-    return f'{abs(lat):0.1f}°{ns}, {abs(lon):0.1f}°{ew}'
-```
+<div class='embed-github-src'
+     repo='fluentpython/example-code-2e'
+     branch='01e717b60a9a14bc1bca4bffd915f7ed2c637e5e'
+     path='08-def-type-hints/coordinates/coordinates_named.py'
+     language="python"
+     line='27-31'
+></div>
 
 #### Tuples as immutable sequences
 * `tuple[int, ...]` is a tuple of unspecified length that are used as immutable lists with `int` items
 * `stuff: tuple[Any, ...]` or `stuff: tuple` means that `stuff` is a tuple of unspecified length with objects of any type
 
+<div class='embed-github-src'
+     repo='fluentpython/example-code-2e'
+     branch='dd535abcf76739d451c2baaf7813b8390a7dfe88'
+     path='08-def-type-hints/columnize.py'
+     language="python"
+     line='2-11'
+></div>
+
+* `list[tuple[str, ...]]` is list of tuple of unspecified length with str type items
+
 ```python
-from collections.abc import Sequence
-
-def columnize(
-    sequence: Sequence[str], num_columns: int = 0
-) -> list[tuple[str, ...]]:
-    if num_columns == 0:
-        num_columns = round(len(sequence) ** 0.5)
-    num_rows, reminder = divmod(len(sequence), num_columns)
-    num_rows += bool(reminder)
-    return [tuple(sequence[i::num_rows]) for i in range(num_rows)]
-
-# list[tuple[str, ...]] is list of tuple of unspecified length with str type items
-
 >>> animals = 'drake fawn heron ibex koala lynx tahr xerus yak zapus'.split()
 >>> table = columnize(animals)
 >>> table
@@ -295,46 +300,30 @@ def columnize(
 >>> for row in table:
 ...     print(''.join(f'{word:10}' for word in row))
 ...
-drake koala yak
-fawn lynx zapus
-heron tahr
-ibex xerus
+drake     koala     yak
+fawn      lynx      zapus
+heron     tah
+ibex      xerus
 ```
 
 ### Generic Mappings
 * `MappingType[KeyType, ValueType]`
 
-```python
-import sys
-import re
-import unicodedata
-from collections.abc import Iterator
+<div class='embed-github-src'
+     repo='fluentpython/example-code-2e'
+     branch='01e717b60a9a14bc1bca4bffd915f7ed2c637e5e'
+     path='08-def-type-hints/charindex.py'
+     language="python"
+     line='15-34'
+></div>
 
-RE_WORD = re.compile(r'\w+')
-STOP_CODE = sys.maxunicode + 1
-
-def tokenize(text: str) -> Iterator[str]:
-    """return iterable of uppercased words"""
-    for match in RE_WORD.finditer(text):
-        yield match.group().upper()
-
-def name_index(start: int = 32, end: int = STOP_CODE) -> dict[str, set[str]]:
-    index: dict[str, set[str]] = {}
-    for char in (chr(i) for i in range(start, end)):
-        if name := unicodedata.name(char, ''):
-            # unicodedata.name(char, '') is assigned to name and check name
-            for word in tokenize(name):
-                index.setdefault(word, set()).add(char)
-    return index    # returns dict of str and set of str
-
->>> index = name_index(32, 65)
->>> index['SIGN']
-{'$', '>', '=', '+', '<', '%', '#'}
->>> index['DIGIT']
-{'8', '5', '6', '2', '3', '0', '1', '4', '7', '9'}
->>> index['DIGIT'] & index['EIGHT']
-{'8'}
-```
+<div class='embed-github-src'
+     repo='fluentpython/example-code-2e'
+     branch='01e717b60a9a14bc1bca4bffd915f7ed2c637e5e'
+     path='08-def-type-hints/charindex.py'
+     language="python"
+     line='5-11'
+></div>
 
 ### Abstract Base Classes
 
@@ -342,8 +331,8 @@ def name_index(start: int = 32, end: int = STOP_CODE) -> dict[str, set[str]]:
 
 > Be conservative in what you send, be liberal in what you accept
 
-* Set argument type hints as loosely as possible
-* Set return value type hints as strictly as possible
+* Set argument type hints as loosely as possible.
+* Set return value type hints as strictly as possible.
 
 ```python
 from collections.abc import Mapping
@@ -356,7 +345,7 @@ def name2hex(name: str, color_map: dict[str, int]) -> str:      # 2
 * `# 1` accepts `Mapping` type of color_map.
 * `# 2` accepts `dict` type of color_map.
 * `UserDict` is not subtype-of `dict`, so function in `# 2` cannot accept `UserDict` type variable as argument.
-* `collections.abc.MutableMapping` or `collections.abc.Mapping` is appropriate because these types are superclass of `dict` and `UserDict`.
+* `collections.abc.MutableMapping` or `collections.abc.Mapping` are appropriate because these types are superclass of `dict` and `UserDict`.
 * In general, it is desirable to give arguments as loose type hints as possible.
     * [`typing.List` in Python document](https://docs.python.org/3/library/typing.html#typing.List) says that it is preferred to use abc type for annotating arguments.
 
@@ -374,19 +363,19 @@ def name2hex(name: str, color_map: dict[str, int]) -> str:      # 2
     3. If you want to avoid hardcoding concrete types, use numeric protocols like `SupportsFloat`.
 
 ### Iterable
+
+<div class='embed-github-src'
+     repo='fluentpython/example-code-2e'
+     branch='01e717b60a9a14bc1bca4bffd915f7ed2c637e5e'
+     path='08-def-type-hints/replacer.py'
+     language="python"
+     line='16-23'
+></div>
+
+* `# <1>` : defines type alias.
+* `# <2>` : Argument `changes` accepts all iterable type variable which is used in for loop.
+
 ```python
-from collections.abc import Iterable
-
-FromTo = tuple[str, str]        # Type alias
-
-def zip_replace(
-    text: str,
-    changes: Iterable[FromTo]   # changes accepts all iterable type used in for loop
-) -> str:
-    for from_, to in changes:
-        text = text.replace(from_, to)
-    return text
-
 >>> l33t = [('a', '4'), ('e', '3'), ('i', '1'), ('o', '0')]
 >>> text = 'mad skilled noob powned leet'
 >>> from replacer import zip_replace
@@ -401,23 +390,16 @@ def zip_replace(
 * Specifying `abc.Iterable` or `abc.Sequence` as return value type annotation is too vague.
 
 ### Parameterized Generics and TypeVar
-* A parameterized generic is a generic type, written as `list[T]`, where `T` is a type variable that will be bound to a specific type with **each usage**.
-* This allows a parameter type to be reflected on the result type.
+* A parameterized generic is a generic type, written as `list[T]`, where `T` is a type variable that will be bound to a specific type with each usage.
+* This allows a parameter type to be reflected in the result type.
 
-```python
-from collections.abc import Sequence
-from random import shuffle
-from typing import TypeVar
-
-T = TypeVar('T')
-
-def sample(population: Sequence[T], size: int) -> list[T]:
-    if size < 1:
-        raise ValueError('size must be >= 1')
-    result = list(population)
-    shuffle(result)
-    return result[:size]
-```
+<div class='embed-github-src'
+     repo='fluentpython/example-code-2e'
+     branch='01e717b60a9a14bc1bca4bffd915f7ed2c637e5e'
+     path='08-def-type-hints/sample.py'
+     language="python"
+     line='2-13'
+></div>
 
 * The items in the `list` of return value are same type as the items in the `population` of `Sequence` type in the first argument.
     * If `population` is `tuple[int, ...]` which is consistent-with `Sequence[int]`, return type is `list[int]`
@@ -425,8 +407,11 @@ def sample(population: Sequence[T], size: int) -> list[T]:
 
 #### Restrict TypeVar
 
-* `TypeVar('NameTypeVar', restrictType1, restrictType2, ...)`
-    * Additional positional arguments on `TypeVar` restricts the type parameter.
+```python
+TypeVar('NameTypeVar', restrictType1, restrictType2, ...)
+```
+
+Additional positional arguments on `TypeVar` restricts the type parameter.
 
 ```python
 from collections import Counter
@@ -446,15 +431,17 @@ def mode(data: Iterable[NumberT]) -> NumberT:
 * In the example below, any subclasses of `hashable` can be accepted as the type of elements of the `data`.
     * `hashable` have only the `__hash__` method.
 
+<div class='embed-github-src'
+     repo='fluentpython/example-code-2e'
+     branch='01e717b60a9a14bc1bca4bffd915f7ed2c637e5e'
+     path='08-def-type-hints/mode/mode_hashable.py'
+     language="python"
+     line='2-12'
+></div>
+
 ```python
-from collections import Counter
-from collections.abc import Iterable, Hashable
-from typing import TypeVar
-
-HashableT = TypeVar('HashableT', bound=Hashable)
-
-def mode(data: Iterable[HashableT]) -> HashableT:
-    ...
+>>> mode(["red", "blue", "blue", "red", "green", "red", "red"]) 'red'
+'red'
 ```
 
 * A restricted type variable will be set to one of the types named in the `TypeVar` declaration.
@@ -476,61 +463,45 @@ AnyStr = TypeVar('AnyStr', bytes, str)
 2. define a subclass of `typing.Protocol` which specifies methods for the protocol type.
 3. use the subclass as the keyword argument `bound` of `TypeVar`
 
-```python
-from collections.abc import Iterable
-from typing import Any, Protocol, TypeVar  # 1.
+<div class='embed-github-src'
+     repo='fluentpython/example-code-2e'
+     branch='2f8bf06270f58670cdddf07715d1d1526cc87df2'
+     path='08-def-type-hints/comparable/comparable.py'
+     language="python"
+     line='1-4'
+></div>
 
+<div class='embed-github-src'
+     repo='fluentpython/example-code-2e'
+     branch='01e717b60a9a14bc1bca4bffd915f7ed2c637e5e'
+     path='08-def-type-hints/comparable/top.py'
+     language="python"
+     line='23-32'
+></div>
 
-class SupportsLessThan(Protocol):  # 2.
-    def __lt__(self, other: Any) -> bool:
-        ...
+<div class='embed-github-src'
+     repo='fluentpython/example-code-2e'
+     branch='01e717b60a9a14bc1bca4bffd915f7ed2c637e5e'
+     path='08-def-type-hints/comparable/top_test.py'
+     language="python"
+     line='2-7'
+></div>
 
+* `# <1>` : `typing.TYPE_CHECKING` is always `False` at runtime and always `True` at static type checking.
 
-LT = TypeVar('LT', bound=SupportsLessThan)
+<div class='embed-github-src'
+     repo='fluentpython/example-code-2e'
+     branch='01e717b60a9a14bc1bca4bffd915f7ed2c637e5e'
+     path='08-def-type-hints/comparable/top_test.py'
+     language="python"
+     line='24-44'
+></div>
 
-
-def top(series: Iterable[LT], length: int) -> list[LT]:  # 3.
-    ordered = sorted(series, reverse=True)
-    return ordered[:length]
-
-```
-
-```python
-from collections.abc import Iterator
-from typing import TYPE_CHECKING
-
-import pytest
-from top import top
-
-
-# several lines omitted
-def test_top_tuples() -> None:
-    fruit = 'mango pear apple kiwi banana'.split()
-    series: Iterator[tuple[int, str]] = ((len(s), s) for s in fruit)
-    # Pylance annotates type of `series` as Generator[tuple[int, LiteralString]].
-    # This type hint provide type information of `series`
-    #   as Iterator[tuple[int, str]] to Mypy
-    length = 3
-    expected = [(6, 'banana'), (5, 'mango'), (5, 'apple')]
-    result = top(series, length)
-    if TYPE_CHECKING:           # TYPE_CHECKING is True at static type checking
-                                # TYPE_CHECKING is False at runtime
-        reveal_type(series)     # reveal_type() is Mypy debugging facility
-                                #   which prints a type of argument variable
-        reveal_type(expected)
-        reveal_type(result)
-    assert result == expected
-
-
-# intentional type error
-def test_top_objects_error() -> None:
-    series = [object() for _ in range(4)]
-    if TYPE_CHECKING:
-        reveal_type(series)
-    with pytest.raises(TypeError) as excinfo:
-        top(series, 3)      # Mypy flags this line as an error
-    assert "'<' not supported" in str(excinfo.value)
-```
+* `# <2>` : Explicit type declaration for the `series` variable.
+    * Mypy and Pylance annotates type of `series` as `Generator[tuple[int, LiteralString]]` if this type annotation does not exist.
+* `# <3>` : This prevents execution of `reveal_type()` at runtime.
+* `# <4>` : `reveal_type(variable)` reveals type of `variable`. This function is debug facility of Mypy and cannot be executed at runtime.
+* `# <5>` : Mypy flags this line as an error
 
 ### Callable
 
@@ -547,42 +518,29 @@ def repl(input_fn: Callable[[Any], str] = input) -> None:
 def input(__prompt: Any = ...) -> str: ...
     # input is consistent-with Callable[[Any], str]
 ```
-* `Callable[..., ReturnType]` can be used for callable with arbitrary arguments type.
+* `Callable[..., ReturnType]` can be used for callable with arbitrary arguments type and number.
+* A plain `Callable` is equivalant with `Callable[..., Any]`
 
 #### Variance in Callable types
 
-```python
-from collections.abc import Callable
-def update(
-    probe: Callable[[], float],
-    display: Callable[[float], None]
-) -> None:
-    temperature = probe()
-    display(temperature)
+<div class='embed-github-src'
+     repo='fluentpython/example-code-2e'
+     branch='434f8d26b6a11e6f59aba288933192af92f211ad'
+     path='08-def-type-hints/callable/variance.py'
+     language="python"
+     line='1-22'
+></div>
 
-def probe_ok() -> int:
-    return 42
+* `# <6>` : Mypy flags this line because `Callable[[int], None]` is not *consistent-with* `Callable[[float], None]`.
+* `# <8>` : `Callable[[complex], None]` is *consistent-with* `Callable[[float], None]`.
 
-def display_wrong(temperature: int) -> None:
-    print(hex(temperature))
-
-update(probe_ok, display_wrong) # type error
-    # Argument 2 to "update" has incompatible type "Callable[[int], None]";
-    # expected "Callable[[float], None]"  [arg-type]
-
-def display_ok(temperature: complex) -> None:
-    print(temperature)
-
-update(probe_ok, display_ok) # OK
-```
-
-* `Callable[[], int]` is subtype-of `Callable[[], float]`
-    * return value of type `int` have all method of type `float`
+* `Callable[[], int]` is subtype-of `Callable[[], float]`.
+    * Return value of type `int` have all method of type `float`.
 * `Callable[[int],None]` is not a subtype-of `Callable[[float], None]`
     * Because type `int` has more method compare to type `float`, \
         argument inside of `Callable[[int],None]` would call method \
-        which does not support in type `float` (for example, `hex` method)
-* `Callable[[Complex],None]` is subtype of `Callable[[float],None]`
+        which does not support in type `float` (for example, `hex` method).
+* `Callable[[Complex],None]` is subtype of `Callable[[float],None]`.
 * `Callable` is *covariant* on the return type.
 * `Callable` is *contravariant* on the declared parameter types.
 

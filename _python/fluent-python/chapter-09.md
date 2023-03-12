@@ -1,6 +1,6 @@
 ---
 layout: distill
-title: Chapter 9
+title: Chapter 09
 description: Decotors and Closures
 # img: assets/img/12.jpg
 # importance: 1
@@ -356,32 +356,19 @@ Handling abc.Sequence:1 3 2.5 Fraction(2, 3)
 
 Parameterized decorators return decorator, which is then applied to the function to be decorated.
 
-Refer [this](#decorators-with-argumentsparameterized-decorators)
+Refer [this chapter](#decorators-with-argumentsparameterized-decorators).
 
 ### The Parameterized Clock Decorator
 
-```python:Example9-24
-import time
-DEFAULT_FMT = '[{elapsed:0.8f}s] {name}({args}) -> {result}'
+<div class='embed-github-src'
+     repo='fluentpython/example-code-2e'
+     branch='01e717b60a9a14bc1bca4bffd915f7ed2c637e5e'
+     path='09-closure-deco/clock/clockdeco_param.py'
+     language="python"
+     line='13-29'
+></div>
 
-def clock(fmt=DEFAULT_FMT):
-    def decorator(func):
-        def function_decorated(*_args):
-            t0 = time.perf_counter()
-            _result = func(*_args)  # actual returned value is saved in _result
-            elapsed = time.perf_counter() - t0
-
-            name = func.__name__
-            args = ', '.join(repr(arg) for arg in _args)
-            result = repr(_result)
-
-            # **locals() makes local variables to be assigned to format string fmt
-            print(fmt.format(**locals()))
-
-            return _result
-        return function_decorated
-    return decorator
-
+```python
 @clock()
 def snooze(seconds):
     time.sleep(seconds)
@@ -399,28 +386,16 @@ for i in range(3):
 
 ### A Class-Based Clock Decorator
 
-```python:Example9-27
-import time
-DEFAULT_FMT = '[{elapsed:0.8f}s] {name}({args}) -> {result}'
 
-class clock:
-    def __init__(self, fmt=DEFAULT_FMT):
-        self.fmt = fmt
+<div class='embed-github-src'
+     repo='fluentpython/example-code-2e'
+     branch='01e717b60a9a14bc1bca4bffd915f7ed2c637e5e'
+     path='09-closure-deco/clock/clockdeco_cls.py'
+     language="python"
+     line='13-32'
+></div>
 
-    def __call__(self, func):   # this method makes instances of class clock callable
-        def clocked(*_args):
-            t0 = time.perf_counter()
-            _result = func(*_args)
-            elapsed = time.perf_counter() - t0
-
-            name = func.__name__
-            args = ', '.join(repr(arg) for arg in _args)
-            result = repr(_result)
-
-            print(self.fmt.format(**locals()))
-            return _result
-        return clocked
-
+```python
 @clock()
 def snooze(seconds):
     time.sleep(seconds)

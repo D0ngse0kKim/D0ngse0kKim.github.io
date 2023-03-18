@@ -86,6 +86,39 @@ https://hachy.github.io/2018/11/14/add-file-name-to-code-block-in-jekyll-on-gith
         });
     }
 
+    /*
+    Parse the following format of tag div.
+    <div class='embed-local-src'               : Mandatory, 'embed-local-src'
+        path='absolute/path/to/file'           : Mandatory, path of file
+        line='1-23'                            : Optional, line of file
+        language='python'
+    ></div>
+    */
+
+    var divs = document.getElementsByClassName('embed-local-src');
+    Array.prototype.forEach.call(divs, embed_local_source);
+
+    function embed_local_source(elemDiv) {
+        var url_raw = get_url_raw_local(elemDiv);
+        var url_blob = get_url_blob_local(elemDiv);
+        var language = elemDiv.getAttribute('language');
+        var lines = get_lines(elemDiv);
+        var lineStart = lines[0];
+        var lineEnd = lines[1];
+
+        fetch(url_raw).then(function(res) {
+            return res.text();
+        }).then(function(out) {
+            var elemCode = create_elem_code_block(language, url_blob, out, lineStart, lineEnd);
+            var elemPre = create_elem_pre_from_code_block(elemCode);
+            elemDiv.appendChild(elemPre);
+            hljs.highlightBlock(elemCode);
+            hljs.lineNumbersBlock(elemCode);
+        }).catch(function(err) {
+            throw err;
+        });
+    }
+
     function get_url_raw(elemDiv){
         const baseurl = 'https://raw.githubusercontent.com';
         const repo = elemDiv.getAttribute('repo');
@@ -102,6 +135,16 @@ https://hachy.github.io/2018/11/14/add-file-name-to-code-block-in-jekyll-on-gith
         const path = elemDiv.getAttribute('path') + get_line_specifier(elemDiv);
 
         return [baseurl, repo, 'blob', branch, path].join('/');
+    }
+
+    function get_url_raw_local(elemDiv){
+        const path = elemDiv.getAttribute('path');
+
+        return path;
+    }
+
+    function get_url_blob_local(elemDiv){
+        return get_url_raw_local(elemDiv);
     }
 
     function get_lines(elemDiv){
@@ -170,6 +213,7 @@ https://hachy.github.io/2018/11/14/add-file-name-to-code-block-in-jekyll-on-gith
 
         return elemPre;
     }
+
 </script>
 
 <!--

@@ -1,0 +1,19 @@
+@startuml dependency
+left to right direction
+interface DataFetcher {
+  +fetchData(url: str) -> str:
+}
+
+class HttpDataFetcher implements DataFetcher {
+  +fetchData(url: str) -> str:
+}
+
+class DataAnalyzer {
+  -fetcher: DataFetcher
+  +DataAnalyzer(fetcher: DataFetcher)
+  +analyzeData(url: str) -> void:
+}
+
+DataAnalyzer ..> DataFetcher
+
+@enduml

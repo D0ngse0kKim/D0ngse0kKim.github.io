@@ -1,0 +1,16 @@
+@startuml nestedclass
+class BankAccount {
+    -owner: str
+    -balance: float
+    +deposit(amount: float) -> None:
+    +withdraw(amount: float) -> None:
+}
+class Transaction {
+    -date: str
+    -amount: float
+    -type: str
+    +Transaction(date: str, amount: float, type: str)
+}
+
+Transaction -+ BankAccount
+@enduml

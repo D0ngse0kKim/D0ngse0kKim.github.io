@@ -1,0 +1,28 @@
+@startuml generalization
+class Person {
+  -name: str
+  -age: int
+  +Person(name: str, age: int)
+  +getName() -> str:
+  +setName(name: str) -> None:
+  +getAge() -> int:
+  +setAge(age: int) -> None:
+}
+
+class Employee {
+  -salary: float
+  +Employee(name: str, age: int, salary: float)
+  +getSalary() -> float:
+  +setSalary(salary: float) -> None:
+}
+
+class Manager {
+  -bonus: float
+  +Manager(name: str, age: int, salary: float, bonus: float)
+  +getBonus() -> float:
+  +setBonus(bonus: float) -> None:
+}
+
+Person <|-- Employee
+Person <|-- Manager
+@enduml

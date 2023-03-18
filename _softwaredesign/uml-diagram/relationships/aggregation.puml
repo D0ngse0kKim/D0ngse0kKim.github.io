@@ -1,0 +1,20 @@
+@startuml aggregation
+
+class Order {
+  - orderNumber: int
+  - orderDate: date
+}
+
+class Customer {
+  - customerId: int
+  - customerName: str
+}
+
+class CustomerOrderHistory {
+  - customerId: int
+  - orders: list[Order]
+}
+
+Customer "1" o-- "0..*" Order
+Customer "1" o-- "1" CustomerOrderHistory
+@enduml

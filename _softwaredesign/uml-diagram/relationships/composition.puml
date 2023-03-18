@@ -1,0 +1,33 @@
+@startuml composition
+
+class Order {
+  -orderId: int
+  -customer: Customer
+  -items: list[Item]
+  +addItems(item: Item) -> None:
+  +getTotalPrice(): float
+}
+
+class Customer {
+  -customerId: int
+  -name: str
+  -address: Address
+  +placeOrder(item: list[Item]) -> Order:
+}
+
+class Item {
+  -itemId: int
+  -name: str
+  -price: float
+}
+
+class Address {
+  -street: str
+  -city: str
+  -state: str
+}
+
+Order "1" *-down- "1" Customer : has a
+Customer "1" *-down- "1" Address : has a
+Order "0..*" *-down- "1..*" Item : has many
+@enduml

@@ -1,0 +1,27 @@
+@startuml realization
+interface PaymentGateway {
+  +processPayment(amount: float) -> bool:
+}
+
+class PayPal implements PaymentGateway {
+  +processPayment(amount: float) -> bool:
+}
+
+class CreditCardGateway implements PaymentGateway {
+  +processPayment(amount: float) -> bool:
+}
+
+class Payment {
+  -amount: float
+  -gateway: PaymentGateway
+  +Payment(amount: float, gateway: PaymentGateway)
+  +getAmount() -> float:
+  +setAmount(amount: float) -> None
+  +getGateway() -> PaymentGateway:
+  +setGateway(gateway: PaymentGateway) -> None:
+  +processPayment() -> bool:
+}
+
+Payment --> PaymentGateway : realizes
+
+@enduml

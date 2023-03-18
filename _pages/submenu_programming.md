@@ -5,9 +5,12 @@ nav: true
 nav_order: 2
 dropdown: true
 children:
-    - title: python
+    - title: Python
       permalink: /python
     - title: divider
-    - title: tools
+    - title: Software Design
+      permalink: /softwaredesign/
+    - title: divider
+    - title: Tools
       permalink: /tools/
 ---

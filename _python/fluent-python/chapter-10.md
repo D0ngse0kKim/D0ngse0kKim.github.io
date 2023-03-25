@@ -7,8 +7,15 @@ description: Design Patterns with First-Class Functions
 category: Fluent-Python
 
 toc:
-  - name:
+  - name: "Case Study: Refactoring Strategy"
+  - name: Decorator-Enhanced Strategy Pattern
+  - name: The Command Pattern
 ---
+
+## Abstract
+
+This is summary of chapter 10 of [Fluent Python](https://www.oreilly.com/library/view/fluent-python-2nd/9781492056348/).
+In this chapter, examples of refactoring an implementation of the Strategy pattern, using Python decorators, are presented.
 
 ## Case Study: Refactoring Strategy
 

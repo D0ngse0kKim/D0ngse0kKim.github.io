@@ -82,7 +82,7 @@ Replacement:[$1]($3)
 3. add options written in below to `settings.json`
     ```json
     "editor.formatOnSave": true,
-    "python.formatting.blackPath": "/.venv/bin/black",
+    "python.formatting.blackPath": "${workspaceFolder}/.venv/bin/black",
     "python.formatting.blackArgs": ["--line-length=79", ],
     "python.formatting.provider": "black",
     ```
@@ -105,7 +105,7 @@ Replacement:[$1]($3)
 3. add options written in below to `settings.json`
     ```json
     "python.linting.flake8Enabled": true,
-    "python.linting.flake8Path": "/.venv/bin/flake8",
+    "python.linting.flake8Path": "${workspaceFolder}/.venv/bin/flake8",
     "python.linting.flake8CategorySeverity.E": "Warning",
     "python.linting.flake8CategorySeverity.F": "Warning",
     "python.linting.flake8CategorySeverity.W": "Warning",
@@ -127,7 +127,7 @@ Replacement:[$1]($3)
     ```
 3. add options written in below to `settings.json`
     ```json
-    "isort.path": ["/.venv/bin/isort",],
+    "isort.path": ["${workspaceFolder}/.venv/bin/isort",],
     "editor.codeActionsOnSave": {
         "source.organizeImports": true
     },
@@ -151,7 +151,7 @@ Replacement:[$1]($3)
 3. add options written in below to `settings.json`
     ```json
     "python.linting.mypyEnabled": true,
-    "python.linting.mypyPath": "/Users/dongseokkimp/Desktop/Programming/Github/d0ngse0kkim.github.io/Language/Python/DevelopmentEnvironment/.venv/bin/mypy",
+    "python.linting.mypyPath": "${workspaceFolder}/.venv/bin/mypy",
     "python.linting.mypyCategorySeverity.error": "Information",
     "python.linting.mypyCategorySeverity.note": "Information",
     "python.linting.mypyArgs": [

@@ -1,0 +1,32 @@
+@startuml tombolist
+
+abstract class MutableSequence{
+
+}
+
+class list {
+    {method} <color:DarkBlue>__init__</color>
+    {method} <color:DarkBlue>__len__</color>
+    {method} <color:DarkBlue>extend</color>
+    {method} <color:DarkBlue>__bool__</color>
+}
+
+abstract class Tombola {
+    {method} <color:DarkRed>load</color>
+    {method} <color:DarkRed>pick</color>
+    {method} <color:DarkBlue>loaded</color>
+    {method} <color:DarkBlue>inspect</color>
+}
+
+class TomboList <<virtual subclass of Tombola>>{
+    {method} <color:DarkRed>load</color>
+    {method} <color:DarkRed>pick</color>
+    {method} <color:DarkBlue>loaded</color>
+    {method} <color:DarkBlue>inspect</color>
+}
+
+TomboList -u-> list
+list .u.|> MutableSequence : <<registered>>
+TomboList .u.|> Tombola : <<registered>>
+
+@enduml

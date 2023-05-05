@@ -78,9 +78,10 @@ https://hachy.github.io/2018/11/14/add-file-name-to-code-block-in-jekyll-on-gith
         }).then(function(out) {
             var elemCode = create_elem_code_block(language, url_blob, out, lineStart, lineEnd);
             var elemPre = create_elem_pre_from_code_block(elemCode);
+            var options = {startFrom: Math.max(lineStart,1)};
             elemDiv.appendChild(elemPre);
             hljs.highlightBlock(elemCode);
-            hljs.lineNumbersBlock(elemCode);
+            hljs.lineNumbersBlock(elemCode, options);
         }).catch(function(err) {
             throw err;
         });

@@ -1,0 +1,35 @@
+@startuml tombola
+
+abstract class Tombola {
+    {method} <color:DarkRed>load</color>
+    {method} <color:DarkRed>pick</color>
+    {method} <color:DarkBlue>loaded</color>
+    {method} <color:DarkBlue>inspect</color>
+}
+
+class BingoCage {
+    {method} <color:DarkRed>load</color>
+    {method} <color:DarkRed>pick</color>
+    {method} <color:DarkBlue>loaded</color>
+    {method} <color:DarkBlue>inspect</color>
+    {method} <color:DarkBlue>__init__</color>
+    {method} <color:DarkBlue>__call__</color>
+}
+class LotteryBlower {
+    {method} <color:DarkRed>load</color>
+    {method} <color:DarkRed>pick</color>
+    {method} <color:DarkBlue>loaded</color>
+    {method} <color:DarkBlue>inspect</color>
+    {method} <color:DarkBlue>__init__</color>
+}
+class TomboList <<virtual subclass>>{
+    {method} <color:DarkRed>load</color>
+    {method} <color:DarkRed>pick</color>
+    {method} <color:DarkBlue>loaded</color>
+    {method} <color:DarkBlue>inspect</color>
+}
+
+BingoCage -u-> Tombola
+LotteryBlower -u-> Tombola
+TomboList .u.|> Tombola : <<registered>>
+@enduml

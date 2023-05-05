@@ -143,8 +143,6 @@ indices(...) method of builtins.slice instance
 * `<4>` : If an `int` type of index can be extracted from `key` by using [`operator.index`](https://docs.python.org/3/library/operator.html#operator.index)(refer to [PEP-357](https://peps.python.org/pep-0357/)),
 * `<5>` : returns `self._components[index]`.
 
-https://docs.python.org/3/library/operator.html#operator.index
-
 <div class='embed-github-src'
      repo='fluentpython/example-code-2e'
      branch='8a330d822b997c7992d0b7675c82ad75832300c6'

@@ -1,0 +1,102 @@
+@startuml collections_abc
+
+abstract class Container {
+}
+
+abstract class Iterable {
+}
+
+abstract class Iterator {
+}
+
+abstract class Reversible {
+}
+
+abstract class Generator {
+}
+
+abstract class Sized {
+}
+
+abstract class Collection {
+}
+
+abstract class Sequence {
+}
+
+abstract class MutableSequence {
+}
+
+abstract class ByteString {
+}
+
+abstract class Set {
+}
+
+abstract class MutableSet {
+}
+
+abstract class Mapping {
+}
+
+abstract class MutableMapping {
+}
+
+abstract class MappingView {
+}
+
+abstract class ItemsView {
+}
+
+abstract class KeysView {
+}
+
+abstract class ValuesView {
+}
+
+Iterator -u-|> Iterable
+
+Reversible -u-|> Iterable
+
+Generator -u-|> Iterator
+
+Collection -u-|> Sized
+Collection -u-|> Iterable
+Collection -u-|> Container
+
+Sequence -u-|> Reversible
+Sequence -u-|> Collection
+
+MutableSequence -u-|> Sequence
+
+ByteString -u-|> Sequence
+
+Set -u-|> Collection
+
+MutableSet -u-|> Set
+
+Mapping -u-|> Collection
+
+MutableMapping -u-|> Mapping
+
+MappingView -u-|> Sized
+
+ItemsView -u-|> MappingView
+ItemsView -u-|> Set
+
+KeysView -u-|> MappingView
+KeysView -u-|> Set
+
+ValuesView -u-|> MappingView
+ValuesView -u-|> Collection
+
+
+abstract class Hashable {
+
+}
+
+abstract class Callable {
+
+}
+
+@enduml

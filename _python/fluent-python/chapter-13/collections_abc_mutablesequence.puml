@@ -1,0 +1,64 @@
+@startuml collections_abc_mutablesequence
+skinparam classAttributeIconSize 0
+left to right direction
+abstract class MutableSequence {
+    {method} <color:DarkRed>__getitem__</color>
+    {method} <color:DarkRed>__setitem__</color>
+    {method} <color:DarkRed>__delitem__</color>
+    {method} <color:DarkRed>__len__</color>
+    {method} <color:DarkRed>insert</color>
+    {method} <color:DarkBlue>~__contains__</color>
+    {method} <color:DarkBlue>~__iter__</color>
+    {method} <color:DarkBlue>~__reversed__</color>
+    {method} <color:DarkBlue>index</color>
+    {method} <color:DarkBlue>count</color>
+    {method} <color:DarkBlue>append</color>
+    {method} <color:DarkBlue>reverse</color>
+    {method} <color:DarkBlue>extend</color>
+    {method} <color:DarkBlue>pop</color>
+    {method} <color:DarkBlue>remove</color>
+    {method} <color:DarkBlue>__iadd__</color>
+}
+
+abstract class Sequence {
+    {method} <color:DarkRed>__getitem__</color>
+    {method} <color:DarkRed>__len__</color>
+    {method} <color:DarkBlue>~__contains__</color>
+    {method} <color:DarkBlue>~__iter__</color>
+    {method} <color:DarkBlue>~__reversed__</color>
+    {method} <color:DarkBlue>index</color>
+    {method} <color:DarkBlue>count</color>
+}
+
+abstract class Reversible {
+    {method} <color:DarkRed>__reversed__</color>
+}
+
+abstract class Collection {
+    {method} <color:DarkRed>__contains__</color>
+    {method} <color:DarkRed>__iter__</color>
+    {method} <color:DarkRed>__len__</color>
+}
+
+abstract class Sized {
+    {method} <color:DarkRed>__len__</color>
+}
+
+abstract class Iterable {
+    {method} <color:DarkRed>__iter__</color>
+}
+
+abstract class Container {
+    {method} <color:DarkRed>__contains__</color>
+}
+
+Sequence <|-- MutableSequence
+Collection <|-- Sequence
+Reversible <|-- Sequence
+Iterable <|-- Reversible
+Sized <|-- Collection
+Iterable <|-- Collection
+Container <|-- Collection
+
+
+@enduml

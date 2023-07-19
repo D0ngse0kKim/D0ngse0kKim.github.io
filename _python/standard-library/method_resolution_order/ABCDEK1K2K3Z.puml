@@ -1,0 +1,37 @@
+@startuml ABCDEK1K2K3Z
+class O{}
+
+class A{}
+class B{}
+class C{}
+class D{}
+class E{}
+
+class K1{}
+class K2{}
+class K3{}
+
+class Z{}
+
+A -u-|> O
+B -u-|> O
+C -u-|> O
+D -u-|> O
+E -u-|> O
+
+K1 -u-|> A
+K1 -u-|> B
+K1 -u-|> C
+
+K2 -u-|> D
+K2 -u-|> B
+K2 -u-|> E
+
+K3 -u-|> D
+K3 -u-|> A
+
+Z -u-|> K1
+Z -u-|> K2
+Z -u-|> K3
+
+@enduml

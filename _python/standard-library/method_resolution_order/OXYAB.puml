@@ -1,0 +1,27 @@
+@startuml OXYAB
+
+top to bottom direction
+
+class O{}
+
+class X{}
+class Y{}
+
+class A{}
+class B{}
+
+class C{}
+
+X -u-|> O
+Y -u-|> O
+
+A -u-|> X
+B -u-|> X
+
+A -u-|> Y
+B -u-|> Y
+
+C -u-|> A
+C -u-|> B
+
+@enduml

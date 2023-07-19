@@ -1,0 +1,22 @@
+@startuml FEG
+
+class F{
+    {method} remember2buy
+}
+note right: method returns 'spam'
+
+class E{
+    {method} remember2buy
+}
+note bottom: method returns 'eggs'
+
+class G{
+}
+note bottom: remember2buy is inheritted from class E or F ?
+
+F -u-|> O
+E -u-|> F
+G -u-|> E
+G -u-|> F
+
+@enduml

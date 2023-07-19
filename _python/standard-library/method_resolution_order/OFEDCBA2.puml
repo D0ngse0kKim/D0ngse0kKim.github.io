@@ -1,0 +1,29 @@
+@startuml OFEDCBA2
+
+top to bottom direction
+
+class O{}
+
+class F{}
+class E{}
+class D{}
+
+F -u-|> O
+E -u-|> O
+D -u-|> O
+
+class C{}
+class B{}
+
+C -u-|> D
+C -u-|> F
+
+B -u-|> E
+B -u-|> D
+
+class A{}
+
+A -u-|> B
+A -u-|> C
+
+@enduml

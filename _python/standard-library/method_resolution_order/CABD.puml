@@ -1,0 +1,20 @@
+@startuml CABD
+
+class C{
+}
+
+class A{
+}
+
+class B{
+}
+
+class D{
+}
+
+A -u-|> C
+B -u-|> C
+D -u-|> A
+D -u-|> B
+
+@enduml

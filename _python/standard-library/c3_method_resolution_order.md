@@ -1,6 +1,6 @@
 ---
 layout: distill
-title: method resolution order
+title: C3 Method Resolution Order
 description: Details of method resolution order in complex class hierarchy
 # img: assets/img/12.jpg
 # importance: 1
@@ -25,8 +25,9 @@ In this article, the method resolution order introduced in the Python 2.3
 ## Basic Definitions
 
 1. Method Resolution Order(MRO)
-: Given a class `C` in a complicated multiple inheritance hierarchy, it is a non-trivial task to specify the order in which methods are overridden,
-idx.e. to specify the order of the ancestors of `C`.
+: Given a class `C` in a complicated multiple inheritance hierarchy, it is
+a non-trivial task to specify the order in which methods are overridden,
+i.e. to specify the order of the ancestors of `C`.
 **Method Resolution Order(MRO)** defines the order in which a method is
 searched for in a classes hierarchy.
 
@@ -79,7 +80,7 @@ an *ad hoc* ordering (`CABXYO` in this case).
 
 <div class="row row-cols-2 align-items-center">
     <div class="col-sm-3">
-        {% include figure.html path="python/standard-library/method_resolution_order/OXYAB.svg" class="img-fluid rounded z-depth-1" zoomable=true caption="UML diagram of classes O, X, Y, A and B." %}
+        {% include figure.html path="python/standard-library/c3_method_resolution_order/OXYAB.svg" class="img-fluid rounded z-depth-1" zoomable=true caption="UML diagram of classes O, X, Y, A and B." %}
     </div>
     <div class="col-sm-9">
         <pre class="language-python">
@@ -194,7 +195,7 @@ $$
 
 <div class="row row-cols-2 align-items-center">
     <div class="col-sm-4">
-        {% include figure.html path="python/standard-library/method_resolution_order/OFEDCBA.svg" class="img-fluid rounded z-depth-1" zoomable=true caption="UML diagram of classes O, F, E, D, C, B and A." %}
+        {% include figure.html path="python/standard-library/c3_method_resolution_order/OFEDCBA.svg" class="img-fluid rounded z-depth-1" zoomable=true caption="UML diagram of classes O, F, E, D, C, B and A." %}
     </div>
     <div class="col-sm-6">
         <pre class="language-python">
@@ -272,7 +273,7 @@ $$
 
 <div class="row row-cols-2 align-items-center">
     <div class="col-sm-4">
-        {% include figure.html path="python/standard-library/method_resolution_order/OFEDCBA2.svg" class="img-fluid rounded z-depth-1" zoomable=true caption="UML diagram of classes O, F, E, D, C, B and A." %}
+        {% include figure.html path="python/standard-library/c3_method_resolution_order/OFEDCBA2.svg" class="img-fluid rounded z-depth-1" zoomable=true caption="UML diagram of classes O, F, E, D, C, B and A." %}
     </div>
     <div class="col-sm-6">
         <pre class="language-python">
@@ -377,7 +378,7 @@ The following are examples of interpreter output:
 
 <div class="row row-cols-2 align-items-center">
     <div class="col-sm-3">
-        {% include figure.html path="python/standard-library/method_resolution_order/OXYAB.svg" class="img-fluid rounded z-depth-1" zoomable=true caption="UML diagram of classes O, X, Y, A and B." %}
+        {% include figure.html path="python/standard-library/c3_method_resolution_order/OXYAB.svg" class="img-fluid rounded z-depth-1" zoomable=true caption="UML diagram of classes O, X, Y, A and B." %}
     </div>
     <div class="col-sm-9">
         <pre class="language-python">
@@ -502,7 +503,7 @@ order (MRO) for bases Food, Eggs
 
 <div class="row row-cols-2 align-items-center">
     <div class="col-sm">
-        {% include figure.html path="python/standard-library/method_resolution_order/FEG.svg" class="img-fluid rounded z-depth-1" zoomable=true caption="UML diagram of classes F, E and G." %}
+        {% include figure.html path="python/standard-library/c3_method_resolution_order/FEG.svg" class="img-fluid rounded z-depth-1" zoomable=true caption="UML diagram of classes F, E and G." %}
     </div>
 </div>
 
@@ -624,7 +625,7 @@ Type "help", "copyright", "credits" or "license" for more information.
 
 <div class="row row-cols-2 align-items-center">
     <div class="col-sm-4">
-        {% include figure.html path="python/standard-library/method_resolution_order/CABD.svg" class="img-fluid rounded z-depth-1" zoomable=true caption="UML diagram of classes C, A, B, and D." %}
+        {% include figure.html path="python/standard-library/c3_method_resolution_order/CABD.svg" class="img-fluid rounded z-depth-1" zoomable=true caption="UML diagram of classes C, A, B, and D." %}
     </div>
     <div class="col-sm-6">
         <pre class="language-python">
@@ -705,7 +706,7 @@ On the other hands, Python 2.1 yields $L[D] = DACBC$.
 
 <div class="row row-cols-2 align-items-center">
     <div class="col-sm-6">
-        {% include figure.html path="python/standard-library/method_resolution_order/ABCDEK1K2K3Z.svg" class="img-fluid rounded z-depth-1" zoomable=true caption="UML diagram of classes A, B, C, D, E, K1, K2, K3, and Z" %}
+        {% include figure.html path="python/standard-library/c3_method_resolution_order/ABCDEK1K2K3Z.svg" class="img-fluid rounded z-depth-1" zoomable=true caption="UML diagram of classes A, B, C, D, E, K1, K2, K3, and Z" %}
     </div>
     <div class="col-sm-6">
         <pre class="language-python">

@@ -1,0 +1,29 @@
+@startuml ping
+
+class Root{
+    {method} ping
+}
+
+class A{
+    {method} ping
+}
+
+class B{
+    {method} ping
+}
+
+class Leaf{
+    {method} ping
+}
+
+Root <|- A
+Root <|- B
+
+A <|- Leaf
+B <|- Leaf
+
+B::ping .[#red].> Root::ping
+A::ping .[#red].> B::ping
+Leaf::ping .[#red].> A::ping
+
+@enduml

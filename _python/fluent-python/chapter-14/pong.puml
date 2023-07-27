@@ -1,0 +1,28 @@
+@startuml pong
+
+class Root{
+    {method} pong
+}
+
+class A{
+    {method} pong
+}
+
+class B{
+    {method} pong
+}
+
+class Leaf{
+}
+note bottom: not implemented pong method \nin Leaf class
+
+Root <|- A
+Root <|- B
+
+A <|- Leaf
+B <|- Leaf
+
+A::pong .[#red].> B::pong
+Leaf::pong .u[#red].> A::pong
+
+@enduml

@@ -19,6 +19,7 @@ toc:
 
 ## Abstract
 
+This is a summary of chapter 13 of [Fluent Python](https://www.oreilly.com/library/view/fluent-python-2nd/9781492056348/).
 This chapter provides an overview of typing in Python, covering nominal and structural typing, runtime and static protocols, duck typing, defensive programming, and abstract base classes (ABCs). The chapter explains how to define and use ABCs, subclass an ABC, and implement `__subclasshook__` for your own ABCs.
 The chapter also covers best practices for protocol design and provides a summary of the content.
 

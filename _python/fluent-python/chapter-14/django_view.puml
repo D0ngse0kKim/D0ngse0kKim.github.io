@@ -1,0 +1,100 @@
+@startuml django_view
+
+package django.views.generic{
+    package base{
+        class View{
+            {field} http_method_names
+            {field} view_is_async
+            {method} __init__
+            {method} _allowed_methods
+            {method} as_view
+            {method} dispatch
+            {method} http_method_not_allowed
+            {method} options
+            {method} setup
+        }
+
+        class RedirectView{
+            {field} pattern_name
+            {field} permanent
+            {field} query_string
+            {field} url
+            {method} delete
+            {method} get
+            {method} get_redirect_url
+            {method} head
+            {method} patch
+            {method} post
+            {method} put
+        }
+
+        class TemplateResponseMixin{
+            {field} content_type
+            {field} response_class
+            {field} template_engine
+            {field} template_name
+            {method} get_template_names
+            {method} render_to_response
+        }
+
+        class ContextMixin{
+            {field} extra_context
+            {method} get_context_data
+        }
+
+        class TemplateView{
+            {method} get
+        }
+
+        RedirectView -u-|> View
+        TemplateView -u-|> View
+        TemplateView -u-|> TemplateResponseMixin
+        TemplateView -u-|> ContextMixin
+    }
+
+    package list{
+        class MultipleObjectMixin{
+            {field} allow_empty
+            {field} context_object_name
+            {field} extra_context
+            {field} model
+            {field} ordering
+            {field} page_kwarg
+            {field} paginate_by
+            {field} paginate_orphans
+            {field} paginator_class
+            {field} queryset
+            {method} get_allow_empty
+            {method} get_context_data
+            {method} get_context_object_name
+            {method} get_ordering
+            {method} get_paginate_by
+            {method} get_paginate_orphans
+            {method} get_paginator
+            {method} get_queryset
+            {method} paginate_queryset
+        }
+
+        class BaseListView{
+            {method} get
+        }
+
+    }
+
+    class ListView{
+
+    }
+
+    class MultipleObjectTemplateResponseMixin{
+        {field} template_name_suffix
+    }
+
+    MultipleObjectMixin --|> ContextMixin
+    BaseListView -|> MultipleObjectMixin
+    BaseListView -|> View
+    ListView --|> BaseListView
+    ListView --|> MultipleObjectTemplateResponseMixin
+    MultipleObjectTemplateResponseMixin --|> TemplateResponseMixin
+}
+
+@enduml

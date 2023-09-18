@@ -1,0 +1,27 @@
+@startuml add_radd
+
+start
+:Given ""a + b"";
+if (""a"" has ""~__add__""?) then (Yes)
+    :Get ""result"" from ""a.~__add__(b)"";
+    if (""result"" is ""NotImplemented""?) then (No)
+        #PaleGreen:return ""result"";
+        stop
+    else (Yes)
+    endif
+else (No)
+endif
+
+if (""b"" has ""~__radd__""?) then (Yes)
+    :Get ""result"" from ""b.~__radd__(a)"";
+    if (""result"" is ""NotImplemented""?) then (No)
+        #PaleGreen:return ""result"";
+        stop
+    else (Yes)
+    endif
+else (No)
+endif
+#Pink:raise ""TypeError"";
+stop
+
+@enduml

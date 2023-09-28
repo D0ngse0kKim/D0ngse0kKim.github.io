@@ -8,6 +8,14 @@ category: Fluent-Python
 
 toc:
   - name: Abstract
+  - name: Operator Overloading 101
+  - name: Unary Operators
+  - name: Overloading + for Vector Addition
+  - name: Overloading * for Scalar Multiplication
+  - name: Using @ as an Infix Operator
+  - name: Wrapping-Up Arithmetic Operators
+  - name: Rich Comparison Operators
+  - name: Augmented Assignment Operators
   - name: Chapter Summary
   - name: Further Reading
   - name: Links

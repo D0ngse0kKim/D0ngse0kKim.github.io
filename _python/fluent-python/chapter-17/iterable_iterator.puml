@@ -1,0 +1,19 @@
+@startuml iterable_iterator
+class Iterable {
+    {method} <color:DarkRed>__iter__</color>
+}
+
+class Iterator {
+    {method} <color:DarkRed>__next__</color>
+    {method} <color:DarkBlue>__iter__</color>
+}
+
+note right of Iterator::__iter__
+    ""def ~__iter__(self):""
+    ""    return self""
+end note
+
+Iterable <|-- Iterator
+
+Iterable::__iter__ ...> Iterator:builds
+@enduml

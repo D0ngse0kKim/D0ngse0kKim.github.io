@@ -1,0 +1,635 @@
+<!DOCTYPE html> <html> <head> <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> <meta charset="utf-8"> <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"> <meta http-equiv="X-UA-Compatible" content="IE=edge"> <title>Chapter 17 | Dongseok Kim</title> <meta name="author" content="Dongseok Kim"> <meta name="description" content="Iterators, Generators, and Classic Coroutines"> <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha256-DF7Zhf293AJxJNTmh5zhoYYIMs2oXitRfBjY+9L//AY=" crossorigin="anonymous"> <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mdbootstrap@4.20.0/css/mdb.min.css" integrity="sha256-jpjYvU3G3N6nrrBwXJoVEYI/0zw8htfFnhT9ljN3JJw=" crossorigin="anonymous"> <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous"> <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/academicons@1.9.1/css/academicons.min.css" integrity="sha256-i1+4qU2G2860dGGIOJscdC30s9beBXjFfzjWLjBRsBg=" crossorigin="anonymous"> <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:100,300,400,500,700|Material+Icons"> <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.7.0/build/styles/atom-one-light.min.css" media="" id="highlight_theme_light"> <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.7.0/build/styles/atom-one-dark.min.css" media="none" id="highlight_theme_dark"> <link rel="shortcut icon" href="data:image/svg+xml,&lt;svg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%20100%20100%22&gt;&lt;text%20y=%22.9em%22%20font-size=%2290%22&gt;%E2%9A%9B%EF%B8%8F&lt;/text&gt;&lt;/svg&gt;"> <link rel="stylesheet" href="/assets/css/main.css"> <link rel="canonical" href="https://d0ngse0kkim.github.io/python/fluent-python/chapter-17/"> <script src="/assets/js/theme.js"></script> <script src="/assets/js/dark_mode.js"></script> <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script> <script type="text/javascript">window.MathJax={tex:{tags:"ams"}};</script> <script defer type="text/javascript" id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js"></script> <script defer src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script> <script src="/assets/js/distillpub/template.v2.js"></script> <script src="/assets/js/distillpub/transforms.v2.js"></script> <script src="/assets/js/distillpub/overrides.js"></script> </head> <body> <d-front-matter> <script async type="text/json">{
+      "title": "Chapter 17",
+      "description": "Iterators, Generators, and Classic Coroutines",
+      "published": "February 3, 2024",
+      "authors": [
+        
+      ],
+      "katex": {
+        "delimiters": [
+          {
+            "left": "$",
+            "right": "$",
+            "display": false
+          },
+          {
+            "left": "$$",
+            "right": "$$",
+            "display": true
+          }
+        ]
+      }
+    }</script> </d-front-matter> <header> <nav id="navbar" class="navbar navbar-light navbar-expand-sm fixed-top"> <div class="container"> <a class="navbar-brand title font-weight-lighter" href="/"><span class="font-weight-bold">Dongseok </span>Kim</a> <button class="navbar-toggler collapsed ml-auto" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar top-bar"></span> <span class="icon-bar middle-bar"></span> <span class="icon-bar bottom-bar"></span> </button> <div class="collapse navbar-collapse text-right" id="navbarNav"> <ul class="navbar-nav ml-auto flex-nowrap"> <li class="nav-item "> <a class="nav-link" href="/">about</a> </li> <li class="nav-item dropdown "> <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">programming</a> <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown"> <a class="dropdown-item" href="/python">Python</a> <div class="dropdown-divider"></div> <a class="dropdown-item" href="/softwaredesign/">Software Design</a> <div class="dropdown-divider"></div> <a class="dropdown-item" href="/tools/">Tools</a> </div> </li> <li class="nav-item dropdown "> <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">hobbies</a> <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown"> <a class="dropdown-item" href="/running">running</a> </div> </li> <li class="nav-item dropdown "> <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">others</a> <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown"> <a class="dropdown-item" href="/repositories">repositories</a> <div class="dropdown-divider"></div> <a class="dropdown-item" href="/cv/">cv</a> </div> </li> <li class="toggle-container"> <button id="light-toggle" title="Change theme"> <i class="fas fa-moon"></i> <i class="fas fa-sun"></i> </button> </li> </ul> </div> </div> </nav> <progress id="progress" value="0"> <div class="progress-container"> <span class="progress-bar"></span> </div> </progress> </header> <div class="post distill"> <d-title> <h1>Chapter 17</h1> <p>Iterators, Generators, and Classic Coroutines</p> </d-title> <d-byline></d-byline> <d-article> <d-contents> <nav class="l-text figcaption"> <h3>Contents</h3> <div><a href="#abstarct">Abstarct</a></div> <div><a href="#a-sequence-of-words">A Sequence of Words</a></div> <div><a href="#why-sequences-are-iterable-the-iter-function">Why Sequences Are Iterable The iter Function</a></div> <div><a href="#iterables-versus-iterators">Iterables Versus Iterators</a></div> <div><a href="#sentence-classes-with-iter">Sentence Classes with __iter__</a></div> <div><a href="#lazy-sentences">Lazy Sentences</a></div> <div><a href="#when-to-use-generator-expressions">When to Use Generator Expressions</a></div> <div><a href="#an-arithmetic-progression-generator">An Arithmetic Progression Generator</a></div> <div><a href="#generator-functions-in-the-standard-library">Generator Functions in the Standard Library</a></div> <div><a href="#iterable-reducing-functions">Iterable Reducing Functions</a></div> <div><a href="#subgenerators-with-yield-from">Subgenerators with yield from</a></div> <div><a href="#generic-iterable-types">Generic Iterable Types</a></div> <div><a href="#classic-coroutines">Classic Coroutines</a></div> <div><a href="#chapter-summary">Chapter Summary</a></div> <div><a href="#links">Links</a></div> </nav> </d-contents> <h2 id="abstarct">Abstarct</h2> <p>This is a summary of the chapter 17 of the book “Fluent Python” by Luciano Ramalho.</p> <p>This chapter describes the following topics:</p> <ul> <li>Iterables, Iterators</li> <li>Generator Functions</li> <li>Generator Expressions</li> <li>Generator Functions in the Standard Library</li> <li>Classic Coroutines</li> </ul> <h2 id="a-sequence-of-words">A Sequence of Words</h2> <div class="embed-github-src" repo="fluentpython/example-code-2e/" branch="47cafc801a8e811b7cd7e7a5821f1ad4a65efa52" path="17-it-generator/sentence.py" language="python" line="16-35"></div> <pre><code class="language-python">&gt;&gt;&gt; s = Sentence('"The time has come," the Walrus said,')
+&gt;&gt;&gt; s
+&lt;Sentence('"The time ha... Walrus said,')&gt;
+&gt;&gt;&gt; for word in s:  # &lt;1&gt;
+...     print(word)
+...
+The
+time
+has
+come
+the
+Walrus
+said
+&gt;&gt;&gt; list(s)  # &lt;2&gt;
+['The', 'time', 'has', 'come', 'the', 'Walrus', 'said']
+&gt;&gt;&gt; s[0]  # &lt;3&gt;
+'The'
+&gt;&gt;&gt; s[5]  # &lt;4&gt;
+'Walrus'
+</code></pre> <p>The example above shows that an object of the <code>Sentence</code> class is iterable.</p> <ul> <li> <code>&lt;1&gt;</code> : Because the <code>Sentence</code> object <code>s</code> is iterable, a <code>for</code> loop can be used to iterate over the <code>s</code> object and produce the words in the text.</li> <li> <code>&lt;2&gt;</code> : Because the <code>Sentence</code> object <code>s</code> is iterable, it can be used as input to the <code>list</code> constructor to build a list of words.</li> <li> <code>&lt;3&gt;</code>, <code>&lt;4&gt;</code> : The <code>s</code> object implements the <code>__getitem__</code> method, which means that the <code>s</code> object supports indexing.</li> </ul> <h2 id="why-sequences-are-iterable-the-iter-function">Why Sequences Are Iterable: The iter Function</h2> <p>The <code>iter(object)</code> built-in function<sup id="fnref:pythonorg__builtin_iter" role="doc-noteref"><a href="#fn:pythonorg__builtin_iter" class="footnote" rel="footnote">1</a></sup> does the following processes:</p> <ol> <li>If the <code>object</code> implements the <code>__iter__</code> method, <ul> <li>Call the <code>__iter__</code> method to obtain an iterator and returns the iterator.</li> </ul> </li> <li>If the <code>object</code> does not implement the <code>__iter__</code> method, but does implement the <code>__getitem__</code>, <ul> <li>Creates an iterator that attempts to fetch items in order, starting from index 0.</li> <li>If the <code>__getitem__</code> method raises an <code>IndexError</code> exception, the iterator terminates.</li> <li>Otherwise, the iterator increments the index and tries again.</li> </ul> </li> <li>If the <code>object</code> does not implement the <code>__iter__</code> method or the <code>__getitem__</code> method, the <code>TypeError</code> exception is raised.</li> </ol> <h3 id="how-to-check-if-an-object-is-iterable"><em>How to check if an object is iterable?</em></h3> <h4 id="using-duck-typing"><em>Using Duck Typing</em></h4> <p>Using duck typing, it is possible to check whether an object is iterable or not.</p> <p>The following function is an example of using duck typing to check if an object is iterable.</p> <pre><code class="language-python">&gt;&gt;&gt; def is_iterable(obj):
+...     try:
+...         iter(obj)
+...         return True
+...     except TypeError:  # not iterable
+...         return False
+...
+</code></pre> <p>Simple examples of using the <code>is_iterable</code> function are shown below.</p> <pre><code class="language-python">&gt;&gt;&gt; is_iterable('a string')
+True
+&gt;&gt;&gt; is_iterable([1, 2, 3])
+True
+&gt;&gt;&gt; is_iterable(100)
+False
+&gt;&gt;&gt; is_iterable(3.14)
+False
+</code></pre> <p>An object is iterable if the object implements the <code>__iter__</code> method which returns an iterator or the <code>__getitem__</code> method.</p> <pre><code class="language-python">&gt;&gt;&gt; class ImplementGetItem:
+...     def __getitem__(self, index):
+...         print(f'index = {index}')
+...         if index &gt;= 10:
+...             raise IndexError
+...         return index
+...
+&gt;&gt;&gt; class ImplementIter:
+...     def __iter__(self):
+...         return iter(ImplementGetItem())  # returns an iterator
+...
+&gt;&gt;&gt; is_iterable(ImplementIter())
+True
+&gt;&gt;&gt; is_iterable(ImplementGetItem())
+True
+</code></pre> <h4 id="using-goose-typing"><em>Using Goose Typing</em></h4> <p>Using goose typing, it is difficult to check whether an object is iterable or not.</p> <p>The following function is an example of using goose typing to check if an object is iterable.</p> <pre><code class="language-python">&gt;&gt;&gt; from collections.abc import Iterable
+&gt;&gt;&gt; def is_iterable_goose(obj):
+...     return isinstance(obj, Iterable)
+...
+</code></pre> <p>An object of the <code>ImplementIter</code> class pass the goose typing test, but an object of the <code>ImplementGetItem</code> class does not pass the goose typing test because the <code>ImplementGetItem</code> class does not implement the <code>__iter__</code> method.</p> <pre><code class="language-python">&gt;&gt;&gt; is_iterable_goose(ImplementIter())
+True
+&gt;&gt;&gt; is_iterable_goose(ImplementGetItem())
+False
+</code></pre> <p>An object of the <code>ImplementInvalidIter</code> class passes the goose typing test, but the object is not iterable.</p> <pre><code class="language-python">&gt;&gt;&gt; class ImplementInvalidIter:
+...     def __iter__(self):
+...         pass
+...
+&gt;&gt;&gt; is_iterable_goose(ImplementInvalidIter())
+True
+</code></pre> <p>To sum up, the duck typing is more accurate than the goose typing in checking if an object is iterable or not.</p> <h3 id="using-iter-with-a-callable">Using iter with a Callable</h3> <p>The official documentation of the <code>iter()</code> built-in function <sup id="fnref:pythonorg__builtin_iter:1" role="doc-noteref"><a href="#fn:pythonorg__builtin_iter" class="footnote" rel="footnote">1</a></sup> states that the <code>iter()</code> built-in function can be called with two arguments, like <code>iter(callable, sentinel)</code>.</p> <p>The <code>iter(callable, sentinel)</code> built-in function returns an iterator that:</p> <ol> <li>Repeatedly calls the <code>callable</code> argument with no arguments.</li> <li>If the value returned by the <code>callable</code> argument is equal to the <code>sentinel</code> argument, the iterator terminates.</li> <li>Otherwise, the iterator returns the value returned by the <code>callable</code> argument.</li> </ol> <p>The following example shows how to use the <code>iter(callable, sentinel)</code> built-in function.</p> <pre><code class="language-python">&gt;&gt;&gt; def generate_random_number():
+        import random
+        return_value = random.randint(0, 5)
+        print(f'generate_random_number() returns {return_value}')
+        return return_value
+...
+&gt;&gt;&gt; for random_number in iter(generate_random_number, 3):
+...     print(random_number)
+...
+generate_random_number() returns 1
+1
+generate_random_number() returns 2
+2
+generate_random_number() returns 5
+5
+generate_random_number() returns 4
+2
+generate_random_number() returns 3
+</code></pre> <p>The following example is a more practical example of using the <code>iter(callable, sentinel)</code> built-in function, which is described in the official documentation of the <code>iter()</code> built-in function <sup id="fnref:pythonorg__builtin_iter:2" role="doc-noteref"><a href="#fn:pythonorg__builtin_iter" class="footnote" rel="footnote">1</a></sup>.</p> <pre><code class="language-python">&gt;&gt;&gt; from functools import partial
+&gt;&gt;&gt; with open('mydata.db', 'rb') as f:
+...     read_64bytes = partial(f.read, 64)
+...     for chunk in iter(read_64bytes, b''):
+...         process_data(chunk)
+...
+</code></pre> <h2 id="iterables-versus-iterators">Iterables Versus Iterators</h2> <h3 id="iterable"><em>Iterable</em></h3> <p>An object is <strong>iterable</strong> if the object returns an <em>iterator</em> when the <code>iter(object)</code> built-in function is called.</p> <p>There are two type of iterable objects:</p> <ol> <li>Objects that implement the <code>__iter__</code> method returning an <em>iterator</em>.</li> <li>Objects that implement the <code>__getitem__</code> method.</li> </ol> <h3 id="iterator"><em>Iterator</em></h3> <p>An object is an <strong>iterator</strong> if the object implements the following methods:</p> <ol> <li> <code>__next__</code> method, which is an abstract method that: <ul> <li>Returns the next available item.</li> <li>Raising <code>StopIteration</code> exception when there are no more items.</li> </ul> </li> <li> <code>__iter__</code> method, which is a mixin method that: <ul> <li>Returns <code>self</code>.</li> </ul> </li> </ol> <h3 id="uml-diagram"><em>UML Diagram</em></h3> <div class="row"> <div class="col-sm mt-3 mt-md-0"> <figure> <picture> <source class="responsive-img-srcset" media="(max-width: 480px)" srcset="/python/fluent-python/chapter-17/iterable_iterator.svg-480.webp"></source> <source class="responsive-img-srcset" media="(max-width: 800px)" srcset="/python/fluent-python/chapter-17/iterable_iterator.svg-800.webp"></source> <source class="responsive-img-srcset" media="(max-width: 1400px)" srcset="/python/fluent-python/chapter-17/iterable_iterator.svg-1400.webp"></source> <img src="/python/fluent-python/chapter-17/iterable_iterator.svg" class="img-fluid rounded z-depth-1" width="auto" height="auto" data-zoomable="" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture><figcaption class="caption">UML Diagram of the <code>iterable</code> and <code>iterator</code> ABCs.<br>Red : Abstract methods, Blue : Mixin methods.</figcaption> </figure> </div> </div> <h3 id="for-loop-iter-and-next-built-in-functions"><em>For Loop, <code>iter()</code>, and <code>next()</code> Built-in Functions</em></h3> <p>The <code>for</code> loop, <code>iter()</code> and <code>next()</code> built-in functions are used to iterate over an iterable object.</p> <p>The following example shows a simple <code>for</code> loop on an iterable object.</p> <pre><code class="language-python">&gt;&gt;&gt; s = 'ABC'
+&gt;&gt;&gt; for char in s:
+...     print(char)
+...
+A
+B
+C
+</code></pre> <p>This <code>for</code> loop is equivalent to the following code.</p> <pre><code class="language-python">&gt;&gt;&gt; s = 'ABC'
+&gt;&gt;&gt; it = iter(s)  # &lt;1&gt;
+&gt;&gt;&gt; while True:
+...     try:
+...         print(next(it))  # &lt;2&gt;
+...     except StopIteration:  # &lt;3&gt;
+...         del it  # &lt;4&gt;
+...         break  # &lt;5&gt;
+...
+A
+B
+C
+</code></pre> <ul> <li> <code>&lt;1&gt;</code> : The <code>iter()</code> built-in function is called to obtain an iterator from the iterable object <code>s</code>.</li> <li> <code>&lt;2&gt;</code> : The <code>next()</code> built-in function extracts the next item from the <code>it</code> iterator.</li> <li> <code>&lt;3&gt;</code> : If there are no further items in the <code>it</code> iterator, <code>next(it)</code> raises the <code>StopIteration</code> exception to signal the end of iteration.</li> <li> <code>&lt;4&gt;</code> : The <code>del</code> statement deletes the <code>it</code> iterator.</li> <li> <code>&lt;5&gt;</code> : The <code>break</code> statement terminates the <code>while</code> loop.</li> </ul> <p>Therefore, <code>for</code> loop generates an iterator from an iterable object by using <code>iter()</code> built-in function, and then repeatedly calls <code>next()</code> built-in function over the iterator until the <code>StopIteration</code> exception is raised.</p> <h3 id="implementation-of-iterable-and-iterator-abcs-in-standard-library"><em>Implementation of iterable and iterator ABCs in Standard Library</em></h3> <p>The following table shows the implementation of iterable and iterator ABCs in the standard library.</p> <div class="embed-github-src" repo="python/cpython" branch="b1930bf75f276cd7ca08c4455298128d89adf7d1" path="Lib/_collections_abc.py" language="python" line="253-287"></div> <p><code>__subclasshook__</code> makes the <code>Iterable</code> and <code>Iterator</code> ABCs supports structural type checking.</p> <h3 id="advice-to-check-whether-an-object-is-iterator-or-not"><em>Advice to check whether an object is iterator or not</em></h3> <p>According to the following comments in the source code of the standard library, iterator in Python is a protocol, not a type.</p> <div class="embed-github-src" repo="python/cpython" branch="ed4a978449c856372d1a7cd389f91cafe2581c87" path="Lib/types.py" language="python" line="6-9"></div> <p>Therefore, it is recommended to check whether an object is iterator or not using <code>isinstance(obj, collections.abc.Iterator)</code>.</p> <h3 id="properties-of-iterators"><em>Properties of Iterators</em></h3> <p>The protocol of iterator defines that:</p> <ol> <li>An iterator must implement the <code>__next__</code> method.</li> <li>An iterator must implement the <code>__iter__</code> method that returns the iterator itself.</li> </ol> <p>Therefore, iterators have the following properties:</p> <ol> <li>There is no way to check whether there are remaining items in an iterator without calling the <code>next()</code> built-in function and catching the <code>StopIteration</code> exception.</li> <li>It is not possible to reset an iterator. If you need to start over, you must create a new iterator object by calling <code>iter()</code> built-in function on an iterable.</li> <li>Calling <code>iter()</code> on an iterator returns the iterator itself. Therefore, calling <code>iter()</code> on an iterator does not build a new iterator.</li> </ol> <h2 id="sentence-classes-with-__iter__">Sentence Classes with <code>__iter__</code> </h2> <h3 id="sentence-take-2-a-classic-iterator">Sentence Take #2: A Classic Iterator</h3> <div class="embed-github-src" repo="fluentpython/example-code-2e/" branch="8a330d822b997c7992d0b7675c82ad75832300c6" path="17-it-generator/sentence_iter.py" language="python" line="9-43"></div> <ul> <li> <code>&lt;1&gt;</code> : The <code>__iter__</code> method is implemented to return an iterator.</li> <li> <code>&lt;2&gt;</code> : Because the <code>SentenceIterator</code> is an iterator class, the <code>SentenceIterator(self.words)</code> is an iterator.</li> <li> <code>&lt;3&gt;</code> : <code>SentenceIterator</code> holds a reference to the list of words in the <code>Sentence</code> object.</li> <li> <code>&lt;4&gt;</code> : <code>SentenceIterator</code> holds index of the next word to fetch.</li> <li> <code>&lt;5&gt;</code> : Get the word at <code>self.index</code>.</li> <li> <code>&lt;6&gt;</code> : If <code>IndexError</code> is raised because <code>self.index</code> is out of range, raise <code>StopIteration</code> exception.</li> <li> <code>&lt;7&gt;</code>, <code>&lt;8&gt;</code> : Otherwise, increment <code>self.index</code> and return the word.</li> <li> <code>&lt;9&gt;</code> : <code>__iter__</code> methods implements the protocol of iterator by returning the iterator itself.</li> </ul> <h3 id="dont-make-the-iterable-an-iterator-for-itself">Don’t Make the Iterable an Iterator for Itself</h3> <dl> <dt>Iterable</dt> <dd>Iterables have an <code>__iter__</code> method that instantiates a new iterator every time. It is not recommended to make an iterable an iterator for itself by implementing <code>__next__</code> method in the iterable class.</dd> <dt>Iterator</dt> <dd>Iterators have a <code>__next__</code> method that returns individual items, and an <code>__iter__</code> method that returns <code>self</code>.</dd> </dl> <h4 id="iterator-pattern"><em>Iterator Pattern</em></h4> <p>The “Applicability” section of the “Iterator” design pattern<sup id="fnref:gof__iterator" role="doc-noteref"><a href="#fn:gof__iterator" class="footnote" rel="footnote">2</a></sup> states that:</p> <blockquote> <p>Use the Iterator pattern</p> <ul> <li>to access an aggregate object’s contents without exposing its internal representation.</li> <li>to support multiple traversals of aggregate objects.</li> <li>to provide a uniform interface for traversing different aggregate structures (that is, to support polymorphic iteration).</li> </ul> </blockquote> <p><em>Aggregate objects</em> means that the objects that have internal collections of other objects, such as lists, tuples, sets, and dictionaries.</p> <p>To support <em>multiple traversals</em> of aggregate objects, the iterator pattern generates a new independant iterator from same iterable object every time the <code>__iter__</code> method is called.</p> <p>Therefore, it is not recommended to make an iterable an iterator for itself by implementing <code>__next__</code> method in the iterable class.</p> <h3 id="sentence-take-3-a-generator-function">Sentence Take #3: A Generator Function</h3> <p>Using a generator function makes it possible to implement the <code>Sentence</code> class more concisely without having to implement another iterator class.</p> <div class="embed-github-src" repo="fluentpython/example-code-2e/" branch="6527037ae7319ba370a1ee2d9fe79214d0ed9452" path="17-it-generator/sentence_gen.py" language="python" line="6-27"></div> <ul> <li> <code>&lt;1&gt;</code> : Iterate over <code>self.words</code>.</li> <li> <code>&lt;2&gt;</code> : <code>yield</code> keyword is used to return the word.</li> <li> <code>&lt;3&gt;</code> : Explicit <code>return</code> keyword is not used, and explicit <code>StopIteration</code> exception is not raised.</li> <li> <code>&lt;4&gt;</code> : No need to implement a separate iterator class.</li> </ul> <p>In the following example, the <code>__iter__</code> method is a generator function, which returns an iterator object (a generator object).</p> <h3 id="how-a-generator-works">How a Generator Works</h3> <p>A generator function is a function that:</p> <ol> <li>contains one or more <code>yield</code> keywords in its body.</li> <li>returns a generator object when it is called.</li> </ol> <p>The following example shows how a generator function works.</p> <pre><code class="language-python">&gt;&gt;&gt; def simple_generator_function():
+...     yield 1
+...     yield 2
+...     yield 3
+...
+&gt;&gt;&gt; simple_generator_function
+&lt;function simple_generator_function at 0x7f8b1c0b7d30&gt;
+&gt;&gt;&gt; simple_generator_function()
+&lt;generator object simple_generator_function at 0x7f8b1c0b7e40&gt;
+&gt;&gt;&gt; for value in simple_generator_function():
+...     print(value)
+...
+1
+2
+3
+&gt;&gt;&gt; gen = simple_generator_function()
+&gt;&gt;&gt; next(gen)
+1
+&gt;&gt;&gt; next(gen)
+2
+&gt;&gt;&gt; next(gen)
+3
+&gt;&gt;&gt; next(gen)
+Traceback (most recent call last):
+  File "&lt;stdin&gt;", line 1, in &lt;module&gt;
+StopIteration
+</code></pre> <ul> <li>Generator functions return a generator object when they are called.</li> <li>Generator objects implement the <code>Iterator</code> protocol, therefore they can be used in a <code>for</code> loop.</li> <li>The <code>next()</code> built-in function on a generator object returns the next item in the generator object.</li> <li>The next item in the generator object is the value <code>yield</code>ed from its generator function.</li> <li>When there are no more items in the generator object, the <code>next()</code> built-in function raises the <code>StopIteration</code> exception.</li> </ul> <p>The following example shows how the generator function works:</p> <pre><code class="language-python">&gt;&gt;&gt; def generator_function():
+...     print('before yield 1')
+...     yield 1
+...     print('before yield 2')
+...     yield 2
+...     print('end of generator function')
+...
+&gt;&gt;&gt; generator_function()
+&lt;generator object generator_function at 0x7f8b1c0b7e40&gt;
+&gt;&gt;&gt; gen = generator_function()
+&gt;&gt;&gt; next(gen)
+before yield 1
+1
+&gt;&gt;&gt; next(gen)
+before yield 2
+2
+&gt;&gt;&gt; next(gen)
+end of generator function
+Traceback (most recent call last):
+  File "&lt;stdin&gt;", line 1, in &lt;module&gt;
+StopIteration
+</code></pre> <ul> <li>When a generator function is called, the body of the generator function is not executed.</li> <li>The body of the generator function is executed when the <code>next()</code> built-in function is called on the generator object.</li> <li>The body of the generator function is executed until the <code>yield</code> keyword is reached.</li> <li>The value after the <code>yield</code> keyword is returned by the <code>next()</code> built-in function.</li> <li>The body of the generator function is executed until the end of the generator function is reached.</li> <li>The <code>StopIteration</code> exception is raised when the end of the generator function is reached.</li> </ul> <h2 id="lazy-sentences">Lazy Sentences</h2> <p>The above the <code>Sentence</code> class is not lazy because the whole list of words is built when the <code>__init__</code> method is called.</p> <p>In this chapter, lazy version of the <code>Sentence</code> class will be implemented.</p> <p>In modern programmming, laziness is considered a good trait because it can reduce memory usage, and may avoid waisting CPU cycles in case the program does not need to use the whole list of words.</p> <h3 id="sentence-take-4-lazy-generator">Sentence Take #4: Lazy Generator</h3> <p>In the following example, <code>re.finditer</code> function is used to find all matches of a regular expression <code>RE_WORD</code> in a <code>self.text</code>. The difference of <code>re.findall()</code> and <code>re.finditer()</code> can be described as follows:</p> <ul> <li> <code>re.findall()</code> : returns a list of all matches.</li> <li> <code>re.finditer()</code> : returns a generator that yields <code>re.Match</code> one by one.</li> </ul> <div class="embed-github-src" repo="fluentpython/example-code-2e/" branch="8a330d822b997c7992d0b7675c82ad75832300c6" path="17-it-generator/sentence_gen2.py" language="python" line="6-23"></div> <ul> <li> <code>&lt;2&gt;</code> : <code>RE_WORD.finditer(self.text)</code> builds an iterator over the matches of the regular expression <code>RE_WORD</code> in <code>self.text</code>. This contributes to saving memory because the whole list of words is not built.</li> <li> <code>&lt;3&gt;</code> : <code>match.group()</code> returns the word matched by the regular expression <code>RE_WORD</code>.</li> </ul> <h3 id="sentence-take-5-lazy-generator-expression">Sentence Take #5: Lazy Generator Expression</h3> <p>By using a generator expression, the <code>Sentence</code> class can be implemented more concisely. Before describing the implementation of the <code>Sentence</code> class using a generator expression, a simple example of using a generator expression is shown below.</p> <pre><code class="language-python">&gt;&gt;&gt; def generator_function():
+...     print('before yield 1')
+...     yield 1
+...     print('before yield 2')
+...     yield 2
+...     print('end of generator function')
+...
+&gt;&gt;&gt; ret_val = [x for x in generator_function()]  # &lt;1&gt;
+before yield 1
+before yield 2
+end of generator function
+&gt;&gt;&gt; ret_val
+[1, 2]
+&gt;&gt;&gt; ret_val_gen = (x for x in generator_function())  # &lt;2&gt;
+&gt;&gt;&gt; ret_val_gen
+&lt;generator object &lt;genexpr&gt; at 0x7f8b1c0b7e40&gt;
+&gt;&gt;&gt; for x in ret_val_gen:
+...     print(x)
+...
+before yield 1
+1
+before yield 2
+2
+end of generator function
+</code></pre> <ul> <li> <code>&lt;1&gt;</code> : When building a list comprehension from the generator function, the body of the generator function is executed immediately.</li> <li> <code>&lt;2&gt;</code> : When building a generator expression from the generator function, execution of the body of the generator function is delayed until the generator expression is iterated over.</li> </ul> <div class="embed-github-src" repo="fluentpython/example-code-2e/" branch="8a330d822b997c7992d0b7675c82ad75832300c6" path="17-it-generator/sentence_genexp.py" language="python" line="6-21"></div> <h2 id="when-to-use-generator-expressions">When to Use Generator Expressions</h2> <p>Generator expressions are a syntatic sugar for creating generator objects, replacing a generator function. The rules for using generator expressions are as follows:</p> <ul> <li>If the generator expression spans more than a couple of lines, it is better to use a generator function.</li> </ul> <h3 id="syntax-tip"><em>Syntax Tip</em></h3> <p>When a generator expression is passed as a single argument to a function, there is no need to enclose the generator expression in parentheses.</p> <pre><code class="language-python">&gt;&gt;&gt; sum(x * x for x in range(10))  # &lt;1&gt;
+285
+&gt;&gt;&gt; sum((x * x for x in range(10)))  # &lt;2&gt;
+285
+&gt;&gt;&gt; sum(x * x for x in range(10)) == sum((x * x for x in range(10)))  # &lt;3&gt;
+True
+</code></pre> <p>However, if there are more than one arguments, the generator expression must be enclosed in parentheses.</p> <h3 id="comparing-iterators-and-generators"><em>Comparing iterators and generators</em></h3> <p>The following table compares iterators and generators.</p> <dl> <dt><em>iterator</em></dt> <dd>Any object implementing a <code>__next__</code> method is an iterator. Iterator objects returns individual items when <code>next()</code> built-in function is called on the iterator object or when the iterator object is used in a <code>for</code> loop.</dd> <dt><em>generator</em></dt> <dd>An iterator built by the Python compiler from a generator function or generator expression. Therefore, there is no need to implement the <code>__next__</code> method for a generator object. Instead, <code>yield</code> keyword is used to make a generator function, which is a factory of generator objects. A generator expression is a syntatic sugar for creating generator objects, replacing a generator function.</dd> </dl> <h2 id="an-arithmetic-progression-generator">An Arithmetic Progression Generator</h2> <p>In this section, an arithmetic progression generator is implemented for not only integers but also floating point numbers.</p> <p>The following examples shows how to use a <code>ArithmeticProgression</code> class.</p> <div class="embed-github-src" repo="fluentpython/example-code-2e/" branch="dd535abcf76739d451c2baaf7813b8390a7dfe88" path="17-it-generator/aritprog_v1.py" language="python" line="6-22"></div> <p>The <code>ArithmeticProgression</code> class is implemented as follows:</p> <div class="embed-github-src" repo="fluentpython/example-code-2e/" branch="dd535abcf76739d451c2baaf7813b8390a7dfe88" path="17-it-generator/aritprog_v1.py" language="python" line="29-44"></div> <p>Generator function version of the <code>ArithmeticProgression</code> class is implemented as follows:</p> <div class="embed-github-src" repo="fluentpython/example-code-2e/" branch="dd535abcf76739d451c2baaf7813b8390a7dfe88" path="17-it-generator/aritprog_v2.py" language="python" line="23-30"></div> <h3 id="arithmetic-progression-with-itertools">Arithmetic Progression with itertools</h3> <p>The <code>itertools</code> module<sup id="fnref:pythonorg__itertools" role="doc-noteref"><a href="#fn:pythonorg__itertools" class="footnote" rel="footnote">3</a></sup> provides various generator functions for creating iterators. By using generator functions in the <code>itertools</code> module, it is possible to build the <code>aritprog_gen()</code> generator function more concisely.</p> <p><code>itertools.takewhile(predicate, it)</code> yields items from <code>it</code> until <code>predicate</code> function returns <code>false</code>. The following example shows how to use <code>itertools.takewhile()</code>.</p> <pre><code class="language-python">&gt;&gt;&gt; import itertools
+&gt;&gt;&gt; list(itertools.takewhile(lambda n: n &lt; 3, itertools.count(start=0, step=0.5)))
+[0, 0.5, 1.0, 1.5, 2.0, 2.5]
+</code></pre> <p>By using the above <code>itertools.takewhile()</code> function, the <code>aritprog_gen()</code> can be implemented more concisely. The following example shows the implementation of the <code>aritprog_gen()</code> generator function using the <code>itertools.takewhile()</code> function.</p> <div class="embed-github-src" repo="fluentpython/example-code-2e/" branch="6527037ae7319ba370a1ee2d9fe79214d0ed9452" path="17-it-generator/aritprog_v3.py" language="python" line="2-10"></div> <h2 id="generator-functions-in-the-standard-library">Generator Functions in the Standard Library</h2> <h3 id="filtering-generator-functions"><em>Filtering generator functions</em></h3> <table> <thead> <tr> <th>Module</th> <th>Function</th> <th>Description</th> </tr> </thead> <tbody> <tr> <td><code>itertools</code></td> <td><code>compress(it, selector_it)</code></td> <td>Consume two iterators in parallel; yield items from <code>it</code> whenever the corresponding item in <code>selector_it</code> is truthy.</td> </tr> <tr> <td><code>itertools</code></td> <td><code>dropwhile(predicate, it)</code></td> <td>Consumes <code>it</code>, skipping items while <code>predicate(item)</code> computes truthy, then yields every remaining item.</td> </tr> <tr> <td><code>itertools</code></td> <td><code>takewhile(predicate, it)</code></td> <td>Consumes <code>it</code>, yielding items while <code>predicate(item)</code> computes truthy, then stops;</td> </tr> <tr> <td>(built-in)</td> <td><code>filter(predicate, it)</code></td> <td>Applies <code>predicate()</code> function to each item of <code>it</code>, yielding the item if <code>predicate(item)</code> is truthy.; if <code>predicate</code> is <code>None</code>, only truthy items are yielded.</td> </tr> <tr> <td><code>itertools</code></td> <td><code>filterfalse(predicate, it)</code></td> <td>Applies <code>predicate()</code> function to each item of <code>it</code>, yielding the item if <code>predicate(item)</code> is falsy.; if <code>predicate</code> is <code>None</code>, only falsy items are yielded.</td> </tr> <tr> <td><code>itertools</code></td> <td><code>islice(it, stop)</code></td> <td>Returns a new iterator from <code>it</code> that returns first <code>stop</code> items, then raises <code>StopIteration</code>. <code>it</code> can be any iterable and the yielding operation is lazy.</td> </tr> <tr> <td><code>itertools</code></td> <td><code>islice(it, start, stop, step=1)</code></td> <td>Returns a new iterator from <code>it</code> that returns items from <code>start</code> index until <code>stop</code> index, stepping by <code>step</code>. <code>it</code> can be any iterable and the yielding operation is lazy.</td> </tr> </tbody> </table> <p>The following code shows how to use the above filtering generator functions.</p> <pre><code class="language-python">&gt;&gt;&gt; import itertools
+&gt;&gt;&gt; list(itertools.compress('ABCDEF', [1, 0, 1, 0, 1, 1]))
+['A', 'C', 'E', 'F']
+&gt;&gt;&gt; list(itertools.compress('ABCDEF', [1, 0, 1, 0, 1, 1, 0]))  # Longer selector
+['A', 'C', 'E', 'F']
+&gt;&gt;&gt; list(itertools.compress('ABCDEF', [1, 0, 1]))  # Shorter selector
+['A', 'C']
+&gt;&gt;&gt; list(itertools.dropwhile(lambda x: x &lt; 5, [1, 4, 6, 4, 1]))
+[6, 4, 1]
+&gt;&gt;&gt; list(itertools.takewhile(lambda x: x &lt; 5, [1, 4, 6, 4, 1]))
+[1, 4]
+&gt;&gt;&gt; list(filter(lambda x: x &lt; 5, [1, 4, 6, 4, 1]))
+[1, 4, 4, 1]
+&gt;&gt;&gt; list(filter(None, [1, 0, 2, 0, 3, 0, 4]))  # Truthy values
+[1, 2, 3, 4]
+&gt;&gt;&gt; list(itertools.filterfalse(lambda x: x &lt; 5, [1, 4, 6, 4, 1]))
+[6]
+&gt;&gt;&gt; list(itertools.filterfalse(None, [1, 0, 2, 0, 3, 0, 4]))  # Falsy values
+[0, 0, 0]
+&gt;&gt;&gt; list(itertools.islice('ABCDEFG', 2))  # Stop is specified
+['A', 'B']
+&gt;&gt;&gt; list(itertools.islice('ABCDEFG', 2, 4))  # Start and stop is specified
+['C', 'D']
+&gt;&gt;&gt; list(itertools.islice('ABCDEFG', 2, None))  # Start and stop is specified
+['C', 'D', 'E', 'F', 'G']
+&gt;&gt;&gt; list(itertools.islice('ABCDEFG', 0, None, 2))  # Start, stop, and step is specified
+['A', 'C', 'E', 'G']
+</code></pre> <h3 id="mapping-generator-functions"><em>Mapping generator functions</em></h3> <table> <thead> <tr> <th>Module</th> <th>Function</th> <th>Description</th> </tr> </thead> <tbody> <tr> <td><code>itertools</code></td> <td><code>accumulate(it, [func])</code></td> <td>Yields accumulated sums; if <code>func</code> is provided, yields the result of applying it to the first pair of items, then to the first result and next item, and so on.</td> </tr> <tr> <td>(built-in)</td> <td><code>enumerate(it, start=0)</code></td> <td>Yields 2-tuples of the form <code>(index, item)</code>, where <code>index</code> is counted from <code>start</code>, and <code>item</code> is taken from <code>it</code>.</td> </tr> <tr> <td><code>itertools</code></td> <td><code>map(func, it1, [it2, ..., itN])</code></td> <td>Applies <code>func</code> to each item of <code>it</code>, yielding the result. If <code>it2</code>, …, <code>itN</code> is given, <code>func</code> must be able to take <code>N</code> arguments and the arguments are taken from each iterable.</td> </tr> <tr> <td><code>itertools</code></td> <td><code>starmap(func, it)</code></td> <td>Applies <code>func</code> to each item of <code>it</code>, yielding the result. If <code>it</code> is a sequence of <code>N</code>-tuples, <code>func</code> must be able to take <code>N</code> arguments and the arguments are taken from each tuple.</td> </tr> </tbody> </table> <p>The following code shows how to use the above mapping generator functions.</p> <pre><code class="language-python">&gt;&gt;&gt; import itertools
+&gt;&gt;&gt; list(itertools.accumulate([1, 2, 3, 4, 5]))
+[1, 3, 6, 10, 15]
+&gt;&gt;&gt; import operator
+&gt;&gt;&gt; list(itertools.accumulate([1, 2, 3, 4, 5], operator.mul))
+[1, 2, 6, 24, 120]
+&gt;&gt;&gt; list(itertools.accumulate([5, 3, 7, 5, 9, 2, 0], min))
+[5, 3, 3, 3, 3, 2, 0]
+&gt;&gt;&gt; list(itertools.accumulate([5, 3, 7, 5, 9, 2, 0], max))
+[5, 5, 7, 7, 9, 9, 9]
+&gt;&gt;&gt; list(enumerate('ABC'))
+[(0, 'A'), (1, 'B'), (2, 'C')]
+&gt;&gt;&gt; list(enumerate('ABC', 1))
+[(1, 'A'), (2, 'B'), (3, 'C')]
+&gt;&gt;&gt; list(map(lambda x: x * x, range(5)))
+[0, 1, 4, 9, 16]
+&gt;&gt;&gt; list(map(lambda x, y: x * y, range(5), range(5, 0, -1)))
+[0, 4, 6, 6, 4]
+&gt;&gt;&gt; list(map(lambda x, y: x * y, range(5), range(5, 3, -1)))  # Different length
+[0, 4]
+&gt;&gt;&gt; list(itertools.starmap(lambda x, y: x * y, [(0, 5), (1, 4), (2, 3), (3, 2), (4, 1)]))
+[0, 4, 6, 6, 4]
+</code></pre> <h3 id="merging-generator-functions"><em>Merging generator functions</em></h3> <table> <thead> <tr> <th>Module</th> <th>Function</th> <th>Description</th> </tr> </thead> <tbody> <tr> <td><code>itertools</code></td> <td><code>chain(it1, ..., itN)</code></td> <td>Yields items from each iterable until it is exhausted, then proceeds to the next iterable, until all of the iterables are exhausted.</td> </tr> <tr> <td><code>itertools</code></td> <td><code>chain.from_iterable(it)</code></td> <td>Yields items from each iterable produced by <code>it</code>, one after the other, until all of the iterables are exhausted.</td> </tr> <tr> <td><code>itertools</code></td> <td><code>product(it1, ..., itN, repeat=1)</code></td> <td>Yields tuples containing the Cartesian product of the items from all iterables. <code>repeat</code> specifies the number of times that each item can be repeated in the tuples.</td> </tr> <tr> <td>(built-in)</td> <td><code>zip(it1, ..., itN, strict=False)</code></td> <td>Yields N-tuples built from items taken from the iterables in parallel, silently stopping when the first iterable is exhausted. If <code>strict</code> is <code>True</code> and the length of iterable is different, <code>zip()</code> raises <code>ValueError</code>.</td> </tr> <tr> <td><code>itertools</code></td> <td><code>zip_longest(it1, ..., itN, fillvalue=None)</code></td> <td>Yields N-tuples built from items taken from the iterables in parallel, stopping only when the last iterable is exhausted, filling blanks with <code>fillvalue</code>.</td> </tr> </tbody> </table> <p>The following code shows how to use the above merging generator functions.</p> <pre><code class="language-python">&gt;&gt;&gt; import itertools
+&gt;&gt;&gt; list(itertools.chain('ABCD', [0,1,2,3]))
+['A', 'B', 'C', 'D', 0, 1, 2, 3]
+&gt;&gt;&gt; list(itertools.chain(enumerate('ABCD')))  # chain with one iterable is useless
+[(0, 'A'), (1, 'B'), (2, 'C'), (3, 'D')]
+&gt;&gt;&gt; list(itertools.chain.from_iterable(enumerate('ABCD')))
+[0, 'A', 1, 'B', 2, 'C', 3, 'D']
+&gt;&gt;&gt; list(itertools.product('AB', range(2)))
+[('A', 0), ('A', 1), ('B', 0), ('B', 1)]
+&gt;&gt;&gt; from pprint import pprint
+&gt;&gt;&gt; pprint(list(itertools.product('AB', range(2), repeat=2)))
+[('A', 0, 'A', 0),
+ ('A', 0, 'A', 1),
+ ('A', 0, 'B', 0),
+ ('A', 0, 'B', 1),
+ ('A', 1, 'A', 0),
+ ('A', 1, 'A', 1),
+ ('A', 1, 'B', 0),
+ ('A', 1, 'B', 1),
+ ('B', 0, 'A', 0),
+ ('B', 0, 'A', 1),
+ ('B', 0, 'B', 0),
+ ('B', 0, 'B', 1),
+ ('B', 1, 'A', 0),
+ ('B', 1, 'A', 1),
+ ('B', 1, 'B', 0),
+ ('B', 1, 'B', 1)]
+&gt;&gt;&gt; list(zip('ABCD', 'xy'))
+[('A', 'x'), ('B', 'y')]
+&gt;&gt;&gt; list(zip('ABCD', 'xy', range(5)))
+[('A', 'x', 0), ('B', 'y', 1)]
+&gt;&gt;&gt; list(zip('ABCD', 'xy', range(5), strict=True))
+Traceback (most recent call last):
+  File "&lt;stdin&gt;", line 1, in &lt;module&gt;
+ValueError: zip() argument 2 is shorter than argument 1
+&gt;&gt;&gt; list(itertools.zip_longest('ABCD', 'xy', range(5)))
+[('A', 'x', 0), ('B', 'y', 1), ('C', None, 2), ('D', None, 3), (None, None, 4)]
+&gt;&gt;&gt; list(itertools.zip_longest('ABCD', 'xy', range(5), fillvalue='*'))
+[('A', 'x', 0), ('B', 'y', 1), ('C', '*', 2), ('D', '*', 3), ('*', '*', 4)]
+</code></pre> <h3 id="expanding-generator-functions"><em>Expanding generator functions</em></h3> <table> <thead> <tr> <th>Module</th> <th>Function</th> <th>Description</th> </tr> </thead> <tbody> <tr> <td><code>itertools</code></td> <td><code>combinations(it, out_len)</code></td> <td>Yields combinations of <code>out_len</code> items from <code>it</code>.</td> </tr> <tr> <td><code>itertools</code></td> <td><code>combinations_with_replacement(it, out_len)</code></td> <td>Yields combinations of <code>out_len</code> items from <code>it</code>, allowing individual items to be repeated more than once.</td> </tr> <tr> <td><code>itertools</code></td> <td><code>count(start=0, step=1)</code></td> <td>Yields numbers starting at <code>start</code>, incremented by <code>step</code>, indefinitely.</td> </tr> <tr> <td><code>itertools</code></td> <td><code>cycle(it)</code></td> <td>Yields items from <code>it</code>, saving a copy of each. When <code>it</code> is exhausted, yields items from the saved copy.</td> </tr> <tr> <td><code>itertools</code></td> <td><code>pairwise(it)</code></td> <td>Yields successive overlapping pairs from <code>it</code>; for example, <code>pairwise('ABC')</code> yields <code>('A', 'B')</code>, <code>('B', 'C')</code>.</td> </tr> <tr> <td><code>itertools</code></td> <td><code>permutations(it, out_len=None)</code></td> <td>Yields permutations of <code>out_len</code> items from <code>it</code>. <code>out_len</code> means the length of each permutation; by default, <code>out_len</code> is <code>len(list(it))</code> </td> </tr> <tr> <td><code>itertools</code></td> <td><code>repeat(item, [times])</code></td> <td>Yields <code>item</code> over and over again, indefinitely unless <code>times</code> is specified.</td> </tr> </tbody> </table> <p>The following code shows how to use the above expanding generator functions.</p> <pre><code class="language-python">&gt;&gt;&gt; import itertools
+&gt;&gt;&gt; list(itertools.combinations('ABC', 2))
+[('A', 'B'), ('A', 'C'), ('B', 'C')]
+&gt;&gt;&gt; list(itertools.combinations_with_replacement('ABC', 2))
+[('A', 'A'), ('A', 'B'), ('A', 'C'), ('B', 'B'), ('B', 'C'), ('C', 'C')]
+&gt;&gt;&gt; count_iterator = itertools.count(1, 0.5)
+&gt;&gt;&gt; next(count_iterator), next(count_iterator), next(count_iterator)
+(1, 1.5, 2.0)
+&gt;&gt;&gt; list(itertools.islice(count_iterator, 3, 6))
+[4.0, 4.5, 5.0]
+&gt;&gt;&gt; list(itertools.islice(itertools.cycle('ABC'), 5))
+['A', 'B', 'C', 'A', 'B']
+&gt;&gt;&gt; list(itertools.pairwise('ABCDEF'))
+[('A', 'B'), ('B', 'C'), ('C', 'D'), ('D', 'E'), ('E', 'F')]
+&gt;&gt;&gt; list(itertools.permutations('ABC', 2))
+[('A', 'B'), ('A', 'C'), ('B', 'A'), ('B', 'C'), ('C', 'A'), ('C', 'B')]
+&gt;&gt;&gt; list(itertools.permutations('ABC'))  #  by default, out_len is len(list(it))
+[('A', 'B', 'C'), ('A', 'C', 'B'), ('B', 'A', 'C'), ('B', 'C', 'A'), ('C', 'A', 'B'), ('C', 'B', 'A')]
+&gt;&gt;&gt; list(itertools.repeat('ABC', 3))
+['ABC', 'ABC', 'ABC']
+&gt;&gt;&gt; list(itertools.repeat('ABC', 0))
+[]
+&gt;&gt;&gt; list(map(pow, range(10), itertools.repeat(2)))
+[0, 1, 4, 9, 16, 25, 36, 49, 64, 81]
+</code></pre> <h3 id="rearranging-generator-functions"><em>Rearranging generator functions</em></h3> <table> <thead> <tr> <th>Module</th> <th>Function</th> <th>Description</th> </tr> </thead> <tbody> <tr> <td><code>itertools</code></td> <td><code>groupby(it, [keyfunc])</code></td> <td>Yields 2-tuples of the form <code>(key, group)</code>, where <code>keyfunc</code> is the grouping criterion and <code>group</code> is a generator yielding the items in the group. <code>keyfunc</code> is used to extract the grouping criterion from each item.</td> </tr> <tr> <td>(built-in)</td> <td><code>reversed(seq)</code></td> <td>Yields items from <code>seq</code> in reverse order. <code>seq</code> must be a sequence or implement the <code>__reversed__</code> special method.</td> </tr> <tr> <td><code>itertools</code></td> <td><code>tee(it, n=2)</code></td> <td>Yields <code>n</code> independent iterators from a single iterable.</td> </tr> </tbody> </table> <p>The following code shows how to use the above rearranging generator functions.</p> <pre><code class="language-python">&gt;&gt;&gt; import itertools
+&gt;&gt;&gt; from pprint import pprint
+&gt;&gt;&gt; pprint(list(itertools.groupby('LLLLAAGGG')))
+[('L', &lt;itertools._grouper object at 0x104c25de0&gt;),
+ ('A', &lt;itertools._grouper object at 0x1052a3850&gt;),
+ ('G', &lt;itertools._grouper object at 0x1052a37c0&gt;)]
+&gt;&gt;&gt; for char, group in itertools.groupby('LLLLAAGGG'):
+...     print(char, '-&gt;', list(group))
+...
+L -&gt; ['L', 'L', 'L', 'L']
+A -&gt; ['A', 'A']
+G -&gt; ['G', 'G', 'G']
+&gt;&gt;&gt; animals = ['duck', 'eagle', 'rat', 'giraffe', 'bear', 'bat', 'dolphin', 'shark', 'lion']
+&gt;&gt;&gt; animals.sort(key=len)
+&gt;&gt;&gt; animals
+['rat', 'bat', 'duck', 'bear', 'lion', 'eagle', 'shark', 'giraffe', 'dolphin']
+&gt;&gt;&gt; for length, group in itertools.groupby(animals, len):
+...     print(length, '-&gt;', list(group))
+...
+3 -&gt; ['rat', 'bat']
+4 -&gt; ['duck', 'bear', 'lion']
+5 -&gt; ['eagle', 'shark']
+7 -&gt; ['giraffe', 'dolphin']
+&gt;&gt;&gt; for length, group in itertools.groupby(reversed(animals), len):
+...     print(length, '-&gt;', list(group))
+...
+7 -&gt; ['dolphin', 'giraffe']
+5 -&gt; ['shark', 'eagle']
+4 -&gt; ['lion', 'bear', 'duck']
+3 -&gt; ['bat', 'rat']
+&gt;&gt;&gt;
+</code></pre> <pre><code class="language-python">&gt;&gt;&gt; import itertools
+&gt;&gt;&gt; r1, r2 = itertools.tee('ABC')
+&gt;&gt;&gt; r1
+&lt;itertools._tee object at 0x104c25f40&gt;
+&gt;&gt;&gt; r2
+&lt;itertools._tee object at 0x104c25f40&gt;
+&gt;&gt;&gt; list(itertools.islice(r1, 2))
+['A', 'B']
+&gt;&gt;&gt; list(r2)
+['A', 'B', 'C']
+&gt;&gt;&gt; list(r1)
+['C']
+&gt;&gt;&gt; list(zip(*itertools.tee('ABC')))
+[('A', 'A'), ('B', 'B'), ('C', 'C')]
+&gt;&gt;&gt; list(zip(*itertools.tee('ABC', 3)))
+[('A', 'A', 'A'), ('B', 'B', 'B'), ('C', 'C', 'C')]
+</code></pre> <h2 id="iterable-reducing-functions">Iterable Reducing Functions</h2> <p>The following functions are used to reduce iterables to single values.</p> <table> <thead> <tr> <th>Module</th> <th>Function</th> <th>Description</th> </tr> </thead> <tbody> <tr> <td>(built-in)</td> <td><code>all(it)</code></td> <td>Returns <code>True</code> if all items in <code>it</code> are truthy, otherwise returns <code>False</code>. Applying <code>all</code> to an iterator without item returns <code>True</code>, for example, <code>all([]) == True</code>.</td> </tr> <tr> <td>(built-in)</td> <td><code>any(it)</code></td> <td>Returns <code>True</code> if any item in <code>it</code> is truthy, otherwise returns <code>False</code>. Applying <code>any</code> to an iterator without item returns <code>False</code>, for example, <code>any([]) == False</code>.</td> </tr> <tr> <td>(built-in)</td> <td><code>max(it, [key=], [default=])</code></td> <td>Returns the maximum item in <code>it</code>. <code>key</code> is an ordering function. <code>default</code> is returned if <code>it</code> is empty.</td> </tr> <tr> <td>(built-in)</td> <td><code>max(arg1, arg2, ..., [key=])</code></td> <td>Returns the maximum item in <code>arg1</code>, <code>arg2</code>, <code>...</code>. <code>key</code> is an ordering function. <code>default</code> is returned if <code>it</code> is empty.</td> </tr> <tr> <td>(built-in)</td> <td><code>min(it, [key=], [default=])</code></td> <td>Returns the minimum item in <code>it</code>. <code>key</code> is an ordering function. <code>default</code> is returned if <code>it</code> is empty.</td> </tr> <tr> <td>(built-in)</td> <td><code>min(arg1, arg2, ..., [key=])</code></td> <td>Returns the minimum item in <code>arg1</code>, <code>arg2</code>, <code>...</code>. <code>key</code> is an ordering function. <code>default</code> is returned if <code>it</code> is empty.</td> </tr> <tr> <td><code>functools</code></td> <td><code>reduce(func, it, [initial])</code></td> <td>Returns the result of applying <code>func(x, y)</code> to the first pair of items in <code>it</code>, then to the result and the next item, and so on. If <code>initial</code> is given, <code>initial</code> treated as the first pair.</td> </tr> <tr> <td>(built-in)</td> <td><code>sum(it, [start=0])</code></td> <td>Returns the sum of the items in <code>it</code>, plus <code>start</code> (which defaults to 0).</td> </tr> <tr> <td><code>math</code></td> <td><code>fsum(it)</code></td> <td>Returns an accurate floating-point sum of the items in <code>it</code>.</td> </tr> </tbody> </table> <p>The following code shows how to use the above iterable reducing functions.</p> <pre><code class="language-python">&gt;&gt;&gt; all([1, 2, 3])
+True
+&gt;&gt;&gt; all([1, 2, 0])
+False
+&gt;&gt;&gt; all([])
+True
+&gt;&gt;&gt; all(itertools.islice(range(5), 0))
+True
+&gt;&gt;&gt; any([1, 2, 3])
+True
+&gt;&gt;&gt; any([1, 2, 0])
+True
+&gt;&gt;&gt; any([0, 0, 0])
+False
+&gt;&gt;&gt; any([])
+False
+&gt;&gt;&gt; any(itertools.islice(range(5), 0))
+False
+&gt;&gt;&gt; it = (item for item in [0, 0, 1, 2])
+&gt;&gt;&gt; any(it)  # yields item until it reaches the first truthy value. 2 is not yielded at this point.
+True
+&gt;&gt;&gt; next(it)  # 2 will be yielded.
+2
+</code></pre> <pre><code class="language-python">&gt;&gt;&gt; max([1, 2, 3])
+3
+&gt;&gt;&gt; max([1, 2, 3], key=lambda x: -x)
+1
+&gt;&gt;&gt; max([1, 2, 3], default=0)
+3
+&gt;&gt;&gt; max([], default=0)
+0
+&gt;&gt;&gt; max(1, 2, 3)
+3
+&gt;&gt;&gt; max(1, 2, 3, key=lambda x: -x)
+1
+&gt;&gt;&gt; min([1, 2, 3])
+1
+&gt;&gt;&gt; min([1, 2, 3], key=lambda x: -x)
+3
+&gt;&gt;&gt; min([1, 2, 3], default=0)
+1
+&gt;&gt;&gt; min([], default=0)
+0
+&gt;&gt;&gt; min(1, 2, 3)
+1
+&gt;&gt;&gt; min(1, 2, 3, key=lambda x: -x)
+3
+</code></pre> <pre><code class="language-python">&gt;&gt;&gt; import functools
+&gt;&gt;&gt; functools.reduce(lambda x, y: x * y, [1, 2, 3, 4, 5])
+120
+&gt;&gt;&gt; functools.reduce(lambda x, y: x * y, [1, 2, 3, 4, 5], 10)
+1200
+&gt;&gt;&gt; functools.reduce(lambda x, y: x * y, [1, 2, 3, 4, 5], 0)
+0
+&gt;&gt;&gt; functools.reduce(lambda x, y: x * y, [], 0)
+0
+&gt;&gt;&gt; functools.reduce(lambda x, y: x * y, [], 1)
+1
+&gt;&gt;&gt; sum([1, 2, 3, 4, 5])
+15
+&gt;&gt;&gt; sum([1, 2, 3, 4, 5], 10)
+25
+&gt;&gt;&gt; sum([1, 2, 3, 4, 5], -10)
+5
+&gt;&gt;&gt; sum([1, 2, 3, 4, 5], 0.0)
+15.0
+&gt;&gt;&gt; import math
+&gt;&gt;&gt; math.fsum([1, 2, 3, 4, 5])
+</code></pre> <h2 id="subgenerators-with-yield-from">Subgenerators with yield from</h2> <p><code>yield from</code> is a new syntax introduced in Python 3.3. The <code>yield from</code> statement is used to delegate to a subgenerator. The following example shows how to use <code>yield from</code> statement.</p> <p>The following example shows how to use <code>yield from</code> statement to delegate to a subgenerator.</p> <pre><code class="language-python">&gt;&gt;&gt; def gen():
+...     for c in 'AB':
+...         yield c
+...     for i in range(1, 3):
+...         yield i
+...
+&gt;&gt;&gt; list(gen())
+['A', 'B', 1, 2]
+&gt;&gt;&gt; def sub_gen_ab():
+...     for c in 'AB':
+...         yield c
+...
+&gt;&gt;&gt; def sub_gen_12():
+...     for i in range(1, 3):
+...         yield i
+...
+&gt;&gt;&gt; def delegating_gen():
+...     yield 'a'
+...     yield 'b'
+...     yield from sub_gen_ab()
+...     yield from sub_gen_12()
+...
+&gt;&gt;&gt; list(delegating_gen())
+['a', 'b', 'A', 'B', 1, 2]
+</code></pre> <p>In the above example, the following are the terminologies used in the explanation of <code>yield from</code> statement.</p> <ol> <li> <code>delegating_gen()</code> is the <em>delegating generator</em>.</li> <li> <code>sub_gen_ab()</code> and <code>sub_gen_12()</code> are the <em>subgenerators</em>.</li> <li> <code>yield from sub_gen_ab()</code> and <code>yield from sub_gen_12()</code> are the <em>yield from expressions</em>.</li> </ol> <p>The following is the execution flow of the above example.</p> <ol> <li>When <code>delegating_gen()</code> is called, it returns a generator object.</li> <li>When the <code>next()</code> built-in function is called on the generator object returned by <code>delegating_gen()</code>, the execution of <code>delegating_gen()</code> starts.</li> <li>When <code>yield 'a'</code> and <code>yield 'b'</code> is executed, delegating generator object yields <code>'a'</code> and <code>'b'</code>.</li> <li>When <code>yield from sub_gen_ab()</code> is executed, the control is transferred to the subgenerator <code>sub_gen_ab()</code>.</li> <li>When <code>sub_gen_ab()</code> is exhausted, the control is transferred back to the delegating generator.</li> </ol> <p>When the subgenerator executes a <code>return</code> statement, the delegating generator can capture the returned value from the subgenerator by using <code>yield from</code> as follows:</p> <pre><code class="language-python">&gt;&gt;&gt; def sub_gen():
+...     yield 1
+...     return 'return value'
+...
+&gt;&gt;&gt; def delegating_gen():
+...     yield from sub_gen()
+...
+&gt;&gt;&gt; list(delegating_gen())
+[1]
+&gt;&gt;&gt; def delegating_gen():
+...     ret = yield from sub_gen()
+...     print('sub_gen() returned', ret)
+...
+&gt;&gt;&gt; list(delegating_gen())
+sub_gen() returned return value
+[1]
+</code></pre> <p>The following next subsections explain real-world examples of using the <code>yield from</code> statement.</p> <h3 id="reinventing-chain">Reinventing chain</h3> <p>The following example shows how to use the <code>yield from</code> statement to implement <code>chain()</code> function.</p> <pre><code class="language-python">&gt;&gt;&gt; def chain_without_yield_from(*iterables):
+...     for it in iterables:
+...         for item in it:
+...             yield item
+...
+&gt;&gt;&gt; list(chain_without_yield_from('ABC', range(3)))
+['A', 'B', 'C', 0, 1, 2]
+&gt;&gt;&gt; def chain_with_yield_from(*iterables):
+...     for it in iterables:
+...         yield from it
+...
+&gt;&gt;&gt; list(chain_with_yield_from('ABC', range(3)))
+['A', 'B', 'C', 0, 1, 2]
+</code></pre> <h3 id="traversing-a-tree">Traversing a Tree</h3> <p>In this subsection, an example of traversing a tree structure of subclasses using the <code>yield from</code> statement is shown.</p> <p>Before explaining the example, the following is properties contained in classes in the example.</p> <ol> <li> <dl> <dt><code>class.__name__</code></dt> <dd>The name of the class.</dd> </dl> </li> <li> <dl> <dt><code>class.__subclasses__()</code></dt> <dd>A list of immediate subclasses of the class.</dd> </dl> </li> </ol> <h4 id="step0"><em>Step0</em></h4> <div class="embed-github-src" repo="fluentpython/example-code-2e/" branch="8a330d822b997c7992d0b7675c82ad75832300c6" path="17-it-generator/tree/step0/tree.py" language="python" line="1-11"></div> <p>The output of this step is as follows:</p> <pre><code>BaseException
+</code></pre> <h4 id="step1"><em>Step1</em></h4> <p>In this example, the exception hierarchy levels 0 and 1 are traversed and printed.</p> <div class="embed-github-src" repo="fluentpython/example-code-2e/" branch="47cafc801a8e811b7cd7e7a5821f1ad4a65efa52" path="17-it-generator/tree/step1/tree.py" language="python" line="1-14"></div> <ul> <li> <code>&lt;1&gt;</code> : <code>yield</code> statement can return two values. In this example, the second return value represents the depth in the tree structure.</li> <li> <code>&lt;2&gt;</code> : In this <code>for</code> loop, <code>cls.__subclasses__()</code> captures the subclasses of the class <code>cls</code>.</li> <li> <code>&lt;3&gt;</code> : The subclasses from the <code>cls.__subclasses__()</code> and the depth are yielded.</li> <li> <code>&lt;4&gt;</code> : This statement builds indentation string for the output.</li> </ul> <p>The output of this step is as follows:</p> <pre><code>BaseException
+    BaseExceptionGroup
+    Exception
+    GeneratorExit
+    KeyboardInterrupt
+    SystemExit
+</code></pre> <h4 id="step2"><em>Step2</em></h4> <div class="embed-github-src" repo="fluentpython/example-code-2e/" branch="dd535abcf76739d451c2baaf7813b8390a7dfe88" path="17-it-generator/tree/step2/tree.py" language="python" line="1-18"></div> <ul> <li> <code>&lt;1&gt;</code> : The <code>for</code> loop with <code>yield</code> statement is replaced into a function <code>sub_tree(cls)</code> and the function is called by <code>yield from</code> statement.</li> <li> <code>&lt;2&gt;</code> : The <code>sub_tree(cls)</code> function yields the subclasses of the class <code>cls</code> and the depth <code>1</code>.</li> </ul> <p>The output of this step is as follows:</p> <pre><code>BaseException
+    BaseExceptionGroup
+    Exception
+    GeneratorExit
+    KeyboardInterrupt
+    SystemExit
+</code></pre> <h3 id="step3"><em>Step3</em></h3> <p>In this step, the exception hierarchy levels 0, 1, and 2 are traversed and printed.</p> <div class="embed-github-src" repo="fluentpython/example-code-2e/" branch="47cafc801a8e811b7cd7e7a5821f1ad4a65efa52" path="17-it-generator/tree/step3/tree.py" language="python" line="1-20"></div> <p>In this step, <code>sub_tree()</code> is extended to traverse the subclasses of the class <code>cls</code> up to level 2 of the exception hierarchy.</p> <p>The output of this step is as follows:</p> <pre><code>BaseException
+    BaseExceptionGroup
+        ExceptionGroup
+    Exception
+        ArithmeticError
+        AssertionError
+        AttributeError
+        BufferError
+        EOFError
+        ImportError
+        LookupError
+        MemoryError
+        NameError
+        OSError
+        ReferenceError
+        RuntimeError
+        StopAsyncIteration
+        StopIteration
+        SyntaxError
+        SystemError
+        TypeError
+        ValueError
+        Warning
+        ExceptionGroup
+        _OptionError
+        error
+        TokenError
+        StopTokenizing
+        ClassFoundException
+        EndOfBlock
+    GeneratorExit
+    KeyboardInterrupt
+    SystemExit
+</code></pre> <p>Step 4 will be skipped and step 5 will be explained directly.</p> <h3 id="step5"><em>Step5</em></h3> <p>In this step, the <code>sub_tree()</code> function is extended to traverse the subclasses of the class <code>cls</code> recursively.</p> <div class="embed-github-src" repo="fluentpython/example-code-2e/" branch="47cafc801a8e811b7cd7e7a5821f1ad4a65efa52" path="17-it-generator/tree/step5/tree.py" language="python" line="1-19"></div> <h3 id="step6"><em>Step6</em></h3> <p>In this step, the <code>tree(cls)</code> function incorporates the implementation of the <code>sub_tree()</code> function, and the <code>tree(cls, level)</code> function is recursively called by the <code>yield from</code> statement.</p> <div class="embed-github-src" repo="fluentpython/example-code-2e/" branch="47cafc801a8e811b7cd7e7a5821f1ad4a65efa52" path="17-it-generator/tree/step6/tree.py" language="python" line="1-14"></div> <p>The output of this step is as follows:</p> <pre><code>BaseException
+    BaseExceptionGroup
+        ExceptionGroup
+    Exception
+        ArithmeticError
+            FloatingPointError
+            OverflowError
+            ZeroDivisionError
+        AssertionError
+        AttributeError
+        BufferError
+        EOFError
+        ImportError
+            ModuleNotFoundError
+            ZipImportError
+        LookupError
+            IndexError
+            KeyError
+            CodecRegistryError
+        MemoryError
+        NameError
+            UnboundLocalError
+        OSError
+            BlockingIOError
+            ChildProcessError
+            ConnectionError
+                BrokenPipeError
+                ConnectionAbortedError
+                ConnectionRefusedError
+                ConnectionResetError
+            FileExistsError
+            FileNotFoundError
+            InterruptedError
+            IsADirectoryError
+            NotADirectoryError
+            PermissionError
+            ProcessLookupError
+            TimeoutError
+            UnsupportedOperation
+            itimer_error
+        ReferenceError
+        RuntimeError
+            NotImplementedError
+            RecursionError
+            _DeadlockError
+        StopAsyncIteration
+        StopIteration
+        SyntaxError
+            IndentationError
+                TabError
+        SystemError
+            CodecRegistryError
+        TypeError
+        ValueError
+            UnicodeError
+                UnicodeDecodeError
+                UnicodeEncodeError
+                UnicodeTranslateError
+            UnsupportedOperation
+        Warning
+            BytesWarning
+            DeprecationWarning
+            EncodingWarning
+            FutureWarning
+            ImportWarning
+            PendingDeprecationWarning
+            ResourceWarning
+            RuntimeWarning
+            SyntaxWarning
+            UnicodeWarning
+            UserWarning
+        ExceptionGroup
+        _OptionError
+        error
+        TokenError
+        StopTokenizing
+        ClassFoundException
+        EndOfBlock
+    GeneratorExit
+    KeyboardInterrupt
+    SystemExit
+</code></pre> <h2 id="generic-iterable-types">Generic Iterable Types</h2> <p>A <em>generic iterable type</em> is an iterable type that yields items of the same type. This chapter shows how to annotate generic iterable types.</p> <h3 id="annotating-a-generic-iterable"><em>Annotating a generic iterable</em></h3> <p>To annotate a generic iterable, use the <code>collections.abc.Iterable</code> abc. The following example shows how to annotate a generic iterable.</p> <pre><code class="language-python">from collections.abc import Iterable
+
+def replace_text(text: str, replace_rules: Iterable[tuple[str, str]]) -&gt; str:
+    for from_, to in replace_rules:
+        text = text.replace(from_, to)
+    return text
+
+replace_rules = [('a', 'A'), ('b', 'B'), ('c', 'C')]
+replace_text('abc', replace_rules)  # This prints 'ABC'
+</code></pre> <h3 id="annotating-a-generic-iterator"><em>Annotating a generic iterator</em></h3> <p>A generic iterator types don<code>t appear as often as generic iterable types. To annotate a generic iterator, use the </code>collections.abc.Iterator` abc. The following example shows how to annotate a generic iterator.</p> <div class="embed-github-src" repo="fluentpython/example-code-2e/" branch="6527037ae7319ba370a1ee2d9fe79214d0ed9452" path="17-it-generator/fibo_gen.py" language="python" line="1-7"></div> <p>Annotating a return type of a function as <code>collections.abc.Iterator</code> is used to annotate:</p> <ol> <li>a generator function with <code>yield</code>, <code>yield from</code> statements</li> <li>an iterator object generated by a class with handwritten <code>__next__</code> method.</li> </ol> <h3 id="annotating-a-function-that-returns-an-iterator"><em>Annotating a function that returns an iterator</em></h3> <p>The <code>collections.abc.Generator</code> can be used to annotate a generator function, but it is verbose for a generator used as an iterator.</p> <p>The following example shows that the <code>collection.abc.Iterator</code> type is a simplified version of the <code>collection.abc.Generator</code> type.</p> <div class="embed-github-src" repo="fluentpython/example-code-2e/" branch="dd535abcf76739d451c2baaf7813b8390a7dfe88" path="17-it-generator/iter_gen_type.py" language="python" line="1-13"></div> <ul> <li> <code>&lt;1&gt;</code> : <code>short_kw</code> is a generator expression that yields a Python keyword with less than 5 characters.</li> <li> <code>&lt;2&gt;</code> : <code>mypy</code> prints the type of <code>short_kw</code> as <code>typing.Generator[builtins.str, None, None]</code>.</li> <li> <code>&lt;3&gt;</code> : <code>long_kw</code> is a generator expression that yields a Python keyword with more than 4 characters. <code>mypy</code> does not raise on this type annotation, <code>Iterator[str]</code>.</li> <li> <code>&lt;4&gt;</code> : <code>mypy</code> prints the type of <code>long_kw</code> as <code>typing.Iterator[builtins.str]</code>.</li> </ul> <p>From the above example, it can be seen that <code>collections.abc.Iterator[str]</code> is <em>consistent-with</em> <code>collections.abc.Generator[str, None, None]</code>.</p> <ul> <li> <code>collections.abc.Iterator[T]</code> : An iterator that yields items of type <code>T</code>.</li> <li> <code>collections.abc.Generator[T, None, None]</code> : A generator that yields items of type <code>T</code>, but that does not consume or return values.</li> </ul> <h2 id="classic-coroutines">Classic Coroutines</h2> <p>PEP 342 <sup id="fnref:pythonorg__pep342" role="doc-noteref"><a href="#fn:pythonorg__pep342" class="footnote" rel="footnote">4</a></sup> introduced the <code>send()</code> and other features to make generators act as classic coroutine. This section explains the concept of classic coroutines.</p> <h3 id="coroutines"><em>Coroutines</em></h3> <p>In Python, there are two coroutines concepts:</p> <ol> <li> <em>Classic coroutines</em> : Extended generators that can be used to produce and consume values. <code>send()</code> is used to send values to a coroutine.</li> <li> <em>Native coroutines</em> : Native coroutine will be explained in the later section.</li> </ol> <h3 id="type-annotation-for-classic-coroutines"><em>Type Annotation for Classic Coroutines</em></h3> <p>The classic coroutines are annotated as follows:</p> <pre><code class="language-python">collections.abc.Generator[YieldType, SendType, ReturnType]
+</code></pre> <p>The <code>SendType</code> is relevant only for classic coroutines. The <code>SendType</code> is the type of the value <code>x</code> sent to the coroutine with <code>send(x)</code>.</p> <h3 id="tips-for-generators-iterators-and-coroutines"><em>Tips for Generators, Iterators, and Coroutines</em></h3> <p>David Beazley explains the following tips for generators, iterators, and coroutines <sup id="fnref:pycon2009__david_beazley" role="doc-noteref"><a href="#fn:pycon2009__david_beazley" class="footnote" rel="footnote">5</a></sup>:</p> <ol> <li>Generators produce data for iteration.</li> <li>Coroutines are consumers of data.</li> <li>To keep your brain from exploding, don’t mix the two concepts together.</li> <li><strong>Coroutines are not related to iteration.</strong></li> <li>Note: There is a use of having <code>yield</code> produce a value in a coroutine, but it’s not tied to iteration.</li> </ol> <h3 id="example-coroutine-to-compute-a-running-average">Example: Coroutine to Compute a Running Average</h3> <div class="embed-github-src" repo="fluentpython/example-code-2e/" branch="6527037ae7319ba370a1ee2d9fe79214d0ed9452" path="17-it-generator/coroaverager.py" language="python" line="32-42"></div> <ul> <li> <code>&lt;1&gt;</code> : The <code>averager</code> coroutine is annotated as <code>collections.abc.Generator[float, float, None]</code>. This means that the <code>averager</code> coroutine <ul> <li>yields <code>float</code> values,</li> <li>receives <code>float</code> values, and</li> <li>returns <code>None</code> value,</li> </ul> </li> <li> <code>&lt;2&gt;</code> : Infinite loop to receive values from the caller.</li> <li> <code>&lt;3&gt;</code> : The <code>yield average</code> statement yields the average of the received values and then waits for the next value from the caller.</li> <li> <code>&lt;3&gt;</code> : <code>term = yield average</code> assigns the value sent by <code>.send()</code> to the <code>term</code> variable.</li> </ul> <p>One attractive point in the above implementation is that <code>total</code>, <code>count</code>, and <code>average</code> can be local variables in the <code>averager</code> coroutine. There is no need to use classes, instance attributes or closures to store the state of the coroutine.</p> <p>The following example shows how to use the <code>averager</code> coroutine.</p> <div class="embed-github-src" repo="fluentpython/example-code-2e/" branch="6527037ae7319ba370a1ee2d9fe79214d0ed9452" path="17-it-generator/coroaverager.py" language="python" line="5-13"></div> <ul> <li> <code>&lt;1&gt;</code> : Creates a <code>coro_avg</code> coroutine object by invoking the <code>averager()</code> function.</li> <li> <code>&lt;2&gt;</code> : Starts the <code>coro_avg</code> coroutine by calling <code>next()</code>.</li> <li> <code>&lt;3&gt;</code> : Each call to <code>coro_avg.send()</code> sends a value to the <code>coro_avg</code> coroutine and returns the average of the received values.</li> </ul> <p>In the above example, <code>next(coro_avg)</code> is used to advance the coroutine to the first <code>yield</code> statement. The <code>next(coro_avg)</code> is equivalent to <code>coro_avg.send(None)</code>. It is not possible to send a non-<code>None</code> value to a coroutine before it is started. This will raise a <code>TypeError</code> as follows:</p> <pre><code class="language-python">&gt;&gt;&gt; coro_avg = averager()
+&gt;&gt;&gt; coro_avg.send(10)
+Traceback (most recent call last):
+  File "&lt;stdin&gt;", line 1, in &lt;module&gt;
+TypeError: can't send non-None value to a just-started generator
+</code></pre> <p>After the coroutine is started, the coroutine is suspended at the <code>yield</code> statement, and waits for a value to be sent to it. The <code>coro_avg.send(10)</code> resumes the coroutine and receives the value <code>10</code> from <code>yield</code> statement and assigns it to the <code>term</code> variable.</p> <p>To terminate the coroutine, <code>.close()</code> method is used as follows:</p> <div class="embed-github-src" repo="fluentpython/example-code-2e/" branch="6527037ae7319ba370a1ee2d9fe79214d0ed9452" path="17-it-generator/coroaverager.py" language="python" line="18-25"></div> <ul> <li> <code>&lt;2&gt;</code> : The <code>coro_avg.close()</code> method terminates the coroutine.</li> <li> <code>&lt;3&gt;</code> : Calling <code>.close()</code> on a previously terminated coroutine has no effect.</li> <li> <code>&lt;4&gt;</code> : Calling <code>.send()</code> on a previously terminated coroutine raises a <code>StopIteration</code> exception.</li> </ul> <h3 id="returning-a-value-from-a-coroutine">Returning a Value from a Coroutine</h3> <p>The previous version of the <code>averager()</code> classic coroutine yields the average of the received values every time the <code>.send()</code> method is invoked. In this chapter, the <code>averager()</code> classic coroutine is modified to return the average of the received values when the coroutine is terminated, instead of yielding the partial average of the received values.</p> <div class="embed-github-src" repo="fluentpython/example-code-2e/" branch="6527037ae7319ba370a1ee2d9fe79214d0ed9452" path="17-it-generator/coroaverager2.py" language="python" line="65-78"></div> <ul> <li> <code>&lt;1&gt;</code> : The class <code>Result</code> contains the average of the received values and the number of received values.</li> <li> <code>&lt;2&gt;</code> : To ignore raising error when replacing the <code>.count()</code> method of the <code>NamedTuple</code> into <code>count</code> attribute, the <code># type: ignore</code> comment is used.</li> <li> <code>&lt;3&gt;</code> : The class <code>Sentinel</code> is used to make a sentinel object which is used to terminate the coroutine.</li> <li> <code>&lt;4&gt;</code> : The <code>STOP</code> is a singleton sentinel object.</li> <li> <code>&lt;5&gt;</code> : The <code>SendType</code> is a type alias for the type of the value sent to the coroutine. The <code>SendType</code> is <code>Union[float, Sentinel]</code>.</li> </ul> <p><code>SendType = Union[float, Sentinel]</code> can be rewritten as follows using <code>typing.TypeAlias</code> <sup id="fnref:pythonorg__typing_typealias" role="doc-noteref"><a href="#fn:pythonorg__typing_typealias" class="footnote" rel="footnote">6</a></sup>:</p> <pre><code class="language-python">import typing.TypeAlias
+SendType: TypeAlias = float, Sentinel
+</code></pre> <div class="embed-github-src" repo="fluentpython/example-code-2e/" branch="6527037ae7319ba370a1ee2d9fe79214d0ed9452" path="17-it-generator/coroaverager2.py" language="python" line="81-94"></div> <ul> <li> <code>&lt;1&gt;</code> : The type of return value of the <code>averager2()</code> coroutine is <code>collections.abc.Generator[None, SendType, Result]</code>.</li> <li> <code>&lt;2&gt;</code> : <code>term = yield</code> statement does not yield a value. The <code>term</code> variable is assigned with the value sent by <code>.send()</code> method.</li> <li> <code>&lt;3&gt;</code> : The <code>if isinstance(term, Sentinel)</code> statement checks if the <code>term</code> variable is a sentinel object. If it is a sentinel object, the infinite loop is stopped.</li> <li> <code>&lt;4&gt;</code> : The above <code>isinstance</code> check prevents raising an error by the type checker on the <code>total += term</code> statement.</li> <li> <code>&lt;5&gt;</code> : The <code>Result</code> object is returned when the coroutine is terminated.</li> </ul> <p>The following example demonstrates how to use the <code>averager2()</code> coroutine.</p> <div class="embed-github-src" repo="fluentpython/example-code-2e/" branch="6527037ae7319ba370a1ee2d9fe79214d0ed9452" path="17-it-generator/coroaverager2.py" language="python" line="8-13"></div> <ul> <li> <code>&lt;1&gt;</code> : The <code>coro_avg.send()</code> does not return the average of the received values. Instead, the <code>coro_avg.send()</code> returns <code>None</code>. When the <code>None</code> is returned, Python’s console does not print the returned value.</li> <li> <code>&lt;2&gt;</code> : The <code>coro_avg.close()</code> terminates the coroutine but does not return the average value. When the <code>coro_avg.close()</code> is called, the <code>GeneratorExit</code> exception is raised at the line of the <code>term = yield</code> statement, so the <code>return</code> statement will not be executed.</li> </ul> <p>To get the return value of the coroutine, sending the <code>STOP</code> sentinel object is needed. The following example shows how to get the return value of the <code>averager2()</code> coroutine.</p> <div class="embed-github-src" repo="fluentpython/example-code-2e/" branch="6527037ae7319ba370a1ee2d9fe79214d0ed9452" path="17-it-generator/coroaverager2.py" language="python" line="22-33"></div> <ul> <li> <code>&lt;1&gt;</code> : The <code>coro_avg.send()</code> returns <code>None</code> when the <code>STOP</code> sentinel object is sent to the coroutine. This statement is written in <code>try:</code> block to catch the <code>StopIteration</code> exception.</li> <li> <code>&lt;2&gt;</code> : When the <code>StopIteration</code> exception is raised, the <code>Result</code> object is returned as the <code>StopIteration</code> exception’s value. To get the value of the <code>StopIteration</code> exception, the <code>exc.value</code> attribute is used.</li> <li> <code>&lt;3&gt;</code> : The <code>result</code> variable is assigned with the <code>Result</code> object returned by the <code>coro_avg.send(STOP)</code> method.</li> </ul> <p>A delegating generator can get the return value of a subgenerator by using assigning the return value of <code>yield from</code> statement. The following example shows how to get the return value of the <code>averager2()</code> coroutine by using a delegating generator.</p> <div class="embed-github-src" repo="fluentpython/example-code-2e/" branch="6527037ae7319ba370a1ee2d9fe79214d0ed9452" path="17-it-generator/coroaverager2.py" language="python" line="42-59"></div> <ul> <li> <code>&lt;1&gt;</code> : The <code>res = yield from averager2(True)</code> statement catches the return value from the <code>averager2()</code> coroutine.</li> <li> <code>&lt;3&gt;</code> : The returned value from the <code>return res</code> statement can be catched by the <code>StopIteration</code> exception’s value.</li> <li> <code>&lt;4&gt;</code> : Creating a delegating coroutine object.</li> <li> <code>&lt;5&gt;</code> : To initialize the coroutine, iterator containing the <code>None</code> value on the first item is used for <code>for</code> loop.</li> <li> <code>&lt;7&gt;</code>, <code>&lt;8&gt;</code> : This statement catches the return value of the <code>comp</code> coroutine object.</li> </ul> <h3 id="generic-type-hints-for-classic-coroutines">Generic Type Hints for Classic Coroutines</h3> <div class="embed-github-src" repo="python/cpython/" branch="6f743e7a4da904f61dfa84cc7d7385e4dcc79ac5" path="Lib/typing.py" language="python" line="543-546"></div> <div class="embed-github-src" repo="python/cpython/" branch="6f743e7a4da904f61dfa84cc7d7385e4dcc79ac5" path="Lib/typing.py" language="python" line="2060-2061"></div> <p>By the above code of Python 3.6, the <code>typing.Generator</code> is</p> <ol> <li>covariant on the <code>YieldType</code> and <code>ReturnType</code> type parameters, and</li> <li>contravariant on the <code>SendType</code> type parameter.</li> </ol> <p>Therefore, the following relation holds:</p> <pre><code>float :&gt; int
+Generator[float, Any, float] :&gt; Generator[int, Any, int]
+Generator[Any, float, Any] :&gt; Generator[Any, int, Any]
+</code></pre> <h2 id="chapter-summary">Chapter Summary</h2> <ul> <li>An <em>iterator</em> is an object that implements the <code>__next__()</code> method and the <code>__iter__()</code> method. The <code>__next__()</code> method returns the next item in the sequence. The <code>__iter__()</code> method returns the iterator object itself.</li> <li>An <em>iterable</em> is an object that generates an iterator when the <code>iter()</code> function is called on it. Two type of iterables are: <ul> <li>Object that implements the <code>__iter__()</code> method.</li> <li>Object that implements the <code>__getitem__()</code> method.</li> </ul> </li> <li>It is not recommended to make an iterable object implement the <code>__next__()</code> method. The <code>__next__()</code> method should be implemented in an iterator object.</li> <li>Using a generator function on <code>__iter__()</code> method is a convenient way to implement an iterable object.</li> <li>The <code>yield</code> statement is used to create a generator function.</li> <li>The <code>yield from</code> statement is used to delegate to a subgenerator.</li> <li>The <code>itertools</code> module contains functions that return iterators for efficient looping. If possible, use the <code>itertools</code> module instead of handwritten iterators.</li> <li>To annotate a generic iterable, use the <code>collections.abc.Iterable</code> abc. <ul> <li> <code>Iterable[T]</code> : An iterable that yields items of type <code>T</code>.</li> </ul> </li> <li>To annotate a generic iterator, use the <code>collections.abc.Iterator</code> abc. <ul> <li> <code>Iterator[T]</code> : An iterator that yields items of type <code>T</code>.</li> <li>A type annotation of the return value of generator functions with <code>yield</code> statement is <code>Iterator[T]</code>.</li> </ul> </li> <li> <code>collections.abc.Iterator[T]</code> is <em>consistent-with</em> <code>collections.abc.Generator[T, None, None]</code>.</li> <li>A <em>classic coroutine</em> is an extended generator that can be used to produce and consume values. <ul> <li>The <code>next()</code> built-in function or <code>.send(None)</code> method is used to advance a coroutine to the first <code>yield</code> statement.</li> <li>The <code>send()</code> method is used to send values to a coroutine.</li> <li>The <code>close()</code> method is used to terminate a coroutine.</li> <li>The <code>collections.abc.Generator[YieldType, SendType, ReturnType]</code> is used to annotate a classic coroutine.</li> <li> <code>try: ... except StopIteration as exc: ...</code> is used to get the return value of a coroutine.</li> <li>A delegating generator can get the return value of a subgenerator by using assigning the return value of <code>yield from</code> statement.</li> </ul> </li> </ul> <h2 id="links">Links</h2> <div class="footnotes" role="doc-endnotes"> <ol> <li id="fn:pythonorg__builtin_iter" role="doc-endnote"> <p><a href="https://docs.python.org/3/library/functions.html#iter" rel="external nofollow noopener" target="_blank">Built-in Functions : <strong><code>iter</code></strong><code>(object)</code></a> <a href="#fnref:pythonorg__builtin_iter" class="reversefootnote" role="doc-backlink">↩</a> <a href="#fnref:pythonorg__builtin_iter:1" class="reversefootnote" role="doc-backlink">↩<sup>2</sup></a> <a href="#fnref:pythonorg__builtin_iter:2" class="reversefootnote" role="doc-backlink">↩<sup>3</sup></a></p> </li> <li id="fn:gof__iterator" role="doc-endnote"> <p><a href="https://www.oodesign.com/iterator-pattern.html" rel="external nofollow noopener" target="_blank">Design Patterns : <strong>Iterator</strong></a> <a href="#fnref:gof__iterator" class="reversefootnote" role="doc-backlink">↩</a></p> </li> <li id="fn:pythonorg__itertools" role="doc-endnote"> <p><a href="https://docs.python.org/3/library/itertools.html" rel="external nofollow noopener" target="_blank"><code>itertools</code> — Functions creating iterators for efficient looping</a> <a href="#fnref:pythonorg__itertools" class="reversefootnote" role="doc-backlink">↩</a></p> </li> <li id="fn:pythonorg__pep342" role="doc-endnote"> <p><a href="https://peps.python.org/pep-0342/" rel="external nofollow noopener" target="_blank">PEP 342 – Coroutines via Enhanced Generators</a> <a href="#fnref:pythonorg__pep342" class="reversefootnote" role="doc-backlink">↩</a></p> </li> <li id="fn:pycon2009__david_beazley" role="doc-endnote"> <p><a href="http://www.dabeaz.com/coroutines/Coroutines.pdf" rel="external nofollow noopener" target="_blank">A Curious Course on Coroutines and Concurrency by <em>David Beazley</em> at PyCon’2009</a> <a href="#fnref:pycon2009__david_beazley" class="reversefootnote" role="doc-backlink">↩</a></p> </li> <li id="fn:pythonorg__typing_typealias" role="doc-endnote"> <p><a href="https://docs.python.org/3/library/typing.html#typing.TypeAlias" rel="external nofollow noopener" target="_blank">typing — Support for type hints : <strong><code>typing.TypeAlias</code></strong></a> <a href="#fnref:pythonorg__typing_typealias" class="reversefootnote" role="doc-backlink">↩</a></p> </li> </ol> </div> </d-article> <d-appendix> <d-footnote-list></d-footnote-list> <d-citation-list></d-citation-list> </d-appendix> <d-bibliography src="/assets/bibliography/"></d-bibliography> </div> <footer class="fixed-bottom"> <div class="container mt-0"> © Copyright 2024 Dongseok Kim. Powered by <a href="https://jekyllrb.com/" target="_blank" rel="external nofollow noopener">Jekyll</a> with <a href="https://github.com/alshedivat/al-folio" rel="external nofollow noopener" target="_blank">al-folio</a> theme. Hosted by <a href="https://pages.github.com/" target="_blank" rel="external nofollow noopener">GitHub Pages</a>. Photos from <a href="https://unsplash.com" target="_blank" rel="external nofollow noopener">Unsplash</a>. </div> </footer> <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js" integrity="sha256-fgLAgv7fyCGopR/gBNq2iW3ZKIdqIcyshnUULC4vex8=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/npm/mdbootstrap@4.20.0/js/mdb.min.js" integrity="sha256-NdbiivsvWt7VYCt6hYNT3h/th9vSTL4EDWeGs5SN3DA=" crossorigin="anonymous"></script> <script type="text/javascript">function progressBarSetup(){"max"in document.createElement("progress")?(initializeProgressElement(),$(document).on("scroll",function(){progressBar.attr({value:getCurrentScrollPosition()})}),$(window).on("resize",initializeProgressElement)):(resizeProgressBar(),$(document).on("scroll",resizeProgressBar),$(window).on("resize",resizeProgressBar))}function getCurrentScrollPosition(){return $(window).scrollTop()}function initializeProgressElement(){let e=$("#navbar").outerHeight(!0);$("body").css({"padding-top":e}),$("progress-container").css({"padding-top":e}),progressBar.css({top:e}),progressBar.attr({max:getDistanceToScroll(),value:getCurrentScrollPosition()})}function getDistanceToScroll(){return $(document).height()-$(window).height()}function resizeProgressBar(){progressBar.css({width:getWidthPercentage()+"%"})}function getWidthPercentage(){return getCurrentScrollPosition()/getDistanceToScroll()*100}const progressBar=$("#progress");window.onload=function(){setTimeout(progressBarSetup,50)};</script> <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.7.0/build/highlight.min.js"></script> <script>hljs.highlightAll();</script> <script src="//cdn.jsdelivr.net/npm/highlightjs-line-numbers.js@2.8.0/dist/highlightjs-line-numbers.min.js"></script> <script>hljs.initLineNumbersOnLoad();</script> <script>function append_code_block_header(e){if(!e.className)return;const[t,r]=get_language_and_url(e);r&&(replace_className(e,t),elemCodeBlockHeader=create_elem_code_block_header(r),append_elem_code_block_header_to_previous(e,elemCodeBlockHeader))}function get_language_and_url(e){return e.className.split(/:(.*)/s)}function replace_className(e,t){e.classList.remove(e.className),e.classList.add(t)}function create_elem_code_block_header(e){var t=document.createElement("a");return t.textContent=e,(e.startsWith("http://")||e.startsWith("https://"))&&(t.setAttribute("href",e),t.setAttribute("target","_blank")),t.className="language-plaintext",t}function append_elem_code_block_header_to_previous(e,t){var r=e.parentElement;r.insertBefore(t,r.firstChild),r.classList.add("code-block-header")}function embed_external_source(e){var t=get_url_raw(e),r=get_url_blob(e),n=e.getAttribute("language"),c=get_lines(e),l=c[0],a=c[1];fetch(t).then(function(e){return e.text()}).then(function(t){var c=create_elem_code_block(n,r,t,l,a),o=create_elem_pre_from_code_block(c),_={startFrom:Math.max(l,1)};e.appendChild(o),hljs.highlightBlock(c),hljs.lineNumbersBlock(c,_)})["catch"](function(e){throw e})}function embed_local_source(e){var t=get_url_raw_local(e),r=get_url_blob_local(e),n=e.getAttribute("language"),c=get_lines(e),l=c[0],a=c[1];fetch(t).then(function(e){return e.text()}).then(function(t){var c=create_elem_code_block(n,r,t,l,a),o=create_elem_pre_from_code_block(c);e.appendChild(o),hljs.highlightBlock(c),hljs.lineNumbersBlock(c)})["catch"](function(e){throw e})}function get_url_raw(e){return["https://raw.githubusercontent.com",e.getAttribute("repo"),e.getAttribute("branch"),e.getAttribute("path")].join("/")}function get_url_blob(e){return["https://github.com",e.getAttribute("repo"),"blob",e.getAttribute("branch"),e.getAttribute("path")+get_line_specifier(e)].join("/")}function get_url_raw_local(e){return e.getAttribute("path")}function get_url_blob_local(e){return get_url_raw_local(e)}function get_lines(e){const t=e.getAttribute("line");if(!t)return[0,0];var[r,n]=t.split(/-(.*)/s);return r=parseInt(r),n=parseInt(n),isNaN(r)&&(r=0),isNaN(n)&&(n=0),[r,n]}function get_line_specifier(e){const t=get_lines(e);return 0==t[0]&&0==t[1]?"":(0==t[1]&&t[1],"#L"+String(t[0])+"-L"+String(t[1]))}function create_elem_code_block(e,t,r,n,c){var l=document.createElement("code");return l.className="language-"+e+":"+t,l.textContent=slice_by_line_number(r,n,c),l}function slice_by_line_number(e,t,r){return 0==t&&0==r?e:(0==t&&(t=1),e.split("\n").slice(t-1,r).join("\n"))}function create_elem_pre_from_code_block(e){var t=document.createElement("pre");return t.appendChild(e),append_code_block_header(e),t}const code=document.getElementsByTagName("code");Array.from(code).forEach(append_code_block_header);var divs=document.getElementsByClassName("embed-github-src");Array.prototype.forEach.call(divs,embed_external_source);divs=document.getElementsByClassName("embed-local-src");Array.prototype.forEach.call(divs,embed_local_source);</script> </body> </html>

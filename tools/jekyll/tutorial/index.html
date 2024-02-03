@@ -1,0 +1,107 @@
+<!DOCTYPE html> <html lang="en"> <head> <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> <meta charset="utf-8"> <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"> <meta http-equiv="X-UA-Compatible" content="IE=edge"> <title>Tutorial | Dongseok Kim</title> <meta name="author" content="Dongseok Kim"> <meta name="description" content="Tutorial of Jekyll"> <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha256-DF7Zhf293AJxJNTmh5zhoYYIMs2oXitRfBjY+9L//AY=" crossorigin="anonymous"> <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mdbootstrap@4.20.0/css/mdb.min.css" integrity="sha256-jpjYvU3G3N6nrrBwXJoVEYI/0zw8htfFnhT9ljN3JJw=" crossorigin="anonymous"> <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous"> <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/academicons@1.9.1/css/academicons.min.css" integrity="sha256-i1+4qU2G2860dGGIOJscdC30s9beBXjFfzjWLjBRsBg=" crossorigin="anonymous"> <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:100,300,400,500,700|Material+Icons"> <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.7.0/build/styles/atom-one-light.min.css" media="" id="highlight_theme_light"> <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.7.0/build/styles/atom-one-dark.min.css" media="none" id="highlight_theme_dark"> <link rel="shortcut icon" href="data:image/svg+xml,&lt;svg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%20100%20100%22&gt;&lt;text%20y=%22.9em%22%20font-size=%2290%22&gt;%E2%9A%9B%EF%B8%8F&lt;/text&gt;&lt;/svg&gt;"> <link rel="stylesheet" href="/assets/css/main.css"> <link rel="canonical" href="https://d0ngse0kkim.github.io/tools/jekyll/tutorial/"> <script src="/assets/js/theme.js"></script> <script src="/assets/js/dark_mode.js"></script> </head> <body class="fixed-top-nav "> <header> <nav id="navbar" class="navbar navbar-light navbar-expand-sm fixed-top"> <div class="container"> <a class="navbar-brand title font-weight-lighter" href="/"><span class="font-weight-bold">Dongseok </span>Kim</a> <button class="navbar-toggler collapsed ml-auto" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar top-bar"></span> <span class="icon-bar middle-bar"></span> <span class="icon-bar bottom-bar"></span> </button> <div class="collapse navbar-collapse text-right" id="navbarNav"> <ul class="navbar-nav ml-auto flex-nowrap"> <li class="nav-item "> <a class="nav-link" href="/">about</a> </li> <li class="nav-item dropdown "> <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">programming</a> <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown"> <a class="dropdown-item" href="/python">Python</a> <div class="dropdown-divider"></div> <a class="dropdown-item" href="/softwaredesign/">Software Design</a> <div class="dropdown-divider"></div> <a class="dropdown-item" href="/tools/">Tools</a> </div> </li> <li class="nav-item dropdown "> <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">hobbies</a> <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown"> <a class="dropdown-item" href="/running">running</a> </div> </li> <li class="nav-item dropdown "> <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">others</a> <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown"> <a class="dropdown-item" href="/repositories">repositories</a> <div class="dropdown-divider"></div> <a class="dropdown-item" href="/cv/">cv</a> </div> </li> <li class="toggle-container"> <button id="light-toggle" title="Change theme"> <i class="fas fa-moon"></i> <i class="fas fa-sun"></i> </button> </li> </ul> </div> </div> </nav> <progress id="progress" value="0"> <div class="progress-container"> <span class="progress-bar"></span> </div> </progress> </header> <div class="container mt-5"> <div class="post"> <header class="post-header"> <h1 class="post-title">Tutorial</h1> <p class="post-description">Tutorial of Jekyll</p> </header> <article> <h2 id="installation">Installation</h2> <h3 id="references">References</h3> <ul> <li><a href="https://jekyllrb.com/docs/installation/" rel="external nofollow noopener" target="_blank">Installation</a></li> <li><a href="https://jekyllrb.com/docs/installation/macos/" rel="external nofollow noopener" target="_blank">Jekyll on macOS</a></li> <li><a href="https://jekyllrb.com/docs/step-by-step/01-setup/" rel="external nofollow noopener" target="_blank">Step by Step Tutorial</a></li> </ul> <h3 id="install-ruby">Install <code>ruby</code> </h3> <p>install <code>ruby</code> and <code>chruby</code>(Version manaber of <code>ruby</code>) from <code>brew</code></p> <pre><code class="language-bash">% brew install chruby ruby-install xz
+% ruby-install ruby 3.1.3
+% echo "source $(brew --prefix)/opt/chruby/share/chruby/chruby.sh" &gt;&gt; ~/.zshrc
+% echo "source $(brew --prefix)/opt/chruby/share/chruby/auto.sh" &gt;&gt; ~/.zshrc
+% echo "chruby ruby-3.1.3" &gt;&gt; ~/.zshrc # run 'chruby' to see actual version
+% ruby -v
+ruby 3.1.3p185 (2022-11-24 revision 1a6b16756e) [arm64-darwin21]
+</code></pre> <h3 id="install-jekyll">Install Jekyll</h3> <pre><code class="language-bash">% gem install jekyll bundler
+</code></pre> <h3 id="write-dependencies">Write dependencies</h3> <p>Create a new <code>Gemfile</code> into a project folder to list dependencies of the project.</p> <pre><code class="language-bash:console">% cd /path/to/project/folder
+% bundle init
+</code></pre> <p>Edit <code>Gemfile</code> with text editor and add jekyll as a dependency</p> <pre><code class="language-bash:console">% code Gemfile
+</code></pre> <pre><code class="language-:Gemfile">gem "jekyll"
+</code></pre> <h2 id="create-a-site">Create a site</h2> <p>Create <code>index.html</code> in <strong>root</strong> of your project folder with the following contents:</p> <pre><code class="language-html:index.html">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+  &lt;head&gt;
+    &lt;meta charset="utf-8"&gt;
+    &lt;title&gt;Home&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;h1&gt;Hello World!&lt;/h1&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+</code></pre> <h2 id="build">Build</h2> <ul> <li> <code>jekyll build</code> - Builds the site and outputs a static site to a directory called <code>_site</code>.</li> <li> <code>jekyll serve</code> - Does jekyll build and runs it on a local web server at <code>http://localhost:4000</code>, rebuilding the site any time you make a change.</li> </ul> <h2 id="liquid">Liquid</h2> <h3 id="objects">Objects</h3> <ul> <li>Objects can be used to print predefined variables as content on a page.</li> <li>Use double curly braces for object. <ul> <li> <code>Tutorial</code> displays <code>page.title</code> variable.</li> </ul> </li> <li> <a href="https://jekyllrb.com/docs/variables/" rel="external nofollow noopener" target="_blank">Variables</a> lists available data on jekyll.</li> </ul> <h3 id="tags">Tags</h3> <ul> <li>Tags defines the logic and control flow for templates.</li> <li>Use curly braces and percent sign for tags: <code>{%</code> and <code>%}</code> </li> <li> <code>if</code> statement in jekyll can be used inside of Tags</li> <li> <p>An example below displays sidevar contents if <code>page.show_sidebar</code> is true.</p> <pre><code class="language-html">  {% if page.show_sidebar %}
+  &lt;div class="sidebar"&gt;
+      sidebar content
+  &lt;/div&gt;
+  {% endif %}
+</code></pre> </li> </ul> <h3 id="filters">Filters</h3> <ul> <li>Filters change the output of a Liquid object.</li> <li>They are used within an output and are separated by a <code>|</code>.</li> <li> <p>An example below displays capitalized “HI” instead of “hi”.</p> <pre><code>  {{ "hi" | capitalize }}
+</code></pre> </li> </ul> <h3 id="use-liquid">Use Liquid</h3> <p>An example below displays downcased <code>hello world!</code> on <code>index.html</code>.</p> <p>A front matter is needed to process Liquid on Jekyll.</p> <pre><code class="language-html:index.html">---
+---
+
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+  &lt;head&gt;
+    &lt;meta charset="utf-8"&gt;
+    &lt;title&gt;Home&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;h1&gt;{{ "Hello World!" | downcase }}&lt;/h1&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+</code></pre> <h2 id="front-matter">Front Matter</h2> <h3 id="front-matter-1">Front Matter</h3> <p>A front matter is a snippet of YAML placed between two triple-dashed lines at the start of a file.</p> <p>Variables defined inside of front matter can be accessed using <code>page.var_inside_of_front_matter</code>.</p> <p>An example below displays <code>title</code> inside of front matter on the page title of web browser.</p> <pre><code class="language-html:index.html">---
+title: Home
+---
+&lt;!doctype html&gt;
+&lt;html&gt;
+  &lt;head&gt;
+    &lt;meta charset="utf-8"&gt;
+    &lt;title&gt;{{ page.title }}&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;h1&gt;{{ "Hello World!" | downcase }}&lt;/h1&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+</code></pre> <h2 id="layouts">Layouts</h2> <p>Layouts in Jekyll can be used for providing template layout to each html or markdown files.</p> <h3 id="creating-a-layout">Creating a layout</h3> <p>Layout files is stored in a directory called <code>_layouts</code>.</p> <p>An example below defines page title and contents of each page files.</p> <p>A special variable <code>contents</code> is used for rendering of content of the each pages.</p> <pre><code class="language-html:_layouts/default.html">&lt;!doctype html&gt;
+&lt;html&gt;
+  &lt;head&gt;
+    &lt;meta charset="utf-8"&gt;
+    &lt;title&gt;{{ page.title }}&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    {{ content }}
+  &lt;/body&gt;
+&lt;/html&gt;
+</code></pre> <h3 id="use-layouts">Use layouts</h3> <h4 id="html">html</h4> <p><code>index.html</code> can be re-written to simple contents by using <code>_layouts/default.html</code>.</p> <pre><code class="language-html:index.html">---
+layout: default
+title: Home
+---
+&lt;h1&gt;{{ "Hello World!" | downcase }}&lt;/h1&gt;
+</code></pre> <h4 id="markdown">Markdown</h4> <p><code>about.md</code> is a markdown file that uses <code>_layouts/default.html</code> file to render its contents.</p> <pre><code class="language-markdown:about.md">---
+layout: default
+title: About
+---
+# About page
+
+This page tells you a little bit about me.
+</code></pre> <p>An webpages generated from <code>about.md</code> can be accessed from a URL <code>http://localhost:4000/about.html</code>.</p> <h2 id="includes">Includes</h2> <p><code>include</code> tag can be used to include content from another file stored in an <code>_includes</code> folder.</p> <h3 id="include-usage">Include usage</h3> <p>An example below defines an navigation file in the <code>_includes</code> folder.</p> <p>This file renders links to each pages with red highlighting to current page link.</p> <pre><code class="language-html:_includes/navigation.html">&lt;nav&gt;
+    &lt;a href="/" {% if page.url == "/" %}style="color: red;"{% endif %}&gt;
+        Home
+    &lt;/a&gt;
+    &lt;a href="/about.html" {% if page.url == "/about.html" %}style="color: red;"{% endif %}&gt;
+        About
+    &lt;/a&gt;
+&lt;/nav&gt;
+</code></pre> <p><code>_includes/navigation.html</code> file can be embedded to another html file using <code>include</code> tag.</p> <pre><code class="language-html:_layouts/default.html">&lt;!doctype html&gt;
+&lt;html&gt;
+    &lt;head&gt;
+        &lt;meta charset="utf-8"&gt;
+        &lt;title&gt;{{ page.title }}&lt;/title&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+        {% include navigation.html %}
+        {{ content }}
+    &lt;/body&gt;
+&lt;/html&gt;
+</code></pre> <h2 id="data-files">Data files</h2> <p>Jekyll supports loading data from YAML, JSON, and CSV files located in a <code>_data</code> directory.</p> <h3 id="data-file-usage">Data file usage</h3> <p><code>_data/navigation.yml</code> below defines data of url and name of each pages.</p> <pre><code class="language-yaml:_data/navigation.yml">- name: Home
+  link: /
+- name: About
+  link: /about.html
+</code></pre> <p>Data in this file can be accessed by using <code>site.data.navigation</code>.</p> <pre><code class="language-html:_includes/navigation.html">&lt;nav&gt;
+    {% for item in site.data.navigation %}
+        &lt;a href="{{ item.link }}" {% if page.url == item.link %}style="color: red;"{% endif %}&gt;
+        {{ item.name }}
+        &lt;/a&gt;
+    {% endfor %}
+&lt;/nav&gt;
+</code></pre> </article> </div> </div> <footer class="fixed-bottom"> <div class="container mt-0"> © Copyright 2024 Dongseok Kim. Powered by <a href="https://jekyllrb.com/" target="_blank" rel="external nofollow noopener">Jekyll</a> with <a href="https://github.com/alshedivat/al-folio" rel="external nofollow noopener" target="_blank">al-folio</a> theme. Hosted by <a href="https://pages.github.com/" target="_blank" rel="external nofollow noopener">GitHub Pages</a>. Photos from <a href="https://unsplash.com" target="_blank" rel="external nofollow noopener">Unsplash</a>. </div> </footer> <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js" integrity="sha256-fgLAgv7fyCGopR/gBNq2iW3ZKIdqIcyshnUULC4vex8=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/npm/mdbootstrap@4.20.0/js/mdb.min.js" integrity="sha256-NdbiivsvWt7VYCt6hYNT3h/th9vSTL4EDWeGs5SN3DA=" crossorigin="anonymous"></script> <script defer src="https://cdn.jsdelivr.net/npm/masonry-layout@4.2.2/dist/masonry.pkgd.min.js" integrity="sha256-Nn1q/fx0H7SNLZMQ5Hw5JLaTRZp0yILA/FRexe19VdI=" crossorigin="anonymous"></script> <script defer src="https://cdn.jsdelivr.net/npm/imagesloaded@4/imagesloaded.pkgd.min.js"></script> <script defer src="/assets/js/masonry.js" type="text/javascript"></script> <script defer src="https://cdn.jsdelivr.net/npm/medium-zoom@1.0.8/dist/medium-zoom.min.js" integrity="sha256-7PhEpEWEW0XXQ0k6kQrPKwuoIomz8R8IYyuU1Qew4P8=" crossorigin="anonymous"></script> <script defer src="/assets/js/zoom.js"></script> <script defer src="/assets/js/common.js"></script> <script async src="https://d1bxh8uas1mnw7.cloudfront.net/assets/embed.js"></script> <script async src="https://badge.dimensions.ai/badge.js"></script> <script type="text/javascript">window.MathJax={tex:{tags:"ams"}};</script> <script defer type="text/javascript" id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js"></script> <script defer src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script> <script type="text/javascript">function progressBarSetup(){"max"in document.createElement("progress")?(initializeProgressElement(),$(document).on("scroll",function(){progressBar.attr({value:getCurrentScrollPosition()})}),$(window).on("resize",initializeProgressElement)):(resizeProgressBar(),$(document).on("scroll",resizeProgressBar),$(window).on("resize",resizeProgressBar))}function getCurrentScrollPosition(){return $(window).scrollTop()}function initializeProgressElement(){let e=$("#navbar").outerHeight(!0);$("body").css({"padding-top":e}),$("progress-container").css({"padding-top":e}),progressBar.css({top:e}),progressBar.attr({max:getDistanceToScroll(),value:getCurrentScrollPosition()})}function getDistanceToScroll(){return $(document).height()-$(window).height()}function resizeProgressBar(){progressBar.css({width:getWidthPercentage()+"%"})}function getWidthPercentage(){return getCurrentScrollPosition()/getDistanceToScroll()*100}const progressBar=$("#progress");window.onload=function(){setTimeout(progressBarSetup,50)};</script> <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.7.0/build/highlight.min.js"></script> <script>hljs.highlightAll();</script> <script src="//cdn.jsdelivr.net/npm/highlightjs-line-numbers.js@2.8.0/dist/highlightjs-line-numbers.min.js"></script> <script>hljs.initLineNumbersOnLoad();</script> <script>function append_code_block_header(e){if(!e.className)return;const[t,r]=get_language_and_url(e);r&&(replace_className(e,t),elemCodeBlockHeader=create_elem_code_block_header(r),append_elem_code_block_header_to_previous(e,elemCodeBlockHeader))}function get_language_and_url(e){return e.className.split(/:(.*)/s)}function replace_className(e,t){e.classList.remove(e.className),e.classList.add(t)}function create_elem_code_block_header(e){var t=document.createElement("a");return t.textContent=e,(e.startsWith("http://")||e.startsWith("https://"))&&(t.setAttribute("href",e),t.setAttribute("target","_blank")),t.className="language-plaintext",t}function append_elem_code_block_header_to_previous(e,t){var r=e.parentElement;r.insertBefore(t,r.firstChild),r.classList.add("code-block-header")}function embed_external_source(e){var t=get_url_raw(e),r=get_url_blob(e),n=e.getAttribute("language"),c=get_lines(e),l=c[0],a=c[1];fetch(t).then(function(e){return e.text()}).then(function(t){var c=create_elem_code_block(n,r,t,l,a),o=create_elem_pre_from_code_block(c),_={startFrom:Math.max(l,1)};e.appendChild(o),hljs.highlightBlock(c),hljs.lineNumbersBlock(c,_)})["catch"](function(e){throw e})}function embed_local_source(e){var t=get_url_raw_local(e),r=get_url_blob_local(e),n=e.getAttribute("language"),c=get_lines(e),l=c[0],a=c[1];fetch(t).then(function(e){return e.text()}).then(function(t){var c=create_elem_code_block(n,r,t,l,a),o=create_elem_pre_from_code_block(c);e.appendChild(o),hljs.highlightBlock(c),hljs.lineNumbersBlock(c)})["catch"](function(e){throw e})}function get_url_raw(e){return["https://raw.githubusercontent.com",e.getAttribute("repo"),e.getAttribute("branch"),e.getAttribute("path")].join("/")}function get_url_blob(e){return["https://github.com",e.getAttribute("repo"),"blob",e.getAttribute("branch"),e.getAttribute("path")+get_line_specifier(e)].join("/")}function get_url_raw_local(e){return e.getAttribute("path")}function get_url_blob_local(e){return get_url_raw_local(e)}function get_lines(e){const t=e.getAttribute("line");if(!t)return[0,0];var[r,n]=t.split(/-(.*)/s);return r=parseInt(r),n=parseInt(n),isNaN(r)&&(r=0),isNaN(n)&&(n=0),[r,n]}function get_line_specifier(e){const t=get_lines(e);return 0==t[0]&&0==t[1]?"":(0==t[1]&&t[1],"#L"+String(t[0])+"-L"+String(t[1]))}function create_elem_code_block(e,t,r,n,c){var l=document.createElement("code");return l.className="language-"+e+":"+t,l.textContent=slice_by_line_number(r,n,c),l}function slice_by_line_number(e,t,r){return 0==t&&0==r?e:(0==t&&(t=1),e.split("\n").slice(t-1,r).join("\n"))}function create_elem_pre_from_code_block(e){var t=document.createElement("pre");return t.appendChild(e),append_code_block_header(e),t}const code=document.getElementsByTagName("code");Array.from(code).forEach(append_code_block_header);var divs=document.getElementsByClassName("embed-github-src");Array.prototype.forEach.call(divs,embed_external_source);divs=document.getElementsByClassName("embed-local-src");Array.prototype.forEach.call(divs,embed_local_source);</script> </body> </html>

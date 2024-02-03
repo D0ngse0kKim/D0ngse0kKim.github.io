@@ -1,0 +1,281 @@
+<!DOCTYPE html> <html> <head> <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> <meta charset="utf-8"> <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"> <meta http-equiv="X-UA-Compatible" content="IE=edge"> <title>Replacing Highlighter | Dongseok Kim</title> <meta name="author" content="Dongseok Kim"> <meta name="description" content="How to replace highlighter in jekyll"> <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha256-DF7Zhf293AJxJNTmh5zhoYYIMs2oXitRfBjY+9L//AY=" crossorigin="anonymous"> <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mdbootstrap@4.20.0/css/mdb.min.css" integrity="sha256-jpjYvU3G3N6nrrBwXJoVEYI/0zw8htfFnhT9ljN3JJw=" crossorigin="anonymous"> <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous"> <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/academicons@1.9.1/css/academicons.min.css" integrity="sha256-i1+4qU2G2860dGGIOJscdC30s9beBXjFfzjWLjBRsBg=" crossorigin="anonymous"> <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:100,300,400,500,700|Material+Icons"> <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.7.0/build/styles/atom-one-light.min.css" media="" id="highlight_theme_light"> <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.7.0/build/styles/atom-one-dark.min.css" media="none" id="highlight_theme_dark"> <link rel="shortcut icon" href="data:image/svg+xml,&lt;svg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%20100%20100%22&gt;&lt;text%20y=%22.9em%22%20font-size=%2290%22&gt;%E2%9A%9B%EF%B8%8F&lt;/text&gt;&lt;/svg&gt;"> <link rel="stylesheet" href="/assets/css/main.css"> <link rel="canonical" href="https://d0ngse0kkim.github.io/tools/jekyll/replacing-highlighter/"> <script src="/assets/js/theme.js"></script> <script src="/assets/js/dark_mode.js"></script> <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script> <script type="text/javascript">window.MathJax={tex:{tags:"ams"}};</script> <script defer type="text/javascript" id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js"></script> <script defer src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script> <script src="/assets/js/distillpub/template.v2.js"></script> <script src="/assets/js/distillpub/transforms.v2.js"></script> <script src="/assets/js/distillpub/overrides.js"></script> </head> <body> <d-front-matter> <script async type="text/json">{
+      "title": "Replacing Highlighter",
+      "description": "How to replace highlighter in jekyll",
+      "published": "February 3, 2024",
+      "authors": [
+        
+      ],
+      "katex": {
+        "delimiters": [
+          {
+            "left": "$",
+            "right": "$",
+            "display": false
+          },
+          {
+            "left": "$$",
+            "right": "$$",
+            "display": true
+          }
+        ]
+      }
+    }</script> </d-front-matter> <header> <nav id="navbar" class="navbar navbar-light navbar-expand-sm fixed-top"> <div class="container"> <a class="navbar-brand title font-weight-lighter" href="/"><span class="font-weight-bold">Dongseok </span>Kim</a> <button class="navbar-toggler collapsed ml-auto" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar top-bar"></span> <span class="icon-bar middle-bar"></span> <span class="icon-bar bottom-bar"></span> </button> <div class="collapse navbar-collapse text-right" id="navbarNav"> <ul class="navbar-nav ml-auto flex-nowrap"> <li class="nav-item "> <a class="nav-link" href="/">about</a> </li> <li class="nav-item dropdown "> <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">programming</a> <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown"> <a class="dropdown-item" href="/python">Python</a> <div class="dropdown-divider"></div> <a class="dropdown-item" href="/softwaredesign/">Software Design</a> <div class="dropdown-divider"></div> <a class="dropdown-item" href="/tools/">Tools</a> </div> </li> <li class="nav-item dropdown "> <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">hobbies</a> <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown"> <a class="dropdown-item" href="/running">running</a> </div> </li> <li class="nav-item dropdown "> <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">others</a> <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown"> <a class="dropdown-item" href="/repositories">repositories</a> <div class="dropdown-divider"></div> <a class="dropdown-item" href="/cv/">cv</a> </div> </li> <li class="toggle-container"> <button id="light-toggle" title="Change theme"> <i class="fas fa-moon"></i> <i class="fas fa-sun"></i> </button> </li> </ul> </div> </div> </nav> <progress id="progress" value="0"> <div class="progress-container"> <span class="progress-bar"></span> </div> </progress> </header> <div class="post distill"> <d-title> <h1>Replacing Highlighter</h1> <p>How to replace highlighter in jekyll</p> </d-title> <d-byline></d-byline> <d-article> <d-contents> <nav class="l-text figcaption"> <h3>Contents</h3> <div><a href="#abstract">Abstract</a></div> <div><a href="#disable-jekyll-s-default-syntax-highlighter-rouge">Disable Jekyll's default syntax highlighter Rouge</a></div> <div><a href="#use-highlight-js-as-highlighter">Use highlight.js as highlighter</a></div> <div><a href="#add-line-numbers-display-setting">Add line numbers display setting</a></div> <div><a href="#display-file-name-of-each-code-block">Display file name of each code block</a></div> <div><a href="#injection-of-external-code-from-github">Injection of external code from github</a></div> <div><a href="#commit">Commit</a></div> <div><a href="#references">References</a></div> </nav> </d-contents> <h2 id="abstract">Abstract</h2> <p>This is summary of the way to replace Jekyll’s default highlighter Rouge to <a href="https://highlightjs.org" rel="external nofollow noopener" target="_blank">highlight.js</a>.</p> <h2 id="disable-jekylls-default-syntax-highlighter-rouge">Disable Jekyll’s default syntax highlighter Rouge</h2> <p>Disabling Jekyll’s default syntax highlighter is required for using <a href="https://highlightjs.org" rel="external nofollow noopener" target="_blank">highlight.js</a> as syntax highlighter.</p> <p>Default settings of <a href="https://github.com/alshedivat/al-folio" rel="external nofollow noopener" target="_blank">al-folio</a>, which I uses as a template for github-pages used <a href="https://github.com/rouge-ruby/rouge" rel="external nofollow noopener" target="_blank">Rouge</a> as syntax highlighter.</p> <p>The following is the configuration in _config.yml when Rouge was used as syntax highlighter.</p> <pre><code class="language-yaml:_config.yml"># Markdown and syntax highlight
+markdown: kramdown
+highlighter: rouge
+kramdown:
+  input: GFM
+  syntax_highlighter_opts:
+    css_class: 'highlight'
+    span:
+      line_numbers: false
+    block:
+      line_numbers: false
+      start_line: 1
+</code></pre> <p>The default syntax highlighter can be disabled by changing setting as follows.</p> <pre><code class="language-yaml:_config.yml">markdown: kramdown
+highlighter: none
+kramdown:
+  input: GFM
+  syntax_highlighter_opts:
+    disable: true
+</code></pre> <h2 id="use-highlightjs-as-highlighter">Use highlight.js as highlighter</h2> <p><code>_includes/header.html</code> was embedded for every pages genetared by Jekyll in <a href="https://github.com/alshedivat/al-folio" rel="external nofollow noopener" target="_blank">al-folio</a> template which I uses for github-pages.</p> <p>So I added the following codes in <code>_includes/header.html</code> for using <a href="https://highlightjs.org" rel="external nofollow noopener" target="_blank">highlight.js</a> as syntax highlighter.</p> <pre><code class="language-html:_includes/header.html">&lt;link rel="stylesheet" href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.7.0/build/styles/default.min.css"&gt;
+&lt;script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.7.0/build/highlight.min.js"&gt;&lt;/script&gt;
+&lt;script&gt;hljs.highlightAll();&lt;/script&gt;
+</code></pre> <p>This codes can be found in <a href="https://highlightjs.org/usage/" rel="external nofollow noopener" target="_blank">How to use highlight.js</a>.</p> <p>Codes are highlighted by adding <code>&lt;language&gt;</code> specifier after three backticks of a code block. The following example shows a code block that uses syntax highlighter for python.</p> <pre><code class="language-markdown">```python
+def printarguments(*args):
+    print(args)
+```
+</code></pre> <h2 id="add-line-numbers-display-setting">Add line numbers display setting</h2> <p>Line numbers can be displayed by using <a href="https://github.com/wcoder/highlightjs-line-numbers.js/" rel="external nofollow noopener" target="_blank">highlight.js-line-numbers.js</a>.</p> <p>First, I inserted the following codes into <code>_includes/header.html</code> for enabling line numbers display.</p> <pre><code class="language-html:_includes/header.html">&lt;script src="//cdn.jsdelivr.net/npm/highlightjs-line-numbers.js@2.8.0/dist/highlightjs-line-numbers.min.js"&gt;&lt;/script&gt;
+&lt;script&gt;hljs.initLineNumbersOnLoad();&lt;/script&gt;
+</code></pre> <p>In order to adjust line numbers related display, I have added the following css settings that can be found <a href="https://emmalanglab.com/highlightjs-line-numbers-ja/" rel="external nofollow noopener" target="_blank">here</a>.</p> <pre><code class="language-css:_sass/_base.scss">.hljs-ln {
+  // border display disabled
+  margin-bottom: 0;
+  border: none;
+}
+
+.hljs-ln tr, .hljs-ln td {
+  // border display disabled
+  border: none;
+}
+
+.hljs-ln-numbers &gt; div {
+  font-family: inherit;
+  -webkit-touch-callout: none; /* Hiding of pop-up menus that are displayed by long-pressing on phones, etc. */
+  -webkit-user-select: none;   /* Allow line numbers to be excluded when copying code */
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  text-align: right;
+  color: var(--global-theme-color); /* color of characters of line numbers */
+  opacity: 0.65;
+  vertical-align: top;
+  padding-right: 10px;
+  width: 2rem; /* width of line numbers */
+  min-width: 2rem; /* mininum width for line numbers display */
+  font-size: 80%;
+  line-height: 1.55em;
+}
+
+.hljs-ln-code.hljs-ln-line {
+  padding-left: 8px;
+  font-size: 87.5%;
+  line-height: 1.55em;
+  border-left: 1px solid var(--global-theme-color);
+}
+</code></pre> <p><code>var(--global-theme-color)</code> must be replaced with the value you wish to use as the color of the line number characters to be displayed.</p> <p>In <a href="https://github.com/alshedivat/al-folio" rel="external nofollow noopener" target="_blank">al-folio</a>, the following settings are set for default color <code>#B509AC</code>.</p> <pre><code class="language-css:_variables.scss">$purple-color:        #B509AC !default;
+</code></pre> <pre><code class="language-css:_theme.scss">:root {
+  --global-theme-color: #{$purple-color};
+}
+</code></pre> <h2 id="display-file-name-of-each-code-block">Display file name of each code block</h2> <p>File name can be specified by using specifier like <code>&lt;language&gt;:&lt;filename&gt;</code> after three backticks of a code block.</p> <p>The following code block specifies syntax highlight for python language and <code>filename.py</code> as file name.</p> <pre><code class="language-markdown">```python:filename.py
+def printarguments(*args):
+    print(args)
+```
+</code></pre> <p>This displays code block like this.</p> <div class="column mt-3"> <div class="col-sm mt-3 mt-md-0"> <figure> <picture> <source class="responsive-img-srcset" media="(max-width: 480px)" srcset="/tools/jekyll/replacing-highlighter/code-block-with-file-name-480.webp"></source> <source class="responsive-img-srcset" media="(max-width: 800px)" srcset="/tools/jekyll/replacing-highlighter/code-block-with-file-name-800.webp"></source> <source class="responsive-img-srcset" media="(max-width: 1400px)" srcset="/tools/jekyll/replacing-highlighter/code-block-with-file-name-1400.webp"></source> <img src="/tools/jekyll/replacing-highlighter/code-block-with-file-name.png" class="img-fluid rounded z-depth-1" width="auto" height="auto" data-zoomable="" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture><figcaption class="caption">Example of a code block displaying a file name</figcaption> </figure> </div> </div> <h3 id="javascript-code-for-inserting-elements-which-displays-file-name-of-code-block-into-code-block-tags">Javascript code for inserting elements which displays file name of code block into code block tags.</h3> <p>To do this, add a javascript code which parses language and file name specifier of code block.</p> <pre><code class="language-javascript:highlight.html">&lt;scripts&gt;
+    const code = document.getElementsByTagName('code');
+    Array.from(code).forEach(append_code_block_header);
+
+    function append_code_block_header(elemCode){
+        if(!elemCode.className){return;}else{}
+
+        const [language, urlCodeBlock] = get_language_and_url(elemCode);
+        if(!urlCodeBlock){return;}else{}
+
+        replace_className(elemCode, language);
+        elemCodeBlockHeader = create_elem_code_block_header(urlCodeBlock);
+        append_elem_code_block_header_to_previous(elemCode, elemCodeBlockHeader);
+    }
+
+    function get_language_and_url(elemCode){
+        return elemCode.className.split(/:(.*)/s)
+    }
+
+    function replace_className(elemCode, newName){
+        elemCode.classList.remove(elemCode.className);
+        elemCode.classList.add(newName);
+    }
+
+    function create_elem_code_block_header(urlCodeBlock){
+        var elemCodeBlockHeader = document.createElement('a');
+        elemCodeBlockHeader.textContent = urlCodeBlock;
+        if (
+            (urlCodeBlock.startsWith('http://'))
+            || (urlCodeBlock.startsWith('https://'))
+        ){
+            elemCodeBlockHeader.setAttribute('href', urlCodeBlock);
+            elemCodeBlockHeader.setAttribute('target', '_blank');
+        }
+        elemCodeBlockHeader.className = 'language-plaintext';
+
+        return elemCodeBlockHeader;
+    }
+
+    function append_elem_code_block_header_to_previous(elemCode, elemToAppend){
+        var elemPre = elemCode.parentElement;
+        elemPre.insertBefore(elemToAppend, elemPre.firstChild);
+        elemPre.classList.add('code-block-header');
+    }
+&lt;/scripts&gt;
+</code></pre> <p>This code performs the following processing.</p> <ol> <li>Find <code>&lt;pre&gt;&lt;code&gt; code block contents &lt;/code&gt;&lt;/code&gt;</code> tags.</li> <li>Split language and file name specifier in <code>&lt;code class='language:filename'&gt;</code> into <code>language</code> and <code>filename</code>. (<code>get_language_and_url()</code>)</li> <li>Replace class name from <code>&lt;pre&gt;&lt;code class='language:filename'&gt;</code> to <code>&lt;pre&gt;&lt;code class='language'&gt;</code>. (<code>replace_className()</code>)</li> <li>Generate <code>&lt;a&gt;filename&lt;/a&gt;</code> tags from file name specifier. <ul> <li>If <code>filename</code> is a url starts with <code>http://</code> or <code>https://</code>, adds a hyperlink to the url. (<code>create_elem_code_block_header()</code>)</li> </ul> </li> <li>Insert the <code>&lt;a&gt;&lt;/a&gt;</code> tag in front of <code>&lt;code class='language'&gt;</code> tag. (<code>append_elem_code_block_header_to_previous()</code>)</li> <li>Insert class name into <code>pre</code> tag like <code>&lt;pre class='code-block-header'&gt;</code>. (<code>append_elem_code_block_header_to_previous()</code>)</li> </ol> <h3 id="styling-of-code-block-filename-display">Styling of code block filename display</h3> <pre><code class="language-css:_sass/_base.scss">pre.code-block-header {
+  position: relative;
+  padding-top: 24px;
+  a:first-child {
+    background: var(--global-code-bg-color-darker);
+    color: var(--global-theme-color);
+    display: block;
+    font-size: 80%;
+    font-weight: 700;
+    padding: 1px 10px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 10;
+    opacity: 2;
+    border-bottom: 0;
+
+    /* Maximum width of 40%, word wrapping if exceeded */
+    max-width: 40%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+</code></pre> <h2 id="injection-of-external-code-from-github">Injection of external code from github</h2> <p>Add a function that allows you to display code on Github as a code block on your own page by using the following <code>&lt;div&gt;</code> tag.</p> <pre><code class="language-html">&lt;div class='embed-github-src' repo='fluentpython/example-code-2e' branch='master' path='07-1class-func/tagger.py' line=1-23 language='python'&gt;&lt;/div&gt;
+</code></pre> <ul> <li> <code>class</code> : Mandatory, specify <code>'embed-github-src'</code>.</li> <li> <code>repo</code> : Mandatory, repository name, for example <code>'fluentpython/example-code-2e'</code> </li> <li> <code>branch</code> : Mandatory, branch name, for example <code>'master'</code> </li> <li> <code>path</code> : Mandatory, file path on repository, <code>'07-1class-func/tagger.py'</code> </li> <li> <code>language</code> : Mandatory, language for syntax highlighter, for example <code>'python'</code> </li> <li> <code>line</code> : Optional, <code>&lt;startline&gt;-&lt;endline&gt;</code> </li> </ul> <h3 id="javascript-code">Javascript code</h3> <pre><code class="language-javascript:highlight.html">/*
+Parse the following format of tag div.
+&lt;div class='embed-github-src'               : Mandatory, 'embed-github-src'
+     repo='fluentpython/example-code-2e'    : Mandatory, repository name
+     branch='master'                        : Mandatory, branch of repository
+     path='07-1class-func/tagger.py'        : Mandatory, path of file
+     line=1-23                              : Optional, line of file
+     language='python'
+&gt;&lt;/div&gt;
+*/
+var divs = document.getElementsByClassName('embed-github-src');
+Array.prototype.forEach.call(divs, embed_external_source);
+
+function embed_external_source(elemDiv) {
+    var url_raw = get_url_raw(elemDiv);
+    var url_blob = get_url_blob(elemDiv);
+    var language = elemDiv.getAttribute('language');
+    var lines = get_lines(elemDiv);
+    var lineStart = lines[0];
+    var lineEnd = lines[1];
+
+    fetch(url_raw).then(function(res) {
+        return res.text();
+    }).then(function(out) {
+        var elemCode = create_elem_code_block(language, url_blob, out, lineStart, lineEnd);
+        var elemPre = create_elem_pre_from_code_block(elemCode);
+        elemDiv.appendChild(elemPre);
+        hljs.highlightBlock(elemCode);
+        hljs.lineNumbersBlock(elemCode);
+    }).catch(function(err) {
+        throw err;
+    });
+}
+
+function get_url_raw(elemDiv){
+    const baseurl = 'https://raw.githubusercontent.com';
+    const repo = elemDiv.getAttribute('repo');
+    const branch = elemDiv.getAttribute('branch');
+    const path = elemDiv.getAttribute('path');
+
+    return [baseurl, repo, branch, path].join('/');
+}
+
+function get_url_blob(elemDiv){
+    const baseurl = 'https://github.com';
+    const repo = elemDiv.getAttribute('repo');
+    const branch = elemDiv.getAttribute('branch');
+    const path = elemDiv.getAttribute('path') + get_line_specifier(elemDiv);
+
+    return [baseurl, repo, 'blob', branch, path].join('/');
+}
+
+function get_lines(elemDiv){
+    const attributeLine = elemDiv.getAttribute('line');
+    if(!attributeLine){
+        return [0, 0];
+    }else{}
+
+    var [lineStart, lineEnd] = attributeLine.split(/-(.*)/s);
+    lineStart = parseInt(lineStart);
+    lineEnd = parseInt(lineEnd);
+
+    if(isNaN(lineStart)){
+        lineStart = 0;
+    }else{}
+
+    if(isNaN(lineEnd)){
+        lineEnd = 0;
+    }else{}
+
+    return [lineStart, lineEnd];
+}
+
+function get_line_specifier(elemDiv){
+    const lines = get_lines(elemDiv);
+
+    if((lines[0] == 0) &amp;&amp; (lines[1] == 0)){
+        return '';
+    }else{}
+
+    if(lines[1] == 0){
+        lines[1] == 99999999;
+    }else{}
+
+    return '#L' + String(lines[0]) + '-L' + String(lines[1]);
+}
+
+function create_elem_code_block(language, url, contents, lineStart, lineEnd){
+    var elemCode = document.createElement('code');
+    elemCode.className = 'language-' + language + ':' + url;
+    elemCode.textContent = slice_by_line_number(contents, lineStart, lineEnd);
+
+    return elemCode;
+}
+
+function slice_by_line_number(context, lineStart, lineEnd){
+    if((lineStart == 0) &amp;&amp; (lineEnd == 0)){
+        return context;
+    }else{}
+
+    if(lineStart == 0){
+        lineStart = 1;
+    }else{}
+
+    if(lineEnd == 0){
+        lineEnd == 99999999;
+    }else{}
+
+    return context.split('\n').slice(lineStart-1, lineEnd).join('\n');
+}
+
+function create_elem_pre_from_code_block(elemCode){
+    var elemPre = document.createElement('pre');
+    elemPre.appendChild(elemCode);
+    append_code_block_header(elemCode);
+
+    return elemPre;
+}
+</code></pre> <h2 id="commit">Commit</h2> <p>Refer this <a href="https://github.com/D0ngse0kKim/D0ngse0kKim.github.io/commit/f587b3d0e1c3703b8b00cfa66e238c9698d1b89d" rel="external nofollow noopener" target="_blank">Commit</a> of actual code changes for this functions.</p> <h2 id="references">References</h2> <ul> <li><a href="https://vilcins.medium.com/disable-jekylls-default-syntax-highlighter-rouge-12130ccac779" rel="external nofollow noopener" target="_blank">Disable Jekyll’s default syntax highlighter Rouge</a></li> <li><a href="https://hachy.github.io/2018/11/14/add-file-name-to-code-block-in-jekyll-on-github-pages.html" rel="external nofollow noopener" target="_blank">Add file name to code block in Jekyll on Github pages</a></li> <li><a href="https://jojozhuang.github.io/tutorial/jekyll-highlighting/" rel="external nofollow noopener" target="_blank">Jekyll - Highlighting</a></li> <li><a href="https://emmalanglab.com/highlightjs-line-numbers-ja/" rel="external nofollow noopener" target="_blank">highlight.jsに行番号を追加する方法</a></li> <li><a href="https://github.com/wcoder/highlightjs-line-numbers.js/" rel="external nofollow noopener" target="_blank">highlightjs-line-numbers.js</a></li> <li><a href="https://www.zuar.com/blog/ghost-embed-raw-code-from-github/" rel="external nofollow noopener" target="_blank">How to Embed Raw Code From Github in Ghost Posts</a></li> </ul> </d-article> <d-appendix> <d-footnote-list></d-footnote-list> <d-citation-list></d-citation-list> </d-appendix> <d-bibliography src="/assets/bibliography/"></d-bibliography> </div> <footer class="fixed-bottom"> <div class="container mt-0"> © Copyright 2024 Dongseok Kim. Powered by <a href="https://jekyllrb.com/" target="_blank" rel="external nofollow noopener">Jekyll</a> with <a href="https://github.com/alshedivat/al-folio" rel="external nofollow noopener" target="_blank">al-folio</a> theme. Hosted by <a href="https://pages.github.com/" target="_blank" rel="external nofollow noopener">GitHub Pages</a>. Photos from <a href="https://unsplash.com" target="_blank" rel="external nofollow noopener">Unsplash</a>. </div> </footer> <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js" integrity="sha256-fgLAgv7fyCGopR/gBNq2iW3ZKIdqIcyshnUULC4vex8=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/npm/mdbootstrap@4.20.0/js/mdb.min.js" integrity="sha256-NdbiivsvWt7VYCt6hYNT3h/th9vSTL4EDWeGs5SN3DA=" crossorigin="anonymous"></script> <script type="text/javascript">function progressBarSetup(){"max"in document.createElement("progress")?(initializeProgressElement(),$(document).on("scroll",function(){progressBar.attr({value:getCurrentScrollPosition()})}),$(window).on("resize",initializeProgressElement)):(resizeProgressBar(),$(document).on("scroll",resizeProgressBar),$(window).on("resize",resizeProgressBar))}function getCurrentScrollPosition(){return $(window).scrollTop()}function initializeProgressElement(){let e=$("#navbar").outerHeight(!0);$("body").css({"padding-top":e}),$("progress-container").css({"padding-top":e}),progressBar.css({top:e}),progressBar.attr({max:getDistanceToScroll(),value:getCurrentScrollPosition()})}function getDistanceToScroll(){return $(document).height()-$(window).height()}function resizeProgressBar(){progressBar.css({width:getWidthPercentage()+"%"})}function getWidthPercentage(){return getCurrentScrollPosition()/getDistanceToScroll()*100}const progressBar=$("#progress");window.onload=function(){setTimeout(progressBarSetup,50)};</script> <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.7.0/build/highlight.min.js"></script> <script>hljs.highlightAll();</script> <script src="//cdn.jsdelivr.net/npm/highlightjs-line-numbers.js@2.8.0/dist/highlightjs-line-numbers.min.js"></script> <script>hljs.initLineNumbersOnLoad();</script> <script>function append_code_block_header(e){if(!e.className)return;const[t,r]=get_language_and_url(e);r&&(replace_className(e,t),elemCodeBlockHeader=create_elem_code_block_header(r),append_elem_code_block_header_to_previous(e,elemCodeBlockHeader))}function get_language_and_url(e){return e.className.split(/:(.*)/s)}function replace_className(e,t){e.classList.remove(e.className),e.classList.add(t)}function create_elem_code_block_header(e){var t=document.createElement("a");return t.textContent=e,(e.startsWith("http://")||e.startsWith("https://"))&&(t.setAttribute("href",e),t.setAttribute("target","_blank")),t.className="language-plaintext",t}function append_elem_code_block_header_to_previous(e,t){var r=e.parentElement;r.insertBefore(t,r.firstChild),r.classList.add("code-block-header")}function embed_external_source(e){var t=get_url_raw(e),r=get_url_blob(e),n=e.getAttribute("language"),c=get_lines(e),l=c[0],a=c[1];fetch(t).then(function(e){return e.text()}).then(function(t){var c=create_elem_code_block(n,r,t,l,a),o=create_elem_pre_from_code_block(c),_={startFrom:Math.max(l,1)};e.appendChild(o),hljs.highlightBlock(c),hljs.lineNumbersBlock(c,_)})["catch"](function(e){throw e})}function embed_local_source(e){var t=get_url_raw_local(e),r=get_url_blob_local(e),n=e.getAttribute("language"),c=get_lines(e),l=c[0],a=c[1];fetch(t).then(function(e){return e.text()}).then(function(t){var c=create_elem_code_block(n,r,t,l,a),o=create_elem_pre_from_code_block(c);e.appendChild(o),hljs.highlightBlock(c),hljs.lineNumbersBlock(c)})["catch"](function(e){throw e})}function get_url_raw(e){return["https://raw.githubusercontent.com",e.getAttribute("repo"),e.getAttribute("branch"),e.getAttribute("path")].join("/")}function get_url_blob(e){return["https://github.com",e.getAttribute("repo"),"blob",e.getAttribute("branch"),e.getAttribute("path")+get_line_specifier(e)].join("/")}function get_url_raw_local(e){return e.getAttribute("path")}function get_url_blob_local(e){return get_url_raw_local(e)}function get_lines(e){const t=e.getAttribute("line");if(!t)return[0,0];var[r,n]=t.split(/-(.*)/s);return r=parseInt(r),n=parseInt(n),isNaN(r)&&(r=0),isNaN(n)&&(n=0),[r,n]}function get_line_specifier(e){const t=get_lines(e);return 0==t[0]&&0==t[1]?"":(0==t[1]&&t[1],"#L"+String(t[0])+"-L"+String(t[1]))}function create_elem_code_block(e,t,r,n,c){var l=document.createElement("code");return l.className="language-"+e+":"+t,l.textContent=slice_by_line_number(r,n,c),l}function slice_by_line_number(e,t,r){return 0==t&&0==r?e:(0==t&&(t=1),e.split("\n").slice(t-1,r).join("\n"))}function create_elem_pre_from_code_block(e){var t=document.createElement("pre");return t.appendChild(e),append_code_block_header(e),t}const code=document.getElementsByTagName("code");Array.from(code).forEach(append_code_block_header);var divs=document.getElementsByClassName("embed-github-src");Array.prototype.forEach.call(divs,embed_external_source);divs=document.getElementsByClassName("embed-local-src");Array.prototype.forEach.call(divs,embed_local_source);</script> </body> </html>

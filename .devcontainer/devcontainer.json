@@ -1,0 +1,27 @@
+{
+    // https://containers.dev/implementors/json_reference/
+    "name": "BlogGithub",
+    "dockerComposeFile": "../docker-compose.yml",
+    "customizations": {
+        // https://containers.dev/supporting
+        "vscode": {
+            "extensions": [
+                "ms-azuretools.vscode-docker",
+                "GitHub.copilot",
+                "GitHub.copilot-chat",
+                "GitHub.vscode-pull-request-github",
+                "DavidAnson.vscode-markdownlint",
+                "goessner.mdmath",
+                "jebbs.plantuml",
+                "mhutchie.git-graph"
+            ],
+            "settings": {
+                "editor.rulers": [80]
+            }
+        }
+    },
+    "forwardPorts": [8080],
+    "workspaceFolder": "/srv/jekyll",
+    "service": "jekyll",
+    "onCreateCommand": "apt-get update && apt-get install git -y"
+}
